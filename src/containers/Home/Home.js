@@ -9,12 +9,9 @@ import Exits from "../Exits/Exits";
 import News from "../News/News";
 import Events from "../Events/Events";
 import LogBook from "../LogBook/LogBook";
-import ExitDetails from "../ExitDetails/ExitDetails";
 // import VideoBlog from "../VideoBlog/VideoBlog";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
