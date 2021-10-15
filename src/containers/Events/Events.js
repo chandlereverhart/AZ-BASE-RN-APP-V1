@@ -15,6 +15,14 @@ const Events = (props) => {
         <Text style={styles.text}>Event 4</Text>
         <Text style={styles.text}>Event 5</Text>
       </View>
+
+      <View>
+        <Text style={styles.title2}>Past Events</Text>
+      </View>
+      <View style={styles.exitsView}>
+        <Text style={styles.text}>Event 1</Text>
+        <Text style={styles.text}>Event 2</Text>
+      </View>
     </View>
   );
 };

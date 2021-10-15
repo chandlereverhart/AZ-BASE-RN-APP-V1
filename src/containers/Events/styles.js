@@ -17,6 +17,13 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "600",
     fontSize: 30,
+    opacity: 0.8,
+  },
+  title2: {
+    opacity: 0.8,
+    marginTop: 40,
+    fontWeight: "600",
+    fontSize: 20,
   },
   text: {
     marginVertical: 10,

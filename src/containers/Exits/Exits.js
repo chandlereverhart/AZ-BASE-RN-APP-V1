@@ -1,24 +1,34 @@
 import React, { useEffect } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import { Card } from "react-native-ui-lib";
 import styles from "./styles";
+import ExitDetails from "../ExitDetails/ExitDetails";
 
 const Exits = (props) => {
   return (
     <View style={styles.pageContent}>
-      <View>
-        <View style={styles.logoView}>
-          {/* <Image
-            style={styles.logo}
-            source={require("../../assets/AZBASE-LOGO.png")}
-          /> */}
-        </View>
-        <Text style={styles.title}>Exits</Text>
-      </View>
       <View style={styles.exitsView}>
-        <Text style={styles.text}>Saguaro</Text>
-        <Text style={styles.text}>Canyon Lake </Text>
-        <Text style={styles.text}>Afternoon Delight</Text>
-        <Text style={styles.text}>Courthouse</Text>
+        <Card style={styles.listCard}>
+          <Text style={styles.text}>Saguaro</Text>
+        </Card>
+        <Card style={styles.listCard}>
+          <Text style={styles.text}>Canyon Lake</Text>
+        </Card>
+        <Card style={styles.listCard}>
+          <Text style={styles.text}>Courthouse</Text>
+        </Card>
+        <Card style={styles.listCard}>
+          <Text style={styles.text}>The Ramp</Text>
+        </Card>
+        <Card style={styles.listCard}>
+          <Text style={styles.text}>Camelback</Text>
+        </Card>
+        <Card style={styles.listCard}>
+          <Text style={styles.text}>SuperChicken</Text>
+        </Card>
+        <Card style={styles.listCard}>
+          <Text style={styles.text}>Afternoon Delight</Text>
+        </Card>
       </View>
     </View>
   );
