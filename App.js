@@ -1,8 +1,10 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import * as React from "react";
+
 import { StyleSheet, Text, View } from "react-native";
 //containers
 import Home from "./src/containers/Home/Home";
+
 import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
@@ -10,7 +12,6 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <NavigationContainer>
-        {/* <Root /> */}
         <Home />
       </NavigationContainer>
     </View>

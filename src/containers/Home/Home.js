@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Image } from "react-native";
 import styles from "./styles";
 //components
 import Header from "../../components/Header/Header";
 //screens
-import Exits from "../Exits/Exits";
-import News from "../News/News";
-import Events from "../Events/Events";
-import LogBook from "../LogBook/LogBook";
-// import VideoBlog from "../VideoBlog/VideoBlog";
-
+import Exits from "../Home/Exits/Exits";
+import News from "../Home/News/News";
+import Events from "../Home/Events/Events";
+import LogBook from "../Home/LogBook/LogBook";
+// navigation utils
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import DrawerButton from "../../components/Navigation/Drawer/DrawerButton/DrawerButton";
+import NavigationTitle from "../../components/Navigation/NavigationTitle/NavigationTitle";
+
+const HomeStack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
@@ -90,11 +94,36 @@ function MyTabs() {
 }
 
 const Home = (props) => {
+  const [initialRoute, setInitialRoute] = useState("MyTabs");
+
   return (
-    <View style={styles.root}>
-      <Header />
-      <MyTabs />
-    </View>
+    <HomeStack.Navigator
+      initialRouteName={initialRoute}
+      headerTitleAlign="center"
+      screenOptions={(navigation) => ({
+        headerTitleAlign: "center",
+        // headerRight: () => <DrawerButton navigation={navigation} />,
+        headerTitle: (
+          <Image
+            source={{ uri: "src/assets/AZBASE-LOGO.png" }}
+            style={styles.image}
+          />
+        ),
+        // headerBackImage: () => <NavigationBackImage />,
+        headerBackTitle: null,
+        headerTruncatedBackTitle: null,
+        headerStyle: {
+          height: 300,
+        },
+      })}
+    >
+      <HomeStack.Screen name="MyTabs" component={MyTabs} />
+      <HomeStack.Screen name="Exits" component={Exits} />
+      <HomeStack.Screen name="LogBook" component={LogBook} />
+      <HomeStack.Screen name="News" component={News} />
+      <HomeStack.Screen name="Events" component={Events} />
+      <HomeStack.Screen name="Header" component={Header} />
+    </HomeStack.Navigator>
   );
 };
 export default Home;
