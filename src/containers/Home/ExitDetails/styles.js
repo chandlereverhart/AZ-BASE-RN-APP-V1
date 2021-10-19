@@ -36,11 +36,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  listCard: {
+  detailsCard: {
     marginBottom: 10,
     paddingHorizontal: 10,
     paddingVertical: 10,
     width: "100%",
+    height: "75%",
   },
 });
 
