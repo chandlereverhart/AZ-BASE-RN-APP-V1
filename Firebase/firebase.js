@@ -13,6 +13,10 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
+} else {
+  app = firebase.app();
 }
 
-export { firebase };
+const auth = firebase.auth();
+
+export { auth };
