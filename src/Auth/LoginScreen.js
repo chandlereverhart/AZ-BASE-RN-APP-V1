@@ -17,7 +17,7 @@ const LoginScreen = (props) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate("Home");
+        navigation.replace("MyTabs");
       }
     });
     return unsubscribe;
@@ -29,7 +29,7 @@ const LoginScreen = (props) => {
       .then((userCredentials) => {
         const user = userCredentials;
         console.log("Registered with:", user.email);
-        alert("Registered with:", user.email);
+        alert("Success! Registered with:", user.email);
       })
       .catch((err) => {
         alert(err.message);
@@ -39,7 +39,6 @@ const LoginScreen = (props) => {
     auth.signInWithEmailAndPassword(email, password).then((userCredentials) => {
       const user = userCredentials.user;
       console.log("Logged in with:", user.email);
-      alert("Logged in with:", user.email);
     });
   };
 

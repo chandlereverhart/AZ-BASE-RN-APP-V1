@@ -2,7 +2,6 @@ import React from "react";
 import Icon from "../../../Icon/Icon";
 import { TouchableOpacity } from "react-native";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
-import { useIsDrawerOpen } from "@react-navigation/drawer";
 
 import styles from "./styles";
 

@@ -105,7 +105,7 @@ const Home = (props) => {
         headerTitleAlign="center"
         screenOptions={(navigation) => ({
           headerTitleAlign: "center",
-          // headerRight: () => <DrawerButton navigation={navigation} />,
+          headerRight: () => <DrawerButton navigation={navigation} />,
           headerTitle: (
             <Image
               source={{ uri: "src/assets/AZBASE-LOGO.png" }}

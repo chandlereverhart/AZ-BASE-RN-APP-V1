@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, TextInput, Button } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import { Card } from "react-native-ui-lib";
+import { auth } from "../../../../Firebase/firebase";
+import { useNavigation } from "@react-navigation/core";
 
 import styles from "./styles";
 
@@ -15,9 +24,18 @@ const LogBook = (props) => {
   const handleSave = (values) => {
     alert("Your Jump has been logged!");
   };
+  const navigation = useNavigation();
+  const handleSignOut = () => {
+    auth.signOut().then(() => {
+      navigation.replace("Login");
+    });
+  };
 
   return (
     <>
+      <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+        <Text style={styles.buttonText}>Sign Out</Text>
+      </TouchableOpacity>
       <View style={styles.pageContent}>
         <View style={styles.logView}>
           <TextInput

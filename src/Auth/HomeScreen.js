@@ -14,9 +14,88 @@ const HomeScreen = (props) => {
     });
   };
 
+  const handleEnterApp = () => {
+    navigation.replace("Home");
+  };
+
+  function MyTabs() {
+    return (
+      <Tab.Navigator
+        initialRouteName="Exits"
+        screenOptions={{
+          tabBarActiveTintColor: "#2e2e2e",
+        }}
+      >
+        <Tab.Screen
+          name="Exits"
+          component={Exits}
+          options={{
+            tabBarLabel: "Exits",
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="map-marker-multiple"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="News"
+          component={News}
+          options={{
+            tabBarLabel: "News",
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="newspaper-variant"
+                color={color}
+                size={size}
+              />
+            ),
+            tabBarBadge: 1,
+          }}
+        />
+        <Tab.Screen
+          name="Events"
+          component={Events}
+          options={{
+            tabBarLabel: "Events",
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="calendar-edit"
+                color={color}
+                size={size}
+              />
+            ),
+            // tabBarBadge: 3,
+          }}
+        />
+        <Tab.Screen
+          name="Log Book"
+          component={LogBook}
+          options={{
+            tabBarLabel: "Log Book",
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="lead-pencil"
+                color={color}
+                size={size}
+              />
+            ),
+            // tabBarBadge: 3,
+          }}
+        />
+      </Tab.Navigator>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Text>EMAIL: {auth.currentUser?.email}</Text>
+      <TouchableOpacity onPress={handleEnterApp} style={styles.button}>
+        <Text style={styles.buttonText}>Enter the App!</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
         <Text style={styles.buttonText}>Sign Out</Text>
       </TouchableOpacity>
