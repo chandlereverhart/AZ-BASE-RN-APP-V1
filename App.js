@@ -4,10 +4,10 @@ import { useNavigation } from "@react-navigation/core";
 import { StyleSheet, Image } from "react-native";
 //containers
 import LoginScreen from "./src/Auth/LoginScreen";
-import HomeScreen from "./src/Auth/HomeScreen";
 import Exits from "./src/containers/Home/Exits/Exits";
 import ExitDetails from "./src/containers/Home/ExitDetails/ExitDetails";
 import LogBook from "./src/containers/Home/LogBook";
+import LogBookForm from "./src/components/Forms/LogBookForm";
 import News from "./src/containers/Home/News";
 import Events from "./src/containers/Home/Events";
 import Header from "./src/components/Header/Header";
@@ -122,11 +122,7 @@ export default function App() {
           name="Login"
           component={LoginScreen}
         />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
+
         <Stack.Screen
           name="MyTabs"
           component={MyTabs}
@@ -145,6 +141,11 @@ export default function App() {
         <Stack.Screen
           name="LogBook"
           component={LogBook}
+          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+        />
+        <Stack.Screen
+          name="LogBookForm"
+          component={LogBookForm}
           options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
         />
         <Stack.Screen

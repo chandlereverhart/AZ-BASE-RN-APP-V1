@@ -1,110 +1,91 @@
-import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  Button,
-  TouchableOpacity,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Button, TouchableOpacity } from "react-native";
 import { Card } from "react-native-ui-lib";
-import { auth } from "../../../../Firebase/firebase";
+import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 
 import styles from "./styles";
 
 const LogBook = (props) => {
-  const [jumpNumber, setJumpNumber] = useState("");
-  const [exitNumber, setExitNumber] = useState("");
-  const [exitName, setExitName] = useState("");
-  const [location, setLocation] = useState("");
-  const [details, setDetails] = useState("");
+  useEffect(() => {
+    _getLogBook();
+  }, []);
+  const [tab, setTab] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [label, setLabel] = useState([]);
+  const [logBook, setLogBook] = useState([]);
+  // Redux
 
-  const handleChange = (value) => {};
-  const handleSave = (values) => {
-    alert("Your Jump has been logged!");
-  };
+  useEffect(() => {}, [tab]);
+
+  useEffect(() => {
+    _getLogBook();
+  }, []);
+
+  async function _getLogBook() {
+    setLoading(true);
+    try {
+      const response = await db
+        .collection("users")
+        .where("uid", "==", "rdrz9DnQWwUpg9iXgn0HOBmbSxA2")
+        .get();
+
+      console.log("HERE", response);
+
+      setLogBook(response);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  }
   const navigation = useNavigation();
+
   const handleSignOut = () => {
     auth.signOut().then(() => {
       navigation.replace("Login");
     });
   };
 
+  const openForm = () => {
+    auth.signOut().then(() => {
+      navigation.replace("LogBookForm");
+    });
+  };
+  // const getLogBook = () => {
+  //   console.log("FIRED");
+  //   let jumpsArr = [];
+  //   const logRef = db
+  //     .collection("users")
+  //     .doc("Q8M40JJ8TCx0jlPDqRzk")
+  //     .collection("logBook")
+  //     .doc("4ehSpCmv90Ydhx40UL0O");
+
+  //   jumpsArr.push(logRef);
+  //   console.log(jumpsArr);
+  //   return jumpsArr;
+  // };
   return (
     <>
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
         <Text style={styles.buttonText}>Sign Out</Text>
       </TouchableOpacity>
       <View style={styles.pageContent}>
-        <View style={styles.logView}>
-          <TextInput
-            style={styles.input}
-            value={jumpNumber}
-            placeholder="Jump #"
-            label="Jump #"
-            onChange={(value) => {
-              setJumpNumber(value);
-            }}
-          />
-          <TextInput
-            style={styles.input}
-            value={exitNumber}
-            placeholder="Exit #"
-            onChange={(value) => {
-              setExitNumber(value);
-            }}
-          />
-          <TextInput
-            style={styles.input}
-            value={exitName}
-            placeholder="Exit Name"
-            onChange={(value) => {
-              setExitName(value);
-            }}
-          />
-          <TextInput
-            style={styles.input}
-            value={location}
-            placeholder="Location"
-            onChange={(value) => {
-              setLocation(value);
-            }}
-          />
-          <TextInput
-            style={styles.detailsInput}
-            value={details}
-            placeholder="Other Details..."
-            onChange={(value) => {
-              setDetails(value);
-            }}
-          />
-        </View>
         <View style={styles.saveBtn}>
           <Button
-            title="Log Jump"
+            title="Add a Jump"
             color="white"
             accessibilityLabel="Learn more about this purple button"
-            onPress={handleSave}
+            onPress={openForm}
           />
         </View>
       </View>
 
       <View style={styles.bottomHalf}>
         <View style={styles.totalView}>
-          <Text style={styles.totalText}>Total Jumps: 100</Text>
+          <Text style={styles.totalText}>Total Jumps: {}</Text>
         </View>
         <Card style={styles.card}>
-          <Text style={styles.cardText}>Jump #100</Text>
-        </Card>
-        <Card style={styles.card}>
-          <Text style={styles.cardText}>Jump #99</Text>
-        </Card>
-        <Card style={styles.card}>
-          <Text style={styles.cardText}>Jump #98</Text>
-        </Card>
-        <Card style={styles.card}>
-          <Text style={styles.cardText}>Jump #97</Text>
+          <Text style={styles.cardText}>Jump #{}</Text>
         </Card>
       </View>
     </>

@@ -10,7 +10,7 @@ const firebaseConfig = {
   measurementId: "G-F32Z1R7T0E",
 };
 // Initialize Firebase
-
+let app;
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {
@@ -18,5 +18,6 @@ if (!firebase.apps.length) {
 }
 
 const auth = firebase.auth();
+const db = firebase.firestore();
 
-export { auth };
+export { auth, db };
