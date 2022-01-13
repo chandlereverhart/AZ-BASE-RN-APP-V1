@@ -13,10 +13,13 @@ const LoginScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+  const [userId, setUserId] = useState();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log(user.uid);
+        setUserId(user.uid);
         navigation.replace("MyTabs");
       }
     });
@@ -29,15 +32,11 @@ const LoginScreen = (props) => {
         email,
         password
       );
-      console.log(createUser.user.uid);
-
       await Promise.all([
         db
           .collection("users")
           .doc(createUser.user.uid)
           .set({
-            // name: this.state.name.value,
-            // phone: this.state.phone.value,
             email: email,
             userId: createUser.user.uid,
             roles: {

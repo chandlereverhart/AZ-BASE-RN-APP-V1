@@ -7,16 +7,8 @@ import { useNavigation } from "@react-navigation/core";
 import styles from "./styles";
 
 const LogBook = (props) => {
-  useEffect(() => {
-    _getLogBook();
-  }, []);
-  const [tab, setTab] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [label, setLabel] = useState([]);
   const [logBook, setLogBook] = useState([]);
-  // Redux
-
-  useEffect(() => {}, [tab]);
 
   useEffect(() => {
     _getLogBook();
@@ -25,19 +17,23 @@ const LogBook = (props) => {
   async function _getLogBook() {
     setLoading(true);
     try {
-      const response = await db
-        .collection("users")
-        .where("uid", "==", "rdrz9DnQWwUpg9iXgn0HOBmbSxA2")
-        .get();
-
-      console.log("HERE", response);
-
-      setLogBook(response);
+      const user = auth.currentUser;
+      if (user) {
+        const snapshot = await db
+          .collection("users")
+          .doc(user.uid)
+          .collection("logBook")
+          // .where("userId", "==", user.uid)
+          .get();
+        const response = snapshot.docs.map((doc) => doc.data());
+        setLogBook(response);
+      }
     } catch (error) {
       console.log(error);
     }
     setLoading(false);
   }
+  console.log("LOGBOOK", logBook);
 
   const navigation = useNavigation();
 
@@ -48,9 +44,7 @@ const LogBook = (props) => {
   };
 
   const openForm = () => {
-    auth.signOut().then(() => {
-      navigation.replace("LogBookForm");
-    });
+    navigation.replace("LogBookForm");
   };
 
   return (
@@ -58,24 +52,34 @@ const LogBook = (props) => {
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
         <Text style={styles.buttonText}>Sign Out</Text>
       </TouchableOpacity>
-      <View style={styles.pageContent}>
-        <View style={styles.saveBtn}>
-          <Button
-            title="Add a Jump"
-            color="white"
-            accessibilityLabel="Learn more about this purple button"
-            onPress={openForm}
-          />
-        </View>
+      <View style={styles.saveBtn}>
+        <Button
+          title="Add a Jump"
+          color="white"
+          accessibilityLabel="Learn more about this purple button"
+          onPress={openForm}
+        />
       </View>
 
       <View style={styles.bottomHalf}>
         <View style={styles.totalView}>
-          <Text style={styles.totalText}>Total Jumps: {}</Text>
+          <Text style={styles.totalText}>Total Jumps: {logBook.length}</Text>
         </View>
-        <Card style={styles.card}>
-          <Text style={styles.cardText}>Jump #{}</Text>
-        </Card>
+        {logBook.map((option, index) => {
+          if (option) {
+            return (
+              <Card style={styles.card}>
+                <Text style={styles.cardText}>Jump #{index + 1}</Text>
+                {/* <Text style={styles.cardText}>{option.values.exitName}</Text> */}
+                {/* <Text style={styles.cardText}>{option.values.exitNumber}</Text> */}
+                {/* <Text style={styles.cardText}>
+                  {option.values.otherDetails}
+                </Text> */}
+              </Card>
+            );
+          }
+          return null;
+        })}
       </View>
     </>
   );

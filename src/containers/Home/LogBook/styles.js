@@ -56,9 +56,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   saveBtn: {
-    backgroundColor: "grey",
+    backgroundColor: "black",
     borderRadius: 5,
     width: "50%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   bottomHalf: {
     width: "100%",
