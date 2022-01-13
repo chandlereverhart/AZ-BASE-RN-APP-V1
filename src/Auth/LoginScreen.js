@@ -8,7 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { auth } from "../../Firebase/firebase";
+import { auth, db } from "../../Firebase/firebase";
 const LoginScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,17 +23,34 @@ const LoginScreen = (props) => {
     return unsubscribe;
   }, []);
 
-  const handleSignup = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials;
-        console.log("Registered with:", user.email);
-        alert("Success! Registered with:", user.email);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
+  const handleSignup = async () => {
+    try {
+      const createUser = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      console.log(createUser.user.uid);
+
+      await Promise.all([
+        db
+          .collection("users")
+          .doc(createUser.user.uid)
+          .set({
+            // name: this.state.name.value,
+            // phone: this.state.phone.value,
+            email: email,
+            userId: createUser.user.uid,
+            roles: {
+              appUser: true,
+              clientAdmin: false,
+              superAdmin: false,
+            },
+          }),
+      ]);
+    } catch (err) {
+      alert(err.message);
+      console.log(err.message);
+    }
   };
   const handleLogin = () => {
     auth.signInWithEmailAndPassword(email, password).then((userCredentials) => {

@@ -38,6 +38,7 @@ const LogBook = (props) => {
     }
     setLoading(false);
   }
+
   const navigation = useNavigation();
 
   const handleSignOut = () => {
@@ -51,19 +52,7 @@ const LogBook = (props) => {
       navigation.replace("LogBookForm");
     });
   };
-  // const getLogBook = () => {
-  //   console.log("FIRED");
-  //   let jumpsArr = [];
-  //   const logRef = db
-  //     .collection("users")
-  //     .doc("Q8M40JJ8TCx0jlPDqRzk")
-  //     .collection("logBook")
-  //     .doc("4ehSpCmv90Ydhx40UL0O");
 
-  //   jumpsArr.push(logRef);
-  //   console.log(jumpsArr);
-  //   return jumpsArr;
-  // };
   return (
     <>
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
