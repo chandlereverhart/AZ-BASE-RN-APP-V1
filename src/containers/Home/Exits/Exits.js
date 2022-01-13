@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { auth } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
+
 const Exits = (props) => {
   const navigation = useNavigation();
   const handleSignOut = () => {
@@ -58,7 +59,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: "3%",
     paddingTop: "10%",
     paddingBottom: "10%",
-
     backgroundColor: "white",
     height: "100%",
     width: "100%",
@@ -91,5 +91,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     width: "100%",
+    borderColor: "#b0b0b0",
+    borderWidth: 1,
   },
 });

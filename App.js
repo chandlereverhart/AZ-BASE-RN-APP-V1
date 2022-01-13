@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { useNavigation } from "@react-navigation/core";
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 
 import { StyleSheet, Image } from "react-native";
 //containers
@@ -103,74 +104,86 @@ function LogoTitle() {
   );
 }
 
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#f1c40f",
+    secondary: "#3498db",
+  },
+};
+
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={(navigation) => ({
-          // headerTitle: "A-Z BASE",
+    <PaperProvider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={(navigation) => ({
+            // headerTitle: "A-Z BASE",
 
-          headerTitleAlign: "center",
-          headerBackTitle: "Back it up",
-          headerTruncatedBackTitle: null,
-          headerStyle: {
-            height: 600,
-          },
-        })}
-      >
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={LoginScreen}
-        />
+            headerTitleAlign: "center",
+            headerBackTitle: "Back it up",
+            headerTruncatedBackTitle: null,
+            headerStyle: {
+              height: 600,
+            },
+          })}
+        >
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={LoginScreen}
+          />
 
-        <Stack.Screen
-          name="MyTabs"
-          component={MyTabs}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="Exits"
-          component={Exits}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="ExitDetails"
-          component={ExitDetails}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="LogBook"
-          component={LogBook}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="LogBookDetails"
-          component={LogBookDetails}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="LogBookForm"
-          component={LogBookForm}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="News"
-          component={News}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="Events"
-          component={Events}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="Header"
-          component={Header}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen
+            name="MyTabs"
+            component={MyTabs}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="Exits"
+            component={Exits}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="ExitDetails"
+            component={ExitDetails}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="LogBook"
+            component={LogBook}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="LogBookDetails"
+            component={LogBookDetails}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="LogBookForm"
+            component={LogBookForm}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="News"
+            component={News}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="Events"
+            component={Events}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="Header"
+            component={Header}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
 
