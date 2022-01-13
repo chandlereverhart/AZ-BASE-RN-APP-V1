@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Button } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { auth, db } from "../../../../Firebase/firebase";
@@ -45,7 +45,7 @@ const LogBookDetails = (props) => {
           <View style={styles.jumpView}>
             <Text style={styles.jumpText}>#{jump.jumpNumber}</Text>
           </View>
-          <View style={styles.totalView}>
+          <View style={styles.detailsView}>
             <View style={styles.dividerView}>
               <Divider>
                 <Text>Divider</Text>
@@ -91,34 +91,17 @@ const styles = StyleSheet.create({
     paddingTop: "10%",
     paddingBottom: "10%",
   },
-
-  text: {
-    marginVertical: 10,
-    fontWeight: "600",
-    fontSize: 16,
-    fontWeight: "300",
-  },
-  divider: {
-    marginVertical: 10,
-  },
   dividerView: {
     width: 200,
   },
-  logView: {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    height: "100%",
-  },
-  totalView: {
+  detailsView: {
     marginTop: 50,
     alignItems: "center",
   },
-
   jumpText: {
     fontSize: 30,
     fontWeight: "300",
-    opacity: 0.3,
+    opacity: 0.5,
   },
   totalText: {
     fontSize: 20,
@@ -131,16 +114,15 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontWeight: "200",
   },
-
+  buttonView: {
+    paddingVertical: 30,
+  },
   deleteButton: {
     backgroundColor: "black",
     borderRadius: 5,
     width: "50%",
     justifyContent: "center",
     alignItems: "center",
-  },
-  buttonView: {
-    paddingVertical: 30,
   },
   card: {
     width: "90%",
@@ -152,9 +134,5 @@ const styles = StyleSheet.create({
     borderColor: "#b0b0b0",
     borderWidth: 1,
     marginBottom: 5,
-  },
-  cardText: {
-    fontSize: 16,
-    opacity: 0.9,
   },
 });
