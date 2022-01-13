@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     paddingTop: "10%",
     paddingHorizontal: "5%",
 
-    backgroundColor: "lightgrey",
+    backgroundColor: "white",
     height: "100%",
     width: "100%",
     alignItems: "center",

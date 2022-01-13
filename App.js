@@ -7,6 +7,7 @@ import LoginScreen from "./src/Auth/LoginScreen";
 import Exits from "./src/containers/Home/Exits/Exits";
 import ExitDetails from "./src/containers/Home/ExitDetails/ExitDetails";
 import LogBook from "./src/containers/Home/LogBook";
+import LogBookDetails from "./src/containers/Home/LogBookDetails";
 import LogBookForm from "./src/components/Forms/LogBookForm";
 import News from "./src/containers/Home/News";
 import Events from "./src/containers/Home/Events";
@@ -141,6 +142,11 @@ export default function App() {
         <Stack.Screen
           name="LogBook"
           component={LogBook}
+          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+        />
+        <Stack.Screen
+          name="LogBookDetails"
+          component={LogBookDetails}
           options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
         />
         <Stack.Screen

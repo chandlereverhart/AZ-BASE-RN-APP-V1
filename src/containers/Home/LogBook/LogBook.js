@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/core";
 
 import styles from "./styles";
 
-const LogBook = () => {
+const LogBook = (props) => {
   const [loading, setLoading] = useState(true);
   const [logBook, setLogBook] = useState([]);
 
@@ -40,6 +40,9 @@ const LogBook = () => {
   const openForm = () => {
     navigation.replace("LogBookForm");
   };
+  const handleGoBack = () => {
+    navigation.replace("MyTabs");
+  };
 
   return (
     <>
@@ -54,15 +57,28 @@ const LogBook = () => {
             />
           </View>
         </View>
+        <Button
+          title="Go Back"
+          accessibilityLabel="Learn more about this purple button"
+          onPress={handleGoBack}
+        />
         <View style={styles.totalView}>
           <Text style={styles.totalText}>Total Jumps: {logBook.length}</Text>
         </View>
         {logBook.map((option, index) => {
           if (option) {
             return (
-              <Card style={styles.card}>
+              <Card
+                style={styles.card}
+                key={index}
+                values={option}
+                onPress={() =>
+                  props.navigation.navigate("LogBookDetails", {
+                    option,
+                  })
+                }
+              >
                 <Text style={styles.cardText}>Jump #{index + 1}</Text>
-                {/* <Text style={styles.cardText}>{option.values.exitName}</Text> */}
               </Card>
             );
           }
