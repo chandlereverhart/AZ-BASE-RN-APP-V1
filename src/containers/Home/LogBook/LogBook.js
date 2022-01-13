@@ -23,7 +23,6 @@ const LogBook = (props) => {
           .collection("users")
           .doc(user.uid)
           .collection("logBook")
-          // .where("userId", "==", user.uid)
           .get();
         const response = snapshot.docs.map((doc) => doc.data());
         setLogBook(response);
@@ -33,7 +32,6 @@ const LogBook = (props) => {
     }
     setLoading(false);
   }
-  console.log("LOGBOOK", logBook);
 
   const navigation = useNavigation();
 
@@ -44,6 +42,7 @@ const LogBook = (props) => {
     navigation.replace("MyTabs");
   };
 
+  console.log("LOGBOOK", logBook);
   return (
     <>
       <View style={styles.bottomHalf}>
