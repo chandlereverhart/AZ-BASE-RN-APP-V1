@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, TouchableOpacity } from "react-native";
+import { View, Text, Button } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 
 import styles from "./styles";
 
-const LogBook = (props) => {
+const LogBook = () => {
   const [loading, setLoading] = useState(true);
   const [logBook, setLogBook] = useState([]);
 
@@ -37,31 +37,23 @@ const LogBook = (props) => {
 
   const navigation = useNavigation();
 
-  const handleSignOut = () => {
-    auth.signOut().then(() => {
-      navigation.replace("Login");
-    });
-  };
-
   const openForm = () => {
     navigation.replace("LogBookForm");
   };
 
   return (
     <>
-      <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-        <Text style={styles.buttonText}>Sign Out</Text>
-      </TouchableOpacity>
-      <View style={styles.saveBtn}>
-        <Button
-          title="Add a Jump"
-          color="white"
-          accessibilityLabel="Learn more about this purple button"
-          onPress={openForm}
-        />
-      </View>
-
       <View style={styles.bottomHalf}>
+        <View style={styles.buttons}>
+          <View style={styles.saveBtn}>
+            <Button
+              title="Add a Jump"
+              color="white"
+              accessibilityLabel="Learn more about this purple button"
+              onPress={openForm}
+            />
+          </View>
+        </View>
         <View style={styles.totalView}>
           <Text style={styles.totalText}>Total Jumps: {logBook.length}</Text>
         </View>
@@ -71,10 +63,6 @@ const LogBook = (props) => {
               <Card style={styles.card}>
                 <Text style={styles.cardText}>Jump #{index + 1}</Text>
                 {/* <Text style={styles.cardText}>{option.values.exitName}</Text> */}
-                {/* <Text style={styles.cardText}>{option.values.exitNumber}</Text> */}
-                {/* <Text style={styles.cardText}>
-                  {option.values.otherDetails}
-                </Text> */}
               </Card>
             );
           }

@@ -62,6 +62,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   bottomHalf: {
     width: "100%",
     alignItems: "center",
