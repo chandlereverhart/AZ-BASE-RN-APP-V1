@@ -1,18 +1,44 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  FlatList,
+  StyleSheet,
+  Text,
+  Button,
+  RefreshControl,
+} from "react-native";
 import { Card } from "react-native-ui-lib";
+
 import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 
-import { StyleSheet } from "react-native";
-
 const LogBook = (props) => {
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [logBook, setLogBook] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     _getLogBook();
+    setLoading(false);
   }, []);
+
+  async function handleListRefresh() {
+    setRefreshing(true);
+    await _getLogBook();
+    setRefreshing(false);
+  }
+  // async function handleEndReached() {
+  //   if (logBook.length === 0 || logBook.length < 6 || loading) {
+  //     return;
+  //   }
+  //   try {
+  //     await _getNextLogs();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   async function _getLogBook() {
     setLoading(true);
@@ -24,7 +50,6 @@ const LogBook = (props) => {
           .doc(user.uid)
           .collection("logBook")
           .orderBy("jumpNumber", "desc")
-
           .get();
         const response = snapshot.docs.map((doc) => doc.data());
         setLogBook(response);
@@ -43,11 +68,56 @@ const LogBook = (props) => {
   const handleGoBack = () => {
     navigation.replace("MyTabs");
   };
+  const Item = ({ item, index }) => (
+    console.log("ITEM", item),
+    (
+      <Card
+        style={styles.card}
+        key={index}
+        values={item}
+        onPress={() =>
+          props.navigation.navigate("LogBookDetails", {
+            jump: { item },
+          })
+        }
+      >
+        <Text style={styles.cardText}>Jump #{item.jumpNumber}</Text>
+      </Card>
+    )
+  );
+  const renderItem = ({ item }) => {
+    return <Item item={item} />;
+  };
 
   console.log("LOGBOOK", logBook);
   return (
     <>
       <View style={styles.bottomHalf}>
+        <Button
+          title="Go Back"
+          accessibilityLabel="Learn more about this purple button"
+          onPress={handleGoBack}
+        />
+        <View style={styles.totalView}>
+          <Text style={styles.totalText}>Total Jumps: {logBook.length}</Text>
+        </View>
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={logBook}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            style={styles.flatList}
+            contentContainerStyle={styles.flatlist}
+            // onEndReached={handleEndReached}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={handleListRefresh}
+              />
+            }
+          />
+        </SafeAreaView>
+
         <View style={styles.buttons}>
           <View style={styles.saveBtn}>
             <Button
@@ -58,33 +128,6 @@ const LogBook = (props) => {
             />
           </View>
         </View>
-        <Button
-          title="Go Back"
-          accessibilityLabel="Learn more about this purple button"
-          onPress={handleGoBack}
-        />
-        <View style={styles.totalView}>
-          <Text style={styles.totalText}>Total Jumps: {logBook.length}</Text>
-        </View>
-        {logBook.map((option, index) => {
-          if (option) {
-            return (
-              <Card
-                style={styles.card}
-                key={index}
-                values={option}
-                onPress={() =>
-                  props.navigation.navigate("LogBookDetails", {
-                    option,
-                  })
-                }
-              >
-                <Text style={styles.cardText}>Jump #{option.jumpNumber}</Text>
-              </Card>
-            );
-          }
-          return null;
-        })}
       </View>
     </>
   );
@@ -93,6 +136,10 @@ export default LogBook;
 
 const styles = StyleSheet.create({
   root: {},
+  container: {
+    flex: 1,
+    paddingVertical: 10,
+  },
   pageContent: {
     display: "flex",
     flex: 1,
@@ -104,20 +151,11 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
   },
-  text: {
-    marginVertical: 10,
-    fontWeight: "600",
-    fontSize: 16,
-    fontWeight: "300",
-  },
-  logView: {
-    display: "flex",
-    flexDirection: "column",
+  flatList: {
     width: "100%",
-    height: "100%",
+    paddingHorizontal: 16,
   },
   totalView: {
-    marginTop: 50,
     alignItems: "center",
   },
   totalText: {
@@ -125,26 +163,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontWeight: "600",
     fontWeight: "300",
-  },
-  input: {
-    paddingHorizontal: 10,
-    width: "100%",
-    height: 30,
-    backgroundColor: "white",
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "lightgrey",
-    marginBottom: 10,
-  },
-  detailsInput: {
-    paddingHorizontal: 10,
-    width: "100%",
-    height: 50,
-    backgroundColor: "white",
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "lightgrey",
-    marginBottom: 10,
   },
   saveBtn: {
     backgroundColor: "black",
@@ -160,13 +178,14 @@ const styles = StyleSheet.create({
   },
   bottomHalf: {
     width: "100%",
+    minHeight: "100%",
     alignItems: "center",
     backgroundColor: "white",
-    paddingVertical: 20,
+    paddingBottom: 70,
   },
   card: {
-    width: "90%",
     height: 40,
+    minWidth: "100%",
     alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: 8,

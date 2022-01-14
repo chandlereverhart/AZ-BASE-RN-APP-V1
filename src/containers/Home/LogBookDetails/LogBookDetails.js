@@ -8,7 +8,8 @@ import { Divider, Text, withTheme } from "react-native-paper";
 
 const LogBookDetails = (props) => {
   const { colors } = props.theme;
-  const jump = props.route?.params?.option ?? {};
+  const jump = props.route?.params?.jump?.item ?? {};
+
   const navigation = useNavigation();
 
   const handleDelete = () => {
@@ -37,6 +38,7 @@ const LogBookDetails = (props) => {
       console.log(err.message);
     }
   };
+  //   console.log("JUMP", jump);
 
   return (
     <>

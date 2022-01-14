@@ -40,7 +40,7 @@ const LogBook = (props) => {
             jumpNumber: Number(values.jumpNumber),
             id: uuid(),
           }),
-          navigation.replace("LogBook");
+          navigation.navigate("LogBook");
       }
     } catch (err) {
       alert(err.message);
@@ -48,7 +48,7 @@ const LogBook = (props) => {
     }
   };
   const handleGoBack = () => {
-    navigation.replace("LogBook");
+    navigation.navigate("LogBook");
   };
 
   return (

@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import {View} from 'react-native';
-import SkeletonContent from 'react-native-skeleton-content-nonexpo';
+import { View } from "react-native";
+import SkeletonContent from "react-native-skeleton-content-nonexpo";
 
-import styles from './styles';
+import styles from "./styles";
 
 const EventsListItem = () => {
   return (
@@ -14,17 +14,17 @@ const EventsListItem = () => {
         isLoading={true}
         layout={[
           {
-            width: '20%',
-            flexDirection: 'column',
+            width: "20%",
+            flexDirection: "column",
             children: [
               {
-                width: '70%',
+                width: "70%",
                 height: 15,
                 borderRadius: 6,
                 marginBottom: 10,
               },
               {
-                width: '60%',
+                width: "60%",
                 height: 15,
                 borderRadius: 6,
               },
@@ -36,17 +36,17 @@ const EventsListItem = () => {
           },
           {
             marginLeft: 16,
-            width: '40%',
-            flexDirection: 'column',
+            width: "40%",
+            flexDirection: "column",
             children: [
               {
-                width: '100%',
+                width: "100%",
                 height: 15,
                 borderRadius: 6,
                 marginBottom: 10,
               },
               {
-                width: '60%',
+                width: "60%",
                 height: 15,
                 borderRadius: 6,
               },
