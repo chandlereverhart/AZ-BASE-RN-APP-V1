@@ -120,14 +120,10 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={(navigation) => ({
-            // headerTitle: "A-Z BASE",
-
             headerTitleAlign: "center",
-            headerBackTitle: "Back it up",
+            headerBackTitle: "Back",
             headerTruncatedBackTitle: null,
-            headerStyle: {
-              height: 600,
-            },
+            headerStyle: { color: "black" },
           })}
         >
           <Stack.Screen

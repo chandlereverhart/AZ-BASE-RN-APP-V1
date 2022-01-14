@@ -23,6 +23,8 @@ const LogBook = (props) => {
           .collection("users")
           .doc(user.uid)
           .collection("logBook")
+          .orderBy("jumpNumber", "desc")
+
           .get();
         const response = snapshot.docs.map((doc) => doc.data());
         setLogBook(response);
@@ -77,7 +79,7 @@ const LogBook = (props) => {
                   })
                 }
               >
-                <Text style={styles.cardText}>Jump #{index + 1}</Text>
+                <Text style={styles.cardText}>Jump #{option.jumpNumber}</Text>
               </Card>
             );
           }

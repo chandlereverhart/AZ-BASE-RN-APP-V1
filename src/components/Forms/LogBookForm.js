@@ -8,6 +8,7 @@ import {
   View,
   Text,
   TextInput,
+  Input,
   Button,
   TouchableOpacity,
   StyleSheet,
@@ -36,6 +37,7 @@ const LogBook = (props) => {
           .collection("logBook")
           .add({
             ...values,
+            jumpNumber: Number(values.jumpNumber),
             id: uuid(),
           }),
           navigation.replace("LogBook");
@@ -64,9 +66,11 @@ const LogBook = (props) => {
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View style={styles.logView}>
             <TextInput
+              type="number"
               onChangeText={handleChange("jumpNumber")}
               onBlur={handleBlur("jumpNumber")}
               value={values.jumpNumber}
+              type="number"
               placeholder="Jump #"
               style={styles.input}
             />
