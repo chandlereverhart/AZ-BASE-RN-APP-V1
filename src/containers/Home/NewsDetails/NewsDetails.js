@@ -20,7 +20,7 @@ const NewsDetails = (props) => {
     try {
       const user = auth.currentUser;
       if (user) {
-        const newsObj = db.collection("newss").where("id", "==", news.id);
+        const newsObj = db.collection("news").where("id", "==", news.id);
         newsObj.get().then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
             doc.ref.delete();

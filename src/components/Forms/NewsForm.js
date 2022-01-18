@@ -38,9 +38,6 @@ const NewsForm = (props) => {
       console.log(err.message);
     }
   };
-  const handleGoBack = () => {
-    navigation.navigate("News");
-  };
 
   return (
     <>
@@ -80,11 +77,6 @@ const NewsForm = (props) => {
             <Button
               onPress={handleSubmit}
               title="Submit"
-              style={styles.saveBtn}
-            />
-            <Button
-              onPress={handleGoBack}
-              title="Go Back"
               style={styles.saveBtn}
             />
           </View>

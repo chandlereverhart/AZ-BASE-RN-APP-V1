@@ -43,9 +43,6 @@ const ExitsForm = (props) => {
       console.log(err.message);
     }
   };
-  const handleGoBack = () => {
-    navigation.navigate("Exits");
-  };
 
   return (
     <>
@@ -100,11 +97,6 @@ const ExitsForm = (props) => {
             <Button
               onPress={handleSubmit}
               title="Submit"
-              style={styles.saveBtn}
-            />
-            <Button
-              onPress={handleGoBack}
-              title="Go Back"
               style={styles.saveBtn}
             />
           </View>

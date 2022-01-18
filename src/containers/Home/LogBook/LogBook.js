@@ -53,10 +53,10 @@ const LogBook = (props) => {
   const navigation = useNavigation();
 
   const openForm = () => {
-    navigation.replace("LogBookForm");
+    navigation.navigate("LogBookForm");
   };
   const handleGoBack = () => {
-    navigation.replace("MyTabs");
+    navigation.navigate("MyTabs");
   };
   const Item = ({ item, index }) => (
     console.log("ITEM", item),
@@ -88,9 +88,7 @@ const LogBook = (props) => {
           accessibilityLabel="Learn more about this purple button"
           onPress={handleGoBack}
         />
-        <View style={styles.totalView}>
-          <Text style={styles.totalText}>Total Jumps: {logBook.length}</Text>
-        </View>
+
         <SafeAreaView style={styles.container}>
           <FlatList
             data={logBook}

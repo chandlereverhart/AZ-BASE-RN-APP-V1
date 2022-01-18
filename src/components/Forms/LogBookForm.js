@@ -44,9 +44,6 @@ const LogBook = (props) => {
       console.log(err.message);
     }
   };
-  const handleGoBack = () => {
-    navigation.navigate("LogBook");
-  };
 
   return (
     <>
@@ -95,11 +92,6 @@ const LogBook = (props) => {
             <Button
               onPress={handleSubmit}
               title="Submit"
-              style={styles.saveBtn}
-            />
-            <Button
-              onPress={handleGoBack}
-              title="Go Back"
               style={styles.saveBtn}
             />
           </View>
