@@ -29,16 +29,6 @@ const LogBook = (props) => {
     await _getLogBook();
     setRefreshing(false);
   }
-  // async function handleEndReached() {
-  //   if (logBook.length === 0 || logBook.length < 6 || loading) {
-  //     return;
-  //   }
-  //   try {
-  //     await _getNextLogs();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   async function _getLogBook() {
     setLoading(true);
@@ -89,7 +79,7 @@ const LogBook = (props) => {
     return <Item item={item} />;
   };
 
-  console.log("LOGBOOK", logBook);
+  // console.log("LOGBOOK", logBook);
   return (
     <>
       <View style={styles.bottomHalf}>

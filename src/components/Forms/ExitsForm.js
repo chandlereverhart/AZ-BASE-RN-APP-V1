@@ -14,7 +14,7 @@ import { auth, db } from "../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 
-const LogBook = (props) => {
+const ExitsForm = (props) => {
   const navigation = useNavigation();
 
   const handleSignOut = () => {
@@ -31,13 +31,12 @@ const LogBook = (props) => {
         db
           .collection("users")
           .doc(user.uid)
-          .collection("logBook")
+          .collection("exits")
           .add({
             ...values,
-            jumpNumber: Number(values.jumpNumber),
             id: uuid(),
           }),
-          navigation.navigate("LogBook");
+          navigation.navigate("Exits");
       }
     } catch (err) {
       alert(err.message);
@@ -45,39 +44,24 @@ const LogBook = (props) => {
     }
   };
   const handleGoBack = () => {
-    navigation.navigate("LogBook");
+    navigation.navigate("Exits");
   };
 
   return (
     <>
       <Formik
         initialValues={{
-          jumpNumber: "",
-          exitNumber: "",
           exitName: "",
-          otherDetails: "",
+          impactHeight: "",
+          overallHeight: "",
+          coordinates: "",
+          description: "",
           id: "",
         }}
         onSubmit={(values) => handleSubmit(values)}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View style={styles.logView}>
-            <TextInput
-              type="number"
-              onChangeText={handleChange("jumpNumber")}
-              onBlur={handleBlur("jumpNumber")}
-              value={values.jumpNumber}
-              type="number"
-              placeholder="Jump #"
-              style={styles.input}
-            />
-            <TextInput
-              onChangeText={handleChange("exitNumber")}
-              onBlur={handleBlur("exitNumber")}
-              value={values.exitNumber}
-              placeholder="Exit #"
-              style={styles.input}
-            />
             <TextInput
               onChangeText={handleChange("exitName")}
               onBlur={handleBlur("exitName")}
@@ -86,10 +70,31 @@ const LogBook = (props) => {
               style={styles.input}
             />
             <TextInput
-              onChangeText={handleChange("otherDetails")}
-              onBlur={handleBlur("otherDetails")}
-              value={values.otherDetails}
-              placeholder="Other Details..."
+              onChangeText={handleChange("impactHeight")}
+              onBlur={handleBlur("impactHeight")}
+              value={values.impactHeight}
+              placeholder="Height to Impact"
+              style={styles.input}
+            />
+            <TextInput
+              onChangeText={handleChange("overallHeight")}
+              onBlur={handleBlur("overallHeight")}
+              value={values.overallHeight}
+              placeholder="Overall Height"
+              style={styles.input}
+            />
+            <TextInput
+              onChangeText={handleChange("coordinates")}
+              onBlur={handleBlur("coordinates")}
+              value={values.coordinates}
+              placeholder="Latitude Longitude"
+              style={styles.input}
+            />
+            <TextInput
+              onChangeText={handleChange("description")}
+              onBlur={handleBlur("description")}
+              value={values.description}
+              placeholder="Description"
               style={styles.input}
             />
             <Button
@@ -111,7 +116,7 @@ const LogBook = (props) => {
     </>
   );
 };
-export default LogBook;
+export default ExitsForm;
 
 const styles = StyleSheet.create({
   logView: {

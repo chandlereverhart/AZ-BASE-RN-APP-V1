@@ -19,6 +19,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // icons
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import ExitsForm from "./src/components/Forms/ExitsForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -140,6 +141,11 @@ export default function App() {
           <Stack.Screen
             name="Exits"
             component={Exits}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="ExitsForm"
+            component={ExitsForm}
             options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
           />
           <Stack.Screen
