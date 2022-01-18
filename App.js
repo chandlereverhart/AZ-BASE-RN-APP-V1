@@ -11,6 +11,7 @@ import LogBook from "./src/containers/Home/LogBook";
 import LogBookDetails from "./src/containers/Home/LogBookDetails";
 import LogBookForm from "./src/components/Forms/LogBookForm";
 import News from "./src/containers/Home/News";
+import NewsDetails from "./src/containers/Home/NewsDetails/NewsDetails";
 import Events from "./src/containers/Home/Events";
 import EventDetails from "./src/containers/Home/EventDetails/EventDetails";
 
@@ -23,6 +24,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ExitsForm from "./src/components/Forms/ExitsForm";
 import EventsForm from "./src/components/Forms/EventsForm";
+import NewsForm from "./src/components/Forms/NewsForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -162,18 +164,28 @@ export default function App() {
             options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
           />
           <Stack.Screen
-            name="LogBookDetails"
-            component={LogBookDetails}
-            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-          />
-          <Stack.Screen
             name="LogBookForm"
             component={LogBookForm}
             options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
           />
           <Stack.Screen
+            name="LogBookDetails"
+            component={LogBookDetails}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
             name="News"
             component={News}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="NewsForm"
+            component={NewsForm}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="NewsDetails"
+            component={NewsDetails}
             options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
           />
           <Stack.Screen
