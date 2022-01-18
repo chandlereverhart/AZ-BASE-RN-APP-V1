@@ -37,7 +37,7 @@ const Events = (props) => {
       if (user) {
         const snapshot = await db
           .collection("events")
-          .orderBy("date", "desc")
+          .orderBy("date", "asc")
           .get();
         const response = snapshot.docs.map((doc) => doc.data());
         setEvents(response);

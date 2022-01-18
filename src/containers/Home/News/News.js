@@ -37,7 +37,7 @@ const News = (props) => {
       if (user) {
         const snapshot = await db
           .collection("news")
-          .orderBy("date", "desc")
+          .orderBy("date", "asc")
           .get();
         const response = snapshot.docs.map((doc) => doc.data());
         setNews(response);
