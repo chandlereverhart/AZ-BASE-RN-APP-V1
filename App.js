@@ -12,6 +12,8 @@ import LogBookDetails from "./src/containers/Home/LogBookDetails";
 import LogBookForm from "./src/components/Forms/LogBookForm";
 import News from "./src/containers/Home/News";
 import Events from "./src/containers/Home/Events";
+import EventDetails from "./src/containers/Home/EventDetails/EventDetails";
+
 import Header from "./src/components/Header/Header";
 // navigation utils
 import { NavigationContainer } from "@react-navigation/native";
@@ -20,6 +22,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // icons
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ExitsForm from "./src/components/Forms/ExitsForm";
+import EventsForm from "./src/components/Forms/EventsForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -176,6 +179,16 @@ export default function App() {
           <Stack.Screen
             name="Events"
             component={Events}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="EventsForm"
+            component={EventsForm}
+            options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+          />
+          <Stack.Screen
+            name="EventDetails"
+            component={EventDetails}
             options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
           />
           <Stack.Screen

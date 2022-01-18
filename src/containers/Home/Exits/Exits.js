@@ -16,27 +16,27 @@ const Exits = (props) => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [logBook, setLogBook] = useState([]);
+  const [exits, setExits] = useState([]);
 
   const handleSignOut = () => {
     auth.signOut().then(() => {
-      navigation.replace("Login");
+      navigation.navigate("Login");
     });
   };
 
   useEffect(() => {
     setLoading(true);
-    _getLogBook();
+    _getExits();
     setLoading(false);
   }, []);
 
   async function handleListRefresh() {
     setRefreshing(true);
-    await _getLogBook();
+    await _getExits();
     setRefreshing(false);
   }
 
-  async function _getLogBook() {
+  async function _getExits() {
     setLoading(true);
     try {
       const user = auth.currentUser;
@@ -48,7 +48,7 @@ const Exits = (props) => {
           .orderBy("exitName", "asc")
           .get();
         const response = snapshot.docs.map((doc) => doc.data());
-        setLogBook(response);
+        setExits(response);
       }
     } catch (error) {
       console.log(error);
@@ -57,10 +57,10 @@ const Exits = (props) => {
   }
 
   const openForm = () => {
-    navigation.replace("ExitsForm");
+    navigation.navigate("ExitsForm");
   };
   const handleGoBack = () => {
-    navigation.replace("MyTabs");
+    navigation.navigate("MyTabs");
   };
   const Item = ({ item, index }) => (
     console.log("ITEM", item),
@@ -83,14 +83,6 @@ const Exits = (props) => {
     return <Item item={item} />;
   };
 
-  const EXIT_OPTIONS = [
-    { name: "Camelback", icon: "", label: "camelback" },
-    { name: "Saguaro", icon: "", label: "saguaro" },
-    { name: "Superbowl", icon: "", label: "superbowl" },
-    { name: "SuperChicken", icon: "", label: "superChicken" },
-    { name: "The North Exit", icon: "", label: "northExit" },
-  ];
-
   return (
     <>
       <View style={styles.bottomHalf}>
@@ -99,12 +91,10 @@ const Exits = (props) => {
           accessibilityLabel="Learn more about this purple button"
           onPress={handleGoBack}
         />
-        <View style={styles.totalView}>
-          <Text style={styles.totalText}>Total Jumps: {logBook.length}</Text>
-        </View>
+
         <SafeAreaView style={styles.container}>
           <FlatList
-            data={logBook}
+            data={exits}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             style={styles.flatList}
@@ -122,7 +112,7 @@ const Exits = (props) => {
         <View style={styles.buttons}>
           <View style={styles.saveBtn}>
             <Button
-              title="Add a Jump"
+              title="Add an Exit"
               color="white"
               accessibilityLabel="Learn more about this purple button"
               onPress={openForm}

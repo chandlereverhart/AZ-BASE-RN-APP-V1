@@ -1,41 +1,200 @@
-import React, { useEffect } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import styles from "./styles";
-import { auth } from "../../../../Firebase/firebase";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Button,
+  SafeAreaView,
+  FlatList,
+  RefreshControl,
+} from "react-native";
+import { StyleSheet } from "react-native";
+import { Card } from "react-native-ui-lib";
+import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
+
 const Events = (props) => {
   const navigation = useNavigation();
-  const handleSignOut = () => {
-    auth.signOut().then(() => {
-      navigation.replace("Login");
-    });
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+    _getLogBook();
+    setLoading(false);
+  }, []);
+
+  async function handleListRefresh() {
+    setRefreshing(true);
+    await _getLogBook();
+    setRefreshing(false);
+  }
+
+  async function _getLogBook() {
+    setLoading(true);
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        const snapshot = await db
+          .collection("events")
+          .orderBy("date", "desc")
+          .get();
+        const response = snapshot.docs.map((doc) => doc.data());
+        setEvents(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  }
+
+  const openForm = () => {
+    navigation.navigate("EventsForm");
   };
+  const handleGoBack = () => {
+    navigation.navigate("MyTabs");
+  };
+  const Item = ({ item, index }) => (
+    console.log("ITEM", item),
+    (
+      <Card
+        style={styles.card}
+        key={index}
+        values={item}
+        onPress={() =>
+          props.navigation.navigate("EventDetails", {
+            event: { item },
+          })
+        }
+      >
+        <View style={styles.cardTextView}>
+          <Text style={styles.cardTextGrey}>{item.date}</Text>
+          <Text style={styles.cardText}>{item.title}</Text>
+        </View>
+      </Card>
+    )
+  );
+  const renderItem = ({ item }) => {
+    return <Item item={item} />;
+  };
+
   return (
     <>
-      <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-        <Text style={styles.buttonText}>Sign Out</Text>
-      </TouchableOpacity>
-      <View style={styles.pageContent}>
-        <View>
-          <Text style={styles.title}>Upcoming Events</Text>
-        </View>
-        <View style={styles.exitsView}>
-          <Text style={styles.text}>Event 1</Text>
-          <Text style={styles.text}>Event 2</Text>
-          <Text style={styles.text}>Event 3</Text>
-          <Text style={styles.text}>Event 4</Text>
-          <Text style={styles.text}>Event 5</Text>
-        </View>
+      <View style={styles.bottomHalf}>
+        <Button
+          title="Go Back"
+          accessibilityLabel="Learn more about this purple button"
+          onPress={handleGoBack}
+        />
 
-        <View>
-          <Text style={styles.title2}>Past Events</Text>
-        </View>
-        <View style={styles.exitsView}>
-          <Text style={styles.text}>Event 1</Text>
-          <Text style={styles.text}>Event 2</Text>
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={events}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            style={styles.flatList}
+            contentContainerStyle={styles.flatlist}
+            // onEndReached={handleEndReached}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={handleListRefresh}
+              />
+            }
+          />
+        </SafeAreaView>
+
+        <View style={styles.buttons}>
+          <View style={styles.saveBtn}>
+            <Button
+              title="Add Event"
+              color="white"
+              accessibilityLabel="Learn more about this purple button"
+              onPress={openForm}
+            />
+          </View>
         </View>
       </View>
     </>
   );
 };
 export default Events;
+
+const styles = StyleSheet.create({
+  root: {},
+  container: {
+    flex: 1,
+    paddingVertical: 10,
+  },
+  pageContent: {
+    display: "flex",
+    flex: 1,
+    paddingHorizontal: "10%",
+    paddingTop: "10%",
+    paddingBottom: "10%",
+    backgroundColor: "lightgrey",
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+  },
+  flatList: {
+    width: "100%",
+    paddingHorizontal: 16,
+  },
+  totalView: {
+    alignItems: "center",
+  },
+  totalText: {
+    fontSize: 20,
+    marginVertical: 10,
+    fontWeight: "600",
+    fontWeight: "300",
+  },
+  saveBtn: {
+    backgroundColor: "black",
+    borderRadius: 5,
+    width: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bottomHalf: {
+    width: "100%",
+    minHeight: "100%",
+    alignItems: "center",
+    backgroundColor: "white",
+    paddingBottom: 70,
+  },
+  card: {
+    flex: 1,
+    flexDirection: "row",
+    height: 60,
+    minWidth: "100%",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderRadius: 10,
+    borderColor: "#b0b0b0",
+    borderWidth: 1,
+    marginBottom: 5,
+  },
+  cardTextView: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  cardText: {
+    fontSize: 16,
+    opacity: 0.9,
+    marginHorizontal: 8,
+  },
+  cardTextGrey: {
+    fontSize: 14,
+    opacity: 0.9,
+    marginHorizontal: 8,
+    color: "grey",
+  },
+});

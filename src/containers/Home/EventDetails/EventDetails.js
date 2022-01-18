@@ -6,26 +6,22 @@ import { useNavigation } from "@react-navigation/core";
 import { StyleSheet } from "react-native";
 import { Divider, Text, withTheme } from "react-native-paper";
 
-const ExitDetails = (props) => {
+const EventDetails = (props) => {
   const { colors } = props.theme;
-  const exit = props.route?.params?.exit?.item ?? {};
+  const event = props.route?.params?.event?.item ?? {};
 
   const navigation = useNavigation();
 
   const handleDelete = () => {
-    handleDeleteExit();
+    handleDeleteevent();
   };
 
-  const handleDeleteExit = async () => {
+  const handleDeleteevent = async () => {
     try {
       const user = auth.currentUser;
       if (user) {
-        const exitObj = db
-          .collection("users")
-          .doc(user.uid)
-          .collection("exits")
-          .where("id", "==", exit.id);
-        exitObj.get().then(function (querySnapshot) {
+        const eventObj = db.collection("events").where("id", "==", event.id);
+        eventObj.get().then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
             doc.ref.delete();
           });
@@ -38,7 +34,7 @@ const ExitDetails = (props) => {
       console.log(err.message);
     }
   };
-  //   console.log("exit", exit);
+  //   console.log("event", event);
 
   return (
     <>
@@ -51,22 +47,20 @@ const ExitDetails = (props) => {
               </Divider>
             </View>
 
-            <Text style={styles.totalText}>"{exit.exitName}"</Text>
+            <Text style={styles.totalText}>{event.title}</Text>
             <View style={styles.dividerView}>
               <Divider>
                 <Text>Divider</Text>
               </Divider>
             </View>
-            <Text style={styles.otherText}>{exit.impactHeight} to impact</Text>
-            <Text style={styles.otherText}>{exit.overallHeight} overall</Text>
-            <Text style={styles.otherText}>{exit.coordinates}</Text>
-            <Text style={styles.otherText}>{exit.description}</Text>
+            <Text style={styles.otherText}>{event.date}</Text>
+            <Text style={styles.otherText}>{event.description}</Text>
           </View>
         </Card>
         <View style={styles.buttonView}>
           <View style={styles.deleteButton}>
             <Button
-              title="Delete Exit"
+              title="Delete Event"
               color="white"
               accessibilityLabel="Learn more about this purple button"
               onPress={handleDelete}
@@ -78,7 +72,7 @@ const ExitDetails = (props) => {
   );
 };
 
-export default withTheme(ExitDetails);
+export default withTheme(EventDetails);
 
 const styles = StyleSheet.create({
   pageContent: {
