@@ -15,7 +15,6 @@ import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 
 const LogBookForm = (props) => {
-  // console.log("PROPS=>", props);
   const jump = props.route?.params?.jump?.jump ?? {};
   const navigation = useNavigation();
 
@@ -29,7 +28,6 @@ const LogBookForm = (props) => {
     try {
       const user = auth.currentUser;
       const docId = values.id;
-      console.log("VALUES ID =>", values.id);
       if (values.id !== "") {
         const jumpObj = db
           .collection("users")
@@ -62,15 +60,12 @@ const LogBookForm = (props) => {
       console.log(err.message);
     }
   };
-  // ? await db.collection(collectionId).doc(docId).update(newValues)
-  // : await db.collection(collectionId).update(newValues);
 
   return (
     <>
       <Formik
         initialValues={{
           jumpNumber: jump?.jumpNumber?.toString() || "",
-          exitNumber: jump?.exitNumber || "",
           exitName: jump?.exitName || "",
           otherDetails: jump?.otherDetails || "",
           id: jump?.id || "",
@@ -88,13 +83,7 @@ const LogBookForm = (props) => {
               placeholder="Jump #"
               style={styles.input}
             />
-            <TextInput
-              onChangeText={handleChange("exitNumber")}
-              onBlur={handleBlur("exitNumber")}
-              value={values.exitNumber}
-              placeholder="Exit #"
-              style={styles.input}
-            />
+
             <TextInput
               onChangeText={handleChange("exitName")}
               onBlur={handleBlur("exitName")}

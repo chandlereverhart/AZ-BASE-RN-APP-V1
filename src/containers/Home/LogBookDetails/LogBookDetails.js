@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Button } from "react-native";
+import { View, Button, Image } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
@@ -12,14 +12,11 @@ const LogBookDetails = (props) => {
 
   const navigation = useNavigation();
 
-  const handleEdit = () => {
-    // handleDeleteJump();
-  };
   const handleDelete = () => {
-    handleDeleteJump();
+    _handleDelete();
   };
 
-  const handleDeleteJump = async () => {
+  const _handleDelete = async () => {
     try {
       const user = auth.currentUser;
       if (user) {
@@ -66,6 +63,12 @@ const LogBookDetails = (props) => {
 
             <Text style={styles.otherText}>{jump.otherDetails}</Text>
           </View>
+          <View style={styles.logoView}>
+            <Image
+              style={{ width: 220, height: 60 }}
+              source={require("../../../../src/assets/camelback.png")}
+            />
+          </View>
         </Card>
         <View style={styles.buttonView}>
           <View style={styles.editButton}>
@@ -104,6 +107,11 @@ const styles = StyleSheet.create({
   },
   dividerView: {
     width: 200,
+  },
+  logoView: {
+    marginTop: 100,
+    width: "100%",
+    opacity: 0.07,
   },
   detailsView: {
     marginTop: 50,
