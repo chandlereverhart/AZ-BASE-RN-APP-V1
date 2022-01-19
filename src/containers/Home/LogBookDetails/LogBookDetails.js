@@ -12,6 +12,9 @@ const LogBookDetails = (props) => {
 
   const navigation = useNavigation();
 
+  const handleEdit = () => {
+    // handleDeleteJump();
+  };
   const handleDelete = () => {
     handleDeleteJump();
   };
@@ -65,13 +68,19 @@ const LogBookDetails = (props) => {
           </View>
         </Card>
         <View style={styles.buttonView}>
-          <View style={styles.deleteButton}>
+          <View style={styles.editButton}>
             <Button
-              title="Delete Jump"
-              color="white"
-              accessibilityLabel="Learn more about this purple button"
-              onPress={handleDelete}
+              title="Edit "
+              color="black"
+              onPress={() =>
+                props.navigation.navigate("LogBookForm", {
+                  jump: { jump },
+                })
+              }
             />
+          </View>
+          <View style={styles.deleteButton}>
+            <Button title="Delete Jump" color="white" onPress={handleDelete} />
           </View>
         </View>
       </View>
@@ -118,13 +127,23 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     paddingVertical: 30,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  editButton: {
+    backgroundColor: "white",
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginHorizontal: 5,
+    width: "50%",
   },
   deleteButton: {
     backgroundColor: "black",
     borderRadius: 5,
+    marginHorizontal: 5,
     width: "50%",
-    justifyContent: "center",
-    alignItems: "center",
   },
   card: {
     width: "90%",

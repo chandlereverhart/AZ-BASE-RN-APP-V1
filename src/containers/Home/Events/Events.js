@@ -51,9 +51,7 @@ const Events = (props) => {
   const openForm = () => {
     navigation.navigate("EventsForm");
   };
-  const handleGoBack = () => {
-    navigation.navigate("MyTabs");
-  };
+
   const Item = ({ item, index }) => (
     console.log("ITEM", item),
     (
@@ -81,12 +79,6 @@ const Events = (props) => {
   return (
     <>
       <View style={styles.bottomHalf}>
-        <Button
-          title="Go Back"
-          accessibilityLabel="Learn more about this purple button"
-          onPress={handleGoBack}
-        />
-
         <SafeAreaView style={styles.container}>
           <FlatList
             data={events}

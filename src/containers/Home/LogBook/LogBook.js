@@ -55,25 +55,21 @@ const LogBook = (props) => {
   const openForm = () => {
     navigation.navigate("LogBookForm");
   };
-  const handleGoBack = () => {
-    navigation.navigate("MyTabs");
-  };
+
   const Item = ({ item, index }) => (
-    console.log("ITEM", item),
-    (
-      <Card
-        style={styles.card}
-        key={index}
-        values={item}
-        onPress={() =>
-          props.navigation.navigate("LogBookDetails", {
-            jump: { item },
-          })
-        }
-      >
-        <Text style={styles.cardText}>Jump #{item.jumpNumber}</Text>
-      </Card>
-    )
+    // console.log("ITEM", item),
+    <Card
+      style={styles.card}
+      key={index}
+      values={item}
+      onPress={() =>
+        props.navigation.navigate("LogBookDetails", {
+          jump: { item },
+        })
+      }
+    >
+      <Text style={styles.cardText}>Jump #{item.jumpNumber}</Text>
+    </Card>
   );
   const renderItem = ({ item }) => {
     return <Item item={item} />;
@@ -83,12 +79,6 @@ const LogBook = (props) => {
   return (
     <>
       <View style={styles.bottomHalf}>
-        <Button
-          title="Go Back"
-          accessibilityLabel="Learn more about this purple button"
-          onPress={handleGoBack}
-        />
-
         <SafeAreaView style={styles.container}>
           <FlatList
             data={logBook}

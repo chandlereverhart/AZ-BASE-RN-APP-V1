@@ -14,7 +14,9 @@ import { auth, db } from "../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 
-const LogBook = (props) => {
+const LogBookForm = (props) => {
+  // console.log("PROPS=>", props);
+  const jump = props.route?.params?.jump?.jump ?? {};
   const navigation = useNavigation();
 
   const handleSignOut = () => {
@@ -26,8 +28,24 @@ const LogBook = (props) => {
   const handleSubmit = async (values) => {
     try {
       const user = auth.currentUser;
-      console.log(user);
-      if (user) {
+      const docId = values.id;
+      console.log("VALUES ID =>", values.id);
+      if (values.id !== "") {
+        const jumpObj = db
+          .collection("users")
+          .doc(user.uid)
+          .collection("logBook")
+          .where("id", "==", docId);
+        jumpObj.get().then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            doc.ref.update({
+              ...values,
+              jumpNumber: Number(values.jumpNumber),
+            });
+          });
+        }),
+          navigation.navigate("LogBook");
+      } else if (user) {
         db
           .collection("users")
           .doc(user.uid)
@@ -44,16 +62,18 @@ const LogBook = (props) => {
       console.log(err.message);
     }
   };
+  // ? await db.collection(collectionId).doc(docId).update(newValues)
+  // : await db.collection(collectionId).update(newValues);
 
   return (
     <>
       <Formik
         initialValues={{
-          jumpNumber: "",
-          exitNumber: "",
-          exitName: "",
-          otherDetails: "",
-          id: "",
+          jumpNumber: jump?.jumpNumber?.toString() || "",
+          exitNumber: jump?.exitNumber || "",
+          exitName: jump?.exitName || "",
+          otherDetails: jump?.otherDetails || "",
+          id: jump?.id || "",
         }}
         onSubmit={(values) => handleSubmit(values)}
       >
@@ -89,6 +109,7 @@ const LogBook = (props) => {
               placeholder="Other Details..."
               style={styles.input}
             />
+
             <Button
               onPress={handleSubmit}
               title="Submit"
@@ -103,7 +124,7 @@ const LogBook = (props) => {
     </>
   );
 };
-export default LogBook;
+export default LogBookForm;
 
 const styles = StyleSheet.create({
   logView: {

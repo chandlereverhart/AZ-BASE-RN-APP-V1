@@ -59,25 +59,21 @@ const Exits = (props) => {
   const openForm = () => {
     navigation.navigate("ExitsForm");
   };
-  const handleGoBack = () => {
-    navigation.navigate("MyTabs");
-  };
+
   const Item = ({ item, index }) => (
-    console.log("ITEM", item),
-    (
-      <Card
-        style={styles.card}
-        key={index}
-        values={item}
-        onPress={() =>
-          props.navigation.navigate("ExitDetails", {
-            exit: { item },
-          })
-        }
-      >
-        <Text style={styles.cardText}>"{item.exitName}"</Text>
-      </Card>
-    )
+    // console.log("ITEM", item),
+    <Card
+      style={styles.card}
+      key={index}
+      values={item}
+      onPress={() =>
+        props.navigation.navigate("ExitDetails", {
+          exit: { item },
+        })
+      }
+    >
+      <Text style={styles.cardText}>"{item.exitName}"</Text>
+    </Card>
   );
   const renderItem = ({ item }) => {
     return <Item item={item} />;
@@ -86,12 +82,6 @@ const Exits = (props) => {
   return (
     <>
       <View style={styles.bottomHalf}>
-        <Button
-          title="Go Back"
-          accessibilityLabel="Learn more about this purple button"
-          onPress={handleGoBack}
-        />
-
         <SafeAreaView style={styles.container}>
           <FlatList
             data={exits}
