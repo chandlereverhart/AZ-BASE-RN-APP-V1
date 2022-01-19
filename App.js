@@ -2,14 +2,7 @@ import * as React from "react";
 import { useNavigation } from "@react-navigation/core";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 
-import {
-  StyleSheet,
-  Image,
-  Button,
-  View,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Image } from "react-native";
 //containers
 import LoginScreen from "./src/Auth/LoginScreen";
 import Exits from "./src/containers/Home/Exits/Exits";
@@ -33,7 +26,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { auth, db } from "./Firebase/firebase";
+import { auth } from "./Firebase/firebase";
 
 // icons
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -57,13 +50,11 @@ function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
-      {/* <DrawerItem label="Logout" onPress={handleSignOut} /> */}
-      <TouchableOpacity onPress={handleSignOut}>
-        <Text>Logout</Text>
-      </TouchableOpacity>
+      <DrawerItem label="Logout" onPress={handleSignOut} />
     </DrawerContentScrollView>
   );
 }
+console.log(auth);
 
 function MyDrawer(props) {
   return (
@@ -71,6 +62,9 @@ function MyDrawer(props) {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name="MyTabs" component={MyTabs} />
+      {/* {!auth.currentUser && (
+        <Drawer.Screen name="Login" component={LoginScreen} />
+      )} */}
       <Drawer.Screen name="Login" component={LoginScreen} />
     </Drawer.Navigator>
   );
