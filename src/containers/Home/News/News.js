@@ -17,9 +17,12 @@ const News = (props) => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [news, setNews] = useState([]);
+  const [userId, setUserId] = useState(auth.currentUser.uid);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     setLoading(true);
+    _getUsers();
     _getNews();
     setLoading(false);
   }, []);
@@ -47,6 +50,19 @@ const News = (props) => {
     }
     setLoading(false);
   }
+  async function _getUsers() {
+    console.log(userId);
+    setLoading(true);
+    try {
+      const snapShot = await db.collection("users").doc(userId).get();
+      const response = snapShot.data();
+      setUser(response);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  }
+  console.log("USER", user);
 
   const openForm = () => {
     navigation.navigate("NewsForm");

@@ -61,20 +61,6 @@ function MyTabs({ props }) {
           },
         }}
       />
-      <Tab.Screen
-        name="Exits"
-        component={Exits}
-        options={{
-          tabBarLabel: "Exits",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              color={color}
-              name="map-marker-multiple"
-              size={24}
-            />
-          ),
-        }}
-      />
 
       <Tab.Screen
         name="News"
@@ -91,7 +77,7 @@ function MyTabs({ props }) {
           tabBarBadge: 1,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Events"
         component={Events}
         options={{
@@ -100,6 +86,20 @@ function MyTabs({ props }) {
             <MaterialCommunityIcons
               color={color}
               name="calendar-edit"
+              size={24}
+            />
+          ),
+        }}
+      /> */}
+      <Tab.Screen
+        name="Exits"
+        component={Exits}
+        options={{
+          tabBarLabel: "Exits",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              color={color}
+              name="map-marker-multiple"
               size={24}
             />
           ),
