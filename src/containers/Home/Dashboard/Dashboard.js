@@ -12,13 +12,19 @@ import { Card } from "react-native-ui-lib";
 import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 
+// components
+
 const Dashboard = (props) => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [exits, setExits] = useState([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setLoading(true);
+    _getExits();
+    setLoading(false);
+  }, []);
 
   async function handleListRefresh() {
     setRefreshing(true);
@@ -72,6 +78,7 @@ const Dashboard = (props) => {
   return (
     <>
       <View style={styles.bottomHalf}>
+        <View></View>
         <SafeAreaView style={styles.container}>
           <FlatList
             data={exits}

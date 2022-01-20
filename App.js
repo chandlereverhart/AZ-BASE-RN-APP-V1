@@ -42,7 +42,6 @@ const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function MyTabs({ props }) {
-  console.log(props);
   return (
     <Tab.Navigator
       screenOptions={{

@@ -53,24 +53,22 @@ const Events = (props) => {
   };
 
   const Item = ({ item, index }) => (
-    console.log("ITEM", item),
-    (
-      <Card
-        style={styles.card}
-        key={index}
-        values={item}
-        onPress={() =>
-          props.navigation.navigate("EventDetails", {
-            event: { item },
-          })
-        }
-      >
-        <View style={styles.cardTextView}>
-          <Text style={styles.cardTextGrey}>{item.date}</Text>
-          <Text style={styles.cardText}>{item.title}</Text>
-        </View>
-      </Card>
-    )
+    // console.log("ITEM", item),
+    <Card
+      style={styles.card}
+      key={index}
+      values={item}
+      onPress={() =>
+        props.navigation.navigate("EventDetails", {
+          event: { item },
+        })
+      }
+    >
+      <View style={styles.cardTextView}>
+        <Text style={styles.cardTextGrey}>{item.date}</Text>
+        <Text style={styles.cardText}>{item.title}</Text>
+      </View>
+    </Card>
   );
   const renderItem = ({ item }) => {
     return <Item item={item} />;
