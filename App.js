@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/core";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { APP_CONFIGURATION } from "./src/variables";
 
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, Linking } from "react-native";
 //containers
 import LoginScreen from "./src/Auth/LoginScreen";
 import Dashboard from "./src/containers/Home/Dashboard/Dashboard";
@@ -15,8 +16,6 @@ import News from "./src/containers/Home/News";
 import NewsDetails from "./src/containers/Home/NewsDetails/NewsDetails";
 import Events from "./src/containers/Home/Events";
 import EventDetails from "./src/containers/Home/EventDetails/EventDetails";
-
-import Header from "./src/components/Header/Header";
 // navigation utils
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -157,7 +156,6 @@ function MyStack({ props }) {
         <Stack.Screen name="Events" component={Events} />
         <Stack.Screen name="EventsForm" component={EventsForm} />
         <Stack.Screen name="EventDetails" component={EventDetails} />
-        <Stack.Screen name="Header" component={Header} />
       </Stack.Navigator>
     </PaperProvider>
   );
@@ -174,8 +172,26 @@ function CustomDrawerContent(props) {
   }
 
   return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
+    <DrawerContentScrollView
+      {...props}
+      // style={{ backgroundColor: "#000000" }}
+    >
+      <DrawerItem
+        label="Home"
+        onPress={() => {
+          props.navigation.navigate("Home");
+        }}
+      />
+      <DrawerItem label="Notifications" onPress={() => {}} />
+      <DrawerItem label="Account" onPress={() => {}} />
+      <DrawerItem
+        label="Contact Us"
+        onPress={() => {
+          Linking.openURL(
+            `mailto:${APP_CONFIGURATION.content.supportEmail}?subject=Support - ${APP_CONFIGURATION.app.displayName}&body=Device Info: Version: 1.0`
+          );
+        }}
+      />
       {auth.currentUser ? (
         <DrawerItem label="Logout" onPress={handleLogout} />
       ) : (
