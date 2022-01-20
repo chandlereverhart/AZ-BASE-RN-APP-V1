@@ -5,6 +5,7 @@ import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { StyleSheet, Image } from "react-native";
 //containers
 import LoginScreen from "./src/Auth/LoginScreen";
+import Dashboard from "./src/containers/Home/Dashboard/Dashboard";
 import Exits from "./src/containers/Home/Exits/Exits";
 import ExitDetails from "./src/containers/Home/ExitDetails/ExitDetails";
 import LogBook from "./src/containers/Home/LogBook";
@@ -18,6 +19,7 @@ import EventDetails from "./src/containers/Home/EventDetails/EventDetails";
 import Header from "./src/components/Header/Header";
 // navigation utils
 import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -26,6 +28,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
+
 import { auth } from "./Firebase/firebase";
 
 // icons
@@ -35,50 +38,31 @@ import EventsForm from "./src/components/Forms/EventsForm";
 import NewsForm from "./src/components/Forms/NewsForm";
 
 const Stack = createNativeStackNavigator();
+const RootStack = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
-
-const Drawer = createDrawerNavigator();
-
-function CustomDrawerContent(props) {
-  const navigation = useNavigation();
-  const handleSignOut = () => {
-    auth.signOut().then(() => {
-      navigation.navigate("Login");
-    });
-  };
-  return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem label="Logout" onPress={handleSignOut} />
-    </DrawerContentScrollView>
-  );
-}
-console.log(auth);
-
-function MyDrawer(props) {
-  return (
-    <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
-    >
-      <Drawer.Screen name="MyTabs" component={MyTabs} />
-      {/* {!auth.currentUser && (
-        <Drawer.Screen name="Login" component={LoginScreen} />
-      )} */}
-      <Drawer.Screen name="Login" component={LoginScreen} />
-    </Drawer.Navigator>
-  );
-}
 
 function MyTabs({ props }) {
   console.log(props);
   return (
     <Tab.Navigator
-      initialRouteName="Exits"
       screenOptions={{
-        tabBarActiveTintColor: "#2e2e2e",
+        headerShown: false,
+        tabBarActiveTintColor: "black",
       }}
     >
+      <Tab.Screen
+        name="Home"
+        component={Dashboard}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <MaterialCommunityIcons color={color} name="home" size={24} />
+            );
+          },
+        }}
+      />
       <Tab.Screen
         name="Exits"
         component={Exits}
@@ -86,9 +70,9 @@ function MyTabs({ props }) {
           tabBarLabel: "Exits",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="map-marker-multiple"
               color={color}
-              size={size}
+              name="map-marker-multiple"
+              size={24}
             />
           ),
         }}
@@ -101,9 +85,9 @@ function MyTabs({ props }) {
           tabBarLabel: "News",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="newspaper-variant"
               color={color}
-              size={size}
+              name="newspaper-variant"
+              size={24}
             />
           ),
           tabBarBadge: 1,
@@ -116,12 +100,11 @@ function MyTabs({ props }) {
           tabBarLabel: "Events",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="calendar-edit"
               color={color}
-              size={size}
+              name="calendar-edit"
+              size={24}
             />
           ),
-          // tabBarBadge: 3,
         }}
       />
       <Tab.Screen
@@ -131,23 +114,14 @@ function MyTabs({ props }) {
           tabBarLabel: "Log Book",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="lead-pencil"
               color={color}
-              size={size}
+              name="lead-pencil"
+              size={24}
             />
           ),
-          // tabBarBadge: 3,
         }}
       />
     </Tab.Navigator>
-  );
-}
-function LogoTitle() {
-  return (
-    <Image
-      style={{ width: 35, height: 40 }}
-      source={require("./src/assets/AZBASE-LOGO.png")}
-    />
   );
 }
 
@@ -165,117 +139,92 @@ function MyStack({ props }) {
   return (
     <PaperProvider theme={theme}>
       <Stack.Navigator
-        screenOptions={(navigation) => ({
-          headerTitleAlign: "center",
-          headerBackTitle: "Back",
-          headerTruncatedBackTitle: null,
-          headerStyle: { color: "black" },
-          headerTintColor: "black",
-          headerRight: () => (
-            <MaterialCommunityIcons
-              name="menu"
-              color={"black"}
-              size={30}
-              onPress={() => navigation.openDrawer()}
-            />
-          ),
-        })}
+        initialRouteName={"MyTabs"}
+        screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={LoginScreen}
-        />
+        <Stack.Screen name="Login" component={LoginScreen} />
 
-        <Stack.Screen
-          name="MyTabs"
-          component={MyTabs}
-          options={{
-            headerTitle: (props) => <LogoTitle {...props} />,
-          }}
-        />
-        <Stack.Screen
-          name="MyDrawer"
-          component={MyDrawer}
-          options={{
-            headerTitle: (props) => <LogoTitle {...props} />,
-          }}
-        />
-        <Stack.Screen
-          name="Exits"
-          component={Exits}
-          options={{
-            headerTitle: (props) => <LogoTitle {...props} />,
-          }}
-        />
-        <Stack.Screen
-          name="ExitsForm"
-          component={ExitsForm}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="ExitDetails"
-          component={ExitDetails}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="LogBook"
-          component={LogBook}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="LogBookForm"
-          component={LogBookForm}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="LogBookDetails"
-          component={LogBookDetails}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="News"
-          component={News}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="NewsForm"
-          component={NewsForm}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="NewsDetails"
-          component={NewsDetails}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="Events"
-          component={Events}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="EventsForm"
-          component={EventsForm}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="EventDetails"
-          component={EventDetails}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="Header"
-          component={Header}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
+        <Stack.Screen name="MyTabs" component={MyTabs} />
+        <Stack.Screen name="Exits" component={Exits} />
+        <Stack.Screen name="ExitsForm" component={ExitsForm} />
+        <Stack.Screen name="ExitDetails" component={ExitDetails} />
+        <Stack.Screen name="LogBook" component={LogBook} />
+        <Stack.Screen name="LogBookForm" component={LogBookForm} />
+        <Stack.Screen name="LogBookDetails" component={LogBookDetails} />
+        <Stack.Screen name="News" component={News} />
+        <Stack.Screen name="NewsForm" component={NewsForm} />
+        <Stack.Screen name="NewsDetails" component={NewsDetails} />
+        <Stack.Screen name="Events" component={Events} />
+        <Stack.Screen name="EventsForm" component={EventsForm} />
+        <Stack.Screen name="EventDetails" component={EventDetails} />
+        <Stack.Screen name="Header" component={Header} />
       </Stack.Navigator>
     </PaperProvider>
+  );
+}
+const Drawer = createDrawerNavigator();
+
+function CustomDrawerContent(props) {
+  const navigation = useNavigation();
+  function handleLogout() {
+    auth.signOut().then(() => {
+      navigation.replace("Login");
+    });
+    props.navigation.closeDrawer();
+  }
+
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      {auth.currentUser ? (
+        <DrawerItem label="Logout" onPress={handleLogout} />
+      ) : (
+        <DrawerItem
+          label="Login"
+          onPress={() => {
+            props.navigation.navigate("Login");
+          }}
+        />
+      )}
+    </DrawerContentScrollView>
+  );
+}
+function LogoTitle() {
+  return (
+    <Image
+      style={{ width: 35, height: 40 }}
+      source={require("./src/assets/AZBASE-LOGO.png")}
+    />
+  );
+}
+
+function MyDrawer() {
+  return (
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerPosition="left"
+      screenOptions={() => ({
+        headerTitleAlign: "center",
+        headerTintColor: "black",
+        headerTitle: () => <LogoTitle />,
+        headerBackTitle: null,
+        headerTruncatedBackTitle: null,
+        headerStyle: {
+          height: 70,
+        },
+      })}
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
+      <Drawer.Screen name="Home" component={MyStack} />
+    </Drawer.Navigator>
   );
 }
 export default function App(props) {
   return (
     <NavigationContainer>
-      <MyDrawer {...props} />
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        <RootStack.Screen name="Main" component={MyDrawer} />
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 }
