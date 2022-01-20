@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   FlatList,
   RefreshControl,
+  Image,
 } from "react-native";
 import { StyleSheet } from "react-native";
 import { Card } from "react-native-ui-lib";
@@ -78,34 +79,30 @@ const Dashboard = (props) => {
   return (
     <>
       <View style={styles.bottomHalf}>
-        <View></View>
         <SafeAreaView style={styles.container}>
-          <FlatList
-            data={exits}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            style={styles.flatList}
-            contentContainerStyle={styles.flatlist}
-            // onEndReached={handleEndReached}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={handleListRefresh}
-              />
-            }
-          />
-        </SafeAreaView>
-
-        <View style={styles.buttons}>
-          <View style={styles.saveBtn}>
-            <Button
-              title="Add an Exit"
-              color="white"
-              accessibilityLabel="Learn more about this purple button"
-              onPress={openForm}
-            />
+          <View>
+            <Text style={styles.text}>HOME PAGE</Text>
           </View>
-        </View>
+          <View style={styles.weatherView}>
+            <View>
+              <Image
+                style={styles.image}
+                source={require("../../../assets/card.png")}
+              />
+            </View>
+          </View>
+          <View style={styles.cardView}>
+            <Card style={styles.card}>
+              <Text>NEWS</Text>
+              <View style={styles.newsImageView}>
+                <Image
+                  style={styles.newsImage}
+                  source={require("../../../assets/azgame.png")}
+                />
+              </View>
+            </Card>
+          </View>
+        </SafeAreaView>
       </View>
     </>
   );
@@ -136,11 +133,11 @@ const styles = StyleSheet.create({
   totalView: {
     alignItems: "center",
   },
-  totalText: {
-    fontSize: 20,
+  text: {
+    fontSize: 30,
     marginVertical: 10,
-    fontWeight: "600",
-    fontWeight: "300",
+    fontWeight: "500",
+    textAlign: "center",
   },
   saveBtn: {
     backgroundColor: "black",
@@ -161,9 +158,20 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingBottom: 70,
   },
+  weatherView: {
+    marginHorizontal: 60,
+    height: 300,
+  },
+  image: {
+    width: 360,
+    resizeMode: "contain",
+  },
+  cardView: {
+    paddingHorizontal: 120,
+    height: 200,
+  },
   card: {
-    height: 40,
-    minWidth: "100%",
+    height: 200,
     alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: 8,
@@ -171,6 +179,12 @@ const styles = StyleSheet.create({
     borderColor: "#b0b0b0",
     borderWidth: 1,
     marginBottom: 5,
+    marginTop: 20,
+  },
+  newsImage: {
+    width: 100,
+    height: 100,
+    resizeMode: "cover",
   },
   cardText: {
     fontSize: 16,

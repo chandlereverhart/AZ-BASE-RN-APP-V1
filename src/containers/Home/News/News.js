@@ -22,9 +22,12 @@ const News = (props) => {
 
   useEffect(() => {
     setLoading(true);
-    _getUsers();
     _getNews();
     setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    _getUsers();
   }, []);
 
   async function handleListRefresh() {
@@ -109,17 +112,18 @@ const News = (props) => {
             }
           />
         </SafeAreaView>
-
-        <View style={styles.buttons}>
-          <View style={styles.saveBtn}>
-            <Button
-              title="Add News Item"
-              color="white"
-              accessibilityLabel="Learn more about this purple button"
-              onPress={openForm}
-            />
+        {user?.roles?.superAdmin && (
+          <View style={styles.buttons}>
+            <View style={styles.saveBtn}>
+              <Button
+                title="Add News Item"
+                color="white"
+                accessibilityLabel="Learn more about this purple button"
+                onPress={openForm}
+              />
+            </View>
           </View>
-        </View>
+        )}
       </View>
     </>
   );
