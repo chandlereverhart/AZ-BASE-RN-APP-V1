@@ -13,10 +13,10 @@ const Weather = ({ weather, windCondition, temperature }) => {
   return (
     <View style={styles.weatherContainer}>
       <View style={styles.headerContainer}>
-        <MaterialCommunityIcons size={48} name="weather-sunny" color={"#fff"} />
         <Text style={styles.tempText}>
           {Math.round(convertToF(temperature))}˚
         </Text>
+        <Text style={styles.subtitle}>Superstition Mountain</Text>
       </View>
       <View style={styles.bodyContainer}>
         {/* <Text style={styles.title}>{weather}</Text>
