@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, SafeAreaView } from "react-native";
-import { StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
+import { Card } from "react-native-paper";
 
 import WeatherWidget from "../../../components/WeatherWidget/WeatherWidget";
 
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     width: "100%",
     minHeight: "100%",
     alignItems: "center",
-    backgroundColor: "white",
+    // backgroundColor: "white",
     paddingBottom: 70,
   },
 });

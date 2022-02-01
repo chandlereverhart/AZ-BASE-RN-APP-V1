@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Animated } from "react-native";
+import { useTheme, Card } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { API_KEY } from "../../utils/WeatherAPIKey";
 import * as Location from "expo-location";
 
 const Weather = ({ weather, windCondition, temperature }) => {
+  const theme = useTheme();
+
   function convertToF(celsius) {
     return (celsius * 9) / 5 + 32;
   }
@@ -12,24 +15,26 @@ const Weather = ({ weather, windCondition, temperature }) => {
   convertToF(30);
   return (
     <View style={styles.weatherContainer}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.tempText}>
-          {Math.round(convertToF(temperature))}˚
-        </Text>
-        <Text style={styles.subtitle}>Superstition Mountain</Text>
-      </View>
-      <View style={styles.bodyContainer}>
-        {/* <Text style={styles.title}>{weather}</Text>
-         */}
-        <Text style={styles.title}>Wind {Math.round(windCondition)} mph</Text>
-        <Text style={styles.subtitle}>Gusts 2 mph</Text>
-        <MaterialCommunityIcons
-          style={styles.title}
-          size={48}
-          name="navigation"
-          color={"#fff"}
-        />
-      </View>
+      <Card style={styles.weatherCard}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.tempText}>
+            {Math.round(convertToF(temperature))}˚
+          </Text>
+          <Text style={styles.subtitle}>Superstition Mountain</Text>
+        </View>
+        <View style={styles.bodyContainer}>
+          {/* <Text style={styles.title}>{weather}</Text>
+           */}
+          <Text style={styles.title}>Wind {Math.round(windCondition)} mph</Text>
+          <Text style={styles.subtitle}>Gusts 2 mph</Text>
+          <MaterialCommunityIcons
+            style={styles.title}
+            size={48}
+            name="navigation"
+            color={"#fff"}
+          />
+        </View>
+      </Card>
     </View>
   );
 };
@@ -101,7 +106,10 @@ export default class WeatherWidget extends React.Component {
 const styles = StyleSheet.create({
   weatherContainer: {
     flex: 1,
-    backgroundColor: "#595959",
+  },
+  weatherCard: {
+    flex: 1,
+    backgroundColor: "grey",
     borderRadius: 12,
     borderColor: "lightgrey",
     borderWidth: 1,

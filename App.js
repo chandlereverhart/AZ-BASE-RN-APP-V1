@@ -1,6 +1,15 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/core";
-import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import {
+  DarkTheme as PaperDarkTheme,
+  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider,
+  TouchableRipple,
+  Switch,
+  View,
+  Text,
+  Drawer as PaperDrawer,
+} from "react-native-paper";
 import { APP_CONFIGURATION } from "./src/variables";
 
 import { StyleSheet, Image, Linking } from "react-native";
@@ -17,7 +26,12 @@ import NewsDetails from "./src/containers/Home/NewsDetails/NewsDetails";
 import Events from "./src/containers/Home/Events";
 import EventDetails from "./src/containers/Home/EventDetails/EventDetails";
 // navigation utils
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+  useTheme,
+} from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -29,6 +43,12 @@ import {
 } from "@react-navigation/drawer";
 
 import { auth } from "./Firebase/firebase";
+
+import merge from "deepmerge";
+import { PreferencesContext } from "./src/utils/preferencesContext";
+
+const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
+const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
 // icons
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -77,20 +97,7 @@ function MyTabs({ props }) {
           tabBarBadge: 1,
         }}
       />
-      {/* <Tab.Screen
-        name="Events"
-        component={Events}
-        options={{
-          tabBarLabel: "Events",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              color={color}
-              name="calendar-edit"
-              size={24}
-            />
-          ),
-        }}
-      /> */}
+
       <Tab.Screen
         name="Exits"
         component={Exits}
@@ -123,46 +130,37 @@ function MyTabs({ props }) {
   );
 }
 
-const theme = {
-  ...DefaultTheme,
-  roundness: 2,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: "#f1c40f",
-    secondary: "#3498db",
-  },
-};
-
 function MyStack({ props }) {
   return (
-    <PaperProvider theme={theme}>
-      <Stack.Navigator
-        initialRouteName={"MyTabs"}
-        screenOptions={{ headerShown: true }}
-      >
-        <Stack.Screen name="Login" component={LoginScreen} />
+    <Stack.Navigator
+      initialRouteName={"MyTabs"}
+      screenOptions={{ headerShown: true }}
+    >
+      <Stack.Screen name="Login" component={LoginScreen} />
 
-        <Stack.Screen name="MyTabs" component={MyTabs} />
-        <Stack.Screen name="Exits" component={Exits} />
-        <Stack.Screen name="ExitsForm" component={ExitsForm} />
-        <Stack.Screen name="ExitDetails" component={ExitDetails} />
-        <Stack.Screen name="LogBook" component={LogBook} />
-        <Stack.Screen name="LogBookForm" component={LogBookForm} />
-        <Stack.Screen name="LogBookDetails" component={LogBookDetails} />
-        <Stack.Screen name="News" component={News} />
-        <Stack.Screen name="NewsForm" component={NewsForm} />
-        <Stack.Screen name="NewsDetails" component={NewsDetails} />
-        <Stack.Screen name="Events" component={Events} />
-        <Stack.Screen name="EventsForm" component={EventsForm} />
-        <Stack.Screen name="EventDetails" component={EventDetails} />
-      </Stack.Navigator>
-    </PaperProvider>
+      <Stack.Screen name="MyTabs" component={MyTabs} />
+      <Stack.Screen name="Exits" component={Exits} />
+      <Stack.Screen name="ExitsForm" component={ExitsForm} />
+      <Stack.Screen name="ExitDetails" component={ExitDetails} />
+      <Stack.Screen name="LogBook" component={LogBook} />
+      <Stack.Screen name="LogBookForm" component={LogBookForm} />
+      <Stack.Screen name="LogBookDetails" component={LogBookDetails} />
+      <Stack.Screen name="News" component={News} />
+      <Stack.Screen name="NewsForm" component={NewsForm} />
+      <Stack.Screen name="NewsDetails" component={NewsDetails} />
+      <Stack.Screen name="Events" component={Events} />
+      <Stack.Screen name="EventsForm" component={EventsForm} />
+      <Stack.Screen name="EventDetails" component={EventDetails} />
+    </Stack.Navigator>
   );
 }
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
   const navigation = useNavigation();
+  const theme = useTheme();
+  const { toggleTheme, isThemeDark } = React.useContext(PreferencesContext);
+
   function handleLogout() {
     auth.signOut().then(() => {
       navigation.replace("Login");
@@ -171,10 +169,7 @@ function CustomDrawerContent(props) {
   }
 
   return (
-    <DrawerContentScrollView
-      {...props}
-      // style={{ backgroundColor: "#000000" }}
-    >
+    <DrawerContentScrollView {...props}>
       <DrawerItem
         label="Home"
         onPress={() => {
@@ -201,6 +196,13 @@ function CustomDrawerContent(props) {
           }}
         />
       )}
+
+      <TouchableRipple onPress={() => toggleTheme()}>
+        <>
+          <Text>Dark Mode</Text>
+          <Switch color={"red"} value={isThemeDark} />
+        </>
+      </TouchableRipple>
     </DrawerContentScrollView>
   );
 }
@@ -220,7 +222,7 @@ function MyDrawer() {
       drawerPosition="right"
       screenOptions={() => ({
         headerTitleAlign: "center",
-        headerTintColor: "black",
+        headerTintColor: "grey",
         headerTitle: () => <LogoTitle />,
         headerBackTitle: null,
         headerTruncatedBackTitle: null,
@@ -235,12 +237,32 @@ function MyDrawer() {
   );
 }
 export default function App(props) {
+  const [isThemeDark, setIsThemeDark] = React.useState(false);
+
+  let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
+
+  const toggleTheme = React.useCallback(() => {
+    return setIsThemeDark(!isThemeDark);
+  }, [isThemeDark]);
+
+  const preferences = React.useMemo(
+    () => ({
+      toggleTheme,
+      isThemeDark,
+    }),
+    [toggleTheme, isThemeDark]
+  );
+
   return (
-    <NavigationContainer>
-      <RootStack.Navigator screenOptions={{ headerShown: false }}>
-        <RootStack.Screen name="Main" component={MyDrawer} />
-      </RootStack.Navigator>
-    </NavigationContainer>
+    <PreferencesContext.Provider value={preferences}>
+      <PaperProvider theme={theme}>
+        <NavigationContainer theme={theme}>
+          <RootStack.Navigator screenOptions={{ headerShown: false }}>
+            <RootStack.Screen name="Main" component={MyDrawer} />
+          </RootStack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </PreferencesContext.Provider>
   );
 }
 
