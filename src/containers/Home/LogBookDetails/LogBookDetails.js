@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
     width: "50%",
   },
   deleteButton: {
-    backgroundColor: "black",
     borderColor: "rgba(255, 255, 255, 0.95)",
     borderWidth: 1,
     borderRadius: 5,
