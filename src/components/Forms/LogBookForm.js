@@ -98,12 +98,13 @@ const LogBookForm = (props) => {
               placeholder="Other Details..."
               style={styles.input}
             />
-
-            <Button
-              onPress={handleSubmit}
-              title="Submit"
-              style={styles.saveBtn}
-            />
+            <View style={styles.buttonView}>
+              <Button
+                onPress={handleSubmit}
+                title="Submit"
+                style={styles.saveBtn}
+              />
+            </View>
           </View>
         )}
       </Formik>
@@ -121,6 +122,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "100%",
     height: "100%",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
   },
   input: {
     paddingHorizontal: 10,
@@ -133,9 +137,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
+  buttonView: {
+    paddingHorizontal: 30,
+  },
   saveBtn: {
-    backgroundColor: "grey",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
     borderRadius: 5,
+    width: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "black",
     width: "50%",
   },
 });
