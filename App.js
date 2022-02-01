@@ -45,7 +45,7 @@ function MyTabs({ props }) {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
         tabBarActiveTintColor: "black",
       }}
     >
@@ -138,7 +138,7 @@ function MyStack({ props }) {
     <PaperProvider theme={theme}>
       <Stack.Navigator
         initialRouteName={"MyTabs"}
-        screenOptions={{ headerShown: false }}
+        screenOptions={{ headerShown: true }}
       >
         <Stack.Screen name="Login" component={LoginScreen} />
 
@@ -217,7 +217,7 @@ function MyDrawer() {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
-      drawerPosition="left"
+      drawerPosition="right"
       screenOptions={() => ({
         headerTitleAlign: "center",
         headerTintColor: "black",

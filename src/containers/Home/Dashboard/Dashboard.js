@@ -12,6 +12,7 @@ import { StyleSheet } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
+import WeatherWidget from "../../../components/WeatherWidget/WeatherWidget";
 
 // components
 
@@ -80,28 +81,7 @@ const Dashboard = (props) => {
     <>
       <View style={styles.bottomHalf}>
         <SafeAreaView style={styles.container}>
-          <View>
-            <Text style={styles.text}>HOME PAGE</Text>
-          </View>
-          <View style={styles.weatherView}>
-            <View>
-              <Image
-                style={styles.image}
-                source={require("../../../assets/card.png")}
-              />
-            </View>
-          </View>
-          <View style={styles.cardView}>
-            <Card style={styles.card}>
-              <Text>NEWS</Text>
-              <View style={styles.newsImageView}>
-                <Image
-                  style={styles.newsImage}
-                  source={require("../../../assets/azgame.png")}
-                />
-              </View>
-            </Card>
-          </View>
+          <WeatherWidget />
         </SafeAreaView>
       </View>
     </>
@@ -171,7 +151,7 @@ const styles = StyleSheet.create({
     height: 200,
   },
   card: {
-    height: 200,
+    height: 140,
     alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: 8,

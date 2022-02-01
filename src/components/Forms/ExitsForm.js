@@ -84,7 +84,7 @@ const ExitsForm = (props) => {
               onChangeText={handleChange("coordinates")}
               onBlur={handleBlur("coordinates")}
               value={values.coordinates}
-              placeholder="Latitude Longitude"
+              placeholder="Location"
               style={styles.input}
             />
             <TextInput
