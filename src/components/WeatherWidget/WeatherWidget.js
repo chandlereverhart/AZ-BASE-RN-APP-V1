@@ -5,11 +5,18 @@ import { API_KEY } from "../../utils/WeatherAPIKey";
 import * as Location from "expo-location";
 
 const Weather = ({ weather, temperature }) => {
+  function convertToF(celsius) {
+    return (celsius * 9) / 5 + 32;
+  }
+
+  convertToF(30);
   return (
     <View style={styles.weatherContainer}>
       <View style={styles.headerContainer}>
         <MaterialCommunityIcons size={48} name="weather-sunny" color={"#fff"} />
-        <Text style={styles.tempText}>{temperature}˚</Text>
+        <Text style={styles.tempText}>
+          {Math.round(convertToF(temperature))}˚
+        </Text>
       </View>
       <View style={styles.bodyContainer}>
         <Text style={styles.title}>{weather}</Text>
@@ -25,6 +32,8 @@ export default class WeatherWidget extends React.Component {
     temperature: 0,
     weatherCondition: null,
     error: null,
+    lat: 33.44851,
+    lng: -111.47684,
   };
 
   componentDidMount() {
@@ -32,6 +41,10 @@ export default class WeatherWidget extends React.Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.fetchWeather(position.coords.latitude, position.coords.longitude);
+        this.setState({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
       },
       (error) => {
         this.setState({
@@ -43,7 +56,7 @@ export default class WeatherWidget extends React.Component {
 
   fetchWeather(lat = 25, lon = 25) {
     fetch(
-      `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}&units=metric`
+      `http://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.lng}&APPID=${API_KEY}&units=metric`
     )
       .then((res) => res.json())
       .then((json) => {
@@ -75,6 +88,7 @@ export default class WeatherWidget extends React.Component {
 
 const styles = StyleSheet.create({
   weatherContainer: {
+    width: "100%",
     flex: 1,
     backgroundColor: "#f7b733",
     borderRadius: 12,
@@ -87,20 +101,22 @@ const styles = StyleSheet.create({
   tempText: {
     fontSize: 48,
     color: "#fff",
+    textAlign: "center",
   },
   bodyContainer: {
     flex: 2,
-    alignItems: "flex-start",
     justifyContent: "flex-end",
-    paddingLeft: 25,
+    paddingHorizontal: 25,
     marginBottom: 40,
   },
   title: {
     fontSize: 48,
     color: "#fff",
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 24,
     color: "#fff",
+    textAlign: "center",
   },
 });
