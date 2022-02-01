@@ -4,15 +4,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { API_KEY } from "../../utils/WeatherAPIKey";
 import * as Location from "expo-location";
 
-const Weather = () => {
+const Weather = ({ weather, temperature }) => {
   return (
     <View style={styles.weatherContainer}>
       <View style={styles.headerContainer}>
         <MaterialCommunityIcons size={48} name="weather-sunny" color={"#fff"} />
-        <Text style={styles.tempText}>Temperature˚</Text>
+        <Text style={styles.tempText}>{temperature}˚</Text>
       </View>
       <View style={styles.bodyContainer}>
-        <Text style={styles.title}>So Sunny</Text>
+        <Text style={styles.title}>{weather}</Text>
         <Text style={styles.subtitle}>It hurts my eyes!</Text>
       </View>
     </View>
@@ -48,6 +48,11 @@ export default class WeatherWidget extends React.Component {
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
+        this.setState({
+          temperature: json.main.temp,
+          weatherCondition: json.weather[0].main,
+          isLoading: false,
+        });
       });
   }
 
@@ -55,20 +60,24 @@ export default class WeatherWidget extends React.Component {
     const { isLoading } = this.state;
     return (
       <View style={styles.container}>
-        {isLoading ? <Text>Fetching The Weather</Text> : <Weather />}
+        {isLoading ? (
+          <Text>Fetching The Weather</Text>
+        ) : (
+          <Weather
+            weather={this.state.weatherCondition}
+            temperature={this.state.temperature}
+          />
+        )}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
   weatherContainer: {
     flex: 1,
     backgroundColor: "#f7b733",
+    borderRadius: 12,
   },
   headerContainer: {
     flex: 1,
