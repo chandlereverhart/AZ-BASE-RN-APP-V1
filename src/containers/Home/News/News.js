@@ -117,7 +117,7 @@ const News = (props) => {
             <View style={styles.saveBtn}>
               <Button
                 title="Add News Item"
-                color="white"
+                color="black"
                 accessibilityLabel="Learn more about this purple button"
                 onPress={openForm}
               />
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: "10%",
     paddingTop: "10%",
     paddingBottom: "10%",
-    backgroundColor: "lightgrey",
+    // backgroundColor: "lightgrey",
     height: "100%",
     width: "100%",
     alignItems: "center",
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     fontWeight: "300",
   },
   saveBtn: {
-    backgroundColor: "black",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
     borderRadius: 5,
     width: "50%",
     justifyContent: "center",
@@ -176,7 +176,8 @@ const styles = StyleSheet.create({
     width: "100%",
     minHeight: "100%",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+
     paddingBottom: 70,
   },
   card: {
@@ -187,8 +188,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: 8,
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
     borderRadius: 10,
-    borderColor: "#b0b0b0",
+    // borderColor: "rgba(255, 255, 255, 0.2)",
     borderWidth: 1,
     marginBottom: 5,
   },
@@ -198,13 +200,14 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 16,
-    opacity: 0.9,
+    opacity: 0.95,
     marginHorizontal: 8,
+    color: "black",
   },
   cardTextGrey: {
     fontSize: 14,
-    opacity: 0.9,
+    opacity: 0.95,
     marginHorizontal: 8,
-    color: "grey",
+    // color: "grey",
   },
 });

@@ -67,7 +67,7 @@ const ExitDetails = (props) => {
           <View style={styles.deleteButton}>
             <Button
               title="Delete Exit"
-              color="white"
+              color="black"
               accessibilityLabel="Learn more about this purple button"
               onPress={handleDelete}
             />
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
     paddingTop: "10%",
     paddingBottom: "10%",
   },
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   deleteButton: {
-    backgroundColor: "black",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
     borderRadius: 5,
     width: "50%",
     justifyContent: "center",
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   card: {
     width: "90%",
     height: 40,
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
     alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: 8,

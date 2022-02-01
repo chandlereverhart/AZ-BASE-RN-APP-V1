@@ -65,8 +65,8 @@ function MyTabs({ props }) {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerShown: true,
-        tabBarActiveTintColor: "black",
+        // headerShown: true,
+        tabBarActiveTintColor: "rgba(255, 255, 255, 0.95)",
       }}
     >
       <Tab.Screen
@@ -131,27 +131,59 @@ function MyTabs({ props }) {
 }
 
 function MyStack({ props }) {
-  return (
-    <Stack.Navigator
-      initialRouteName={"MyTabs"}
-      screenOptions={{ headerShown: true }}
-    >
-      <Stack.Screen name="Login" component={LoginScreen} />
+  const [isThemeDark, setIsThemeDark] = React.useState(false);
 
-      <Stack.Screen name="MyTabs" component={MyTabs} />
-      <Stack.Screen name="Exits" component={Exits} />
-      <Stack.Screen name="ExitsForm" component={ExitsForm} />
-      <Stack.Screen name="ExitDetails" component={ExitDetails} />
-      <Stack.Screen name="LogBook" component={LogBook} />
-      <Stack.Screen name="LogBookForm" component={LogBookForm} />
-      <Stack.Screen name="LogBookDetails" component={LogBookDetails} />
-      <Stack.Screen name="News" component={News} />
-      <Stack.Screen name="NewsForm" component={NewsForm} />
-      <Stack.Screen name="NewsDetails" component={NewsDetails} />
-      <Stack.Screen name="Events" component={Events} />
-      <Stack.Screen name="EventsForm" component={EventsForm} />
-      <Stack.Screen name="EventDetails" component={EventDetails} />
-    </Stack.Navigator>
+  let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
+
+  const toggleTheme = React.useCallback(() => {
+    return setIsThemeDark(!isThemeDark);
+  }, [isThemeDark]);
+
+  const preferences = React.useMemo(
+    () => ({
+      toggleTheme,
+      isThemeDark,
+    }),
+    [toggleTheme, isThemeDark]
+  );
+  return (
+    <PreferencesContext.Provider value={preferences}>
+      <PaperProvider theme={CombinedDarkTheme}>
+        <Stack.Navigator
+          initialRouteName={"MyTabs"}
+          screenOptions={() => ({
+            headerTitleAlign: "center",
+            headerTintColor: "rgba(255, 255, 255, 0.95)",
+            headerTitle: () => <LogoTitle />,
+            headerBackTitle: null,
+            headerTruncatedBackTitle: null,
+            headerStyle: {
+              height: 70,
+            },
+          })}
+        >
+          <Stack.Screen name="Login" component={LoginScreen} />
+
+          <Stack.Screen name="MyTabs" component={MyTabs} />
+          <Stack.Screen name="Exits" component={Exits} />
+          <Stack.Screen name="ExitsForm" component={ExitsForm} />
+          <Stack.Screen
+            name="ExitDetails"
+            component={ExitDetails}
+            screenOptions={{ headerShown: true }}
+          />
+          <Stack.Screen name="LogBook" component={LogBook} />
+          <Stack.Screen name="LogBookForm" component={LogBookForm} />
+          <Stack.Screen name="LogBookDetails" component={LogBookDetails} />
+          <Stack.Screen name="News" component={News} />
+          <Stack.Screen name="NewsForm" component={NewsForm} />
+          <Stack.Screen name="NewsDetails" component={NewsDetails} />
+          <Stack.Screen name="Events" component={Events} />
+          <Stack.Screen name="EventsForm" component={EventsForm} />
+          <Stack.Screen name="EventDetails" component={EventDetails} />
+        </Stack.Navigator>
+      </PaperProvider>
+    </PreferencesContext.Provider>
   );
 }
 const Drawer = createDrawerNavigator();
@@ -210,7 +242,7 @@ function LogoTitle() {
   return (
     <Image
       style={{ width: 35, height: 40 }}
-      source={require("./src/assets/AZBASE-LOGO.png")}
+      source={require("./src/assets/AZBASE-white.png")}
     />
   );
 }
@@ -222,8 +254,10 @@ function MyDrawer() {
       drawerPosition="right"
       screenOptions={() => ({
         headerTitleAlign: "center",
-        headerTintColor: "grey",
+        headerTintColor: "rgba(255, 255, 255, 0.95)",
         headerTitle: () => <LogoTitle />,
+        headerBackTitle: "Back",
+        headerTruncatedBackTitle: null,
         headerBackTitle: null,
         headerTruncatedBackTitle: null,
         headerStyle: {
@@ -237,32 +271,12 @@ function MyDrawer() {
   );
 }
 export default function App(props) {
-  const [isThemeDark, setIsThemeDark] = React.useState(false);
-
-  let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
-
-  const toggleTheme = React.useCallback(() => {
-    return setIsThemeDark(!isThemeDark);
-  }, [isThemeDark]);
-
-  const preferences = React.useMemo(
-    () => ({
-      toggleTheme,
-      isThemeDark,
-    }),
-    [toggleTheme, isThemeDark]
-  );
-
   return (
-    <PreferencesContext.Provider value={preferences}>
-      <PaperProvider theme={theme}>
-        <NavigationContainer theme={theme}>
-          <RootStack.Navigator screenOptions={{ headerShown: false }}>
-            <RootStack.Screen name="Main" component={MyDrawer} />
-          </RootStack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
-    </PreferencesContext.Provider>
+    <NavigationContainer theme={CombinedDarkTheme}>
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        <RootStack.Screen name="Main" component={MyDrawer} />
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
 }
 

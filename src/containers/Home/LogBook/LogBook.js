@@ -100,7 +100,7 @@ const LogBook = (props) => {
           <View style={styles.saveBtn}>
             <Button
               title="Add a Jump"
-              color="white"
+              color="black"
               accessibilityLabel="Learn more about this purple button"
               onPress={openForm}
             />
@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: "10%",
     paddingTop: "10%",
     paddingBottom: "10%",
-    backgroundColor: "lightgrey",
     height: "100%",
     width: "100%",
     alignItems: "center",
@@ -143,7 +142,8 @@ const styles = StyleSheet.create({
     fontWeight: "300",
   },
   saveBtn: {
-    backgroundColor: "black",
+    backgroundColor: "rgba(255, 255, 255, .95)",
+
     borderRadius: 5,
     width: "50%",
     justifyContent: "center",
@@ -158,8 +158,8 @@ const styles = StyleSheet.create({
     width: "100%",
     minHeight: "100%",
     alignItems: "center",
-    backgroundColor: "white",
     paddingBottom: 70,
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
   card: {
     height: 40,
@@ -169,6 +169,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 10,
     borderColor: "#b0b0b0",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+
     borderWidth: 1,
     marginBottom: 5,
   },

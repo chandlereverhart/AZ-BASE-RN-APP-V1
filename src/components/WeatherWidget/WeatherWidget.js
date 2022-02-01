@@ -109,9 +109,8 @@ const styles = StyleSheet.create({
   },
   weatherCard: {
     flex: 1,
-    backgroundColor: "grey",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderRadius: 12,
-    borderColor: "lightgrey",
     borderWidth: 1,
   },
   headerContainer: {

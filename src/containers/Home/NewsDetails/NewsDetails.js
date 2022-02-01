@@ -39,7 +39,7 @@ const NewsDetails = (props) => {
   return (
     <>
       <View style={styles.pageContent}>
-        <Card style={styles.pageContent}>
+        <Card style={styles.card}>
           <View style={styles.detailsView}>
             <View style={styles.dividerView}>
               <Divider>
@@ -61,7 +61,7 @@ const NewsDetails = (props) => {
           <View style={styles.deleteButton}>
             <Button
               title="Delete news"
-              color="white"
+              color="black"
               accessibilityLabel="Learn more about this purple button"
               onPress={handleDelete}
             />
@@ -82,9 +82,9 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: "center",
-    backgroundColor: "white",
     paddingTop: "10%",
     paddingBottom: "10%",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
   dividerView: {
     width: 200,
@@ -109,21 +109,22 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   deleteButton: {
-    backgroundColor: "black",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
     borderRadius: 5,
     width: "50%",
     justifyContent: "center",
     alignItems: "center",
+    color: "black",
   },
   card: {
-    width: "90%",
-    height: 40,
+    display: "flex",
+    flex: 1,
+    paddingHorizontal: "10%",
+    width: "100%",
+    height: "100%",
     alignItems: "center",
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderRadius: 10,
-    borderColor: "#b0b0b0",
-    borderWidth: 1,
-    marginBottom: 5,
+    paddingTop: "10%",
+    paddingBottom: "10%",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
   },
 });
