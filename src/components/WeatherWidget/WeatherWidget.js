@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { API_KEY } from "../../utils/WeatherAPIKey";
 import * as Location from "expo-location";
 
-const Weather = ({ weather, temperature }) => {
+const Weather = ({ weather, windCondition, temperature }) => {
   function convertToF(celsius) {
     return (celsius * 9) / 5 + 32;
   }
@@ -19,8 +19,16 @@ const Weather = ({ weather, temperature }) => {
         </Text>
       </View>
       <View style={styles.bodyContainer}>
-        <Text style={styles.title}>{weather}</Text>
-        <Text style={styles.subtitle}>It hurts my eyes!</Text>
+        {/* <Text style={styles.title}>{weather}</Text>
+         */}
+        <Text style={styles.title}>Wind {Math.round(windCondition)} mph</Text>
+        <Text style={styles.subtitle}>Gusts 2 mph</Text>
+        <MaterialCommunityIcons
+          style={styles.title}
+          size={48}
+          name="navigation"
+          color={"#fff"}
+        />
       </View>
     </View>
   );
@@ -30,6 +38,7 @@ export default class WeatherWidget extends React.Component {
   state = {
     isLoading: false,
     temperature: 0,
+    windCondition: 0,
     weatherCondition: null,
     error: null,
     lat: 33.44851,
@@ -64,6 +73,8 @@ export default class WeatherWidget extends React.Component {
         this.setState({
           temperature: json.main.temp,
           weatherCondition: json.weather[0].main,
+          windCondition: json.wind.speed,
+
           isLoading: false,
         });
       });
@@ -78,6 +89,7 @@ export default class WeatherWidget extends React.Component {
         ) : (
           <Weather
             weather={this.state.weatherCondition}
+            windCondition={this.state.windCondition}
             temperature={this.state.temperature}
           />
         )}
@@ -88,10 +100,11 @@ export default class WeatherWidget extends React.Component {
 
 const styles = StyleSheet.create({
   weatherContainer: {
-    width: "100%",
     flex: 1,
-    backgroundColor: "#f7b733",
+    backgroundColor: "#595959",
     borderRadius: 12,
+    borderColor: "lightgrey",
+    borderWidth: 1,
   },
   headerContainer: {
     flex: 1,
