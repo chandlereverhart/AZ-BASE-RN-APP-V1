@@ -41,6 +41,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
+import DrawerButton from "./src/components/Drawer/DrawerButton/DrawerButton";
 
 import { auth } from "./Firebase/firebase";
 
@@ -130,7 +131,7 @@ function MyTabs({ props }) {
   );
 }
 
-function MyStack({ props }) {
+function HomeStack({ props }) {
   const [isThemeDark, setIsThemeDark] = React.useState(false);
 
   let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
@@ -155,7 +156,9 @@ function MyStack({ props }) {
             headerTitleAlign: "center",
             headerTintColor: "rgba(255, 255, 255, 0.95)",
             headerTitle: () => <LogoTitle />,
-            headerBackTitle: null,
+            headerRight: () => <DrawerButton />,
+
+            headerBackTitle: "Back",
             headerTruncatedBackTitle: null,
             headerStyle: {
               height: 70,
@@ -252,21 +255,24 @@ function MyDrawer() {
     <Drawer.Navigator
       initialRouteName="Home"
       drawerPosition="right"
+      // screenOptions={() => ({
+      //   headerTitleAlign: "center",
+      //   headerTintColor: "rgba(255, 255, 255, 0.95)",
+      //   headerTitle: () => <LogoTitle />,
+      //   headerBackTitle: "Back",
+      //   headerTruncatedBackTitle: null,
+      //   headerBackTitle: null,
+      //   headerTruncatedBackTitle: null,
+      //   headerStyle: {
+      //     height: 70,
+      //   },
+      // })}
       screenOptions={() => ({
-        headerTitleAlign: "center",
-        headerTintColor: "rgba(255, 255, 255, 0.95)",
-        headerTitle: () => <LogoTitle />,
-        headerBackTitle: "Back",
-        headerTruncatedBackTitle: null,
-        headerBackTitle: null,
-        headerTruncatedBackTitle: null,
-        headerStyle: {
-          height: 70,
-        },
+        headerShown: false,
       })}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Home" component={MyStack} />
+      <Drawer.Screen name="Home" component={HomeStack} />
     </Drawer.Navigator>
   );
 }

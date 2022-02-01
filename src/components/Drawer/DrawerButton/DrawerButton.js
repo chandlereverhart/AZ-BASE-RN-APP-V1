@@ -5,8 +5,9 @@ import { useNavigation } from "@react-navigation/native";
 
 import { StyleSheet } from "react-native";
 
-const DrawerButton = ({ navigation }) => {
+const DrawerButton = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={styles.button}
@@ -21,7 +22,7 @@ const DrawerButton = ({ navigation }) => {
         }
       }}
     >
-      <Icon name={drawerOpen ? "close" : "menu"} style={styles.icon} />
+      <Icon name={"menu"} style={styles.icon} />
     </TouchableOpacity>
   );
 };
@@ -31,7 +32,6 @@ export default DrawerButton;
 const styles = StyleSheet.create({
   button: {
     height: "100%",
-    backgroundColor: "white",
     justifyContent: "center",
     display: "flex",
   },
