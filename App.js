@@ -4,11 +4,6 @@ import {
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
   Provider as PaperProvider,
-  TouchableRipple,
-  Switch,
-  View,
-  Text,
-  Drawer as PaperDrawer,
 } from "react-native-paper";
 import { APP_CONFIGURATION } from "./src/variables";
 
@@ -39,7 +34,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
-  DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
 import DrawerButton from "./src/components/Drawer/DrawerButton/DrawerButton";
@@ -228,20 +222,13 @@ function CustomDrawerContent(props) {
           }}
         />
       )}
-
-      <TouchableRipple onPress={() => toggleTheme()}>
-        <>
-          <Text>Dark Mode</Text>
-          <Switch color={"red"} value={isThemeDark} />
-        </>
-      </TouchableRipple>
     </DrawerContentScrollView>
   );
 }
 function LogoTitle() {
   return (
     <Image
-      style={{ width: 135, height: 40 }}
+      style={{ width: 135, height: 40, marginRight: 10 }}
       source={require("./src/assets/camelback-white.png")}
     />
   );

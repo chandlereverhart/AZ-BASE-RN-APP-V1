@@ -99,11 +99,15 @@ const LogBookForm = (props) => {
               style={styles.input}
             />
             <View style={styles.buttonView}>
-              <Button
-                onPress={handleSubmit}
-                title="Submit"
-                style={styles.saveBtn}
-              />
+              <View style={styles.deleteButton}>
+                <Button
+                  style={styles.deleteButton}
+                  title="Submit"
+                  color="white"
+                  accessibilityLabel="Learn more about this purple button"
+                  onPress={handleSubmit}
+                />
+              </View>
             </View>
           </View>
         )}
@@ -129,7 +133,7 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 10,
     width: "100%",
-    height: 30,
+    height: 40,
     backgroundColor: "white",
     borderRadius: 5,
     borderWidth: 1,
@@ -143,10 +147,11 @@ const styles = StyleSheet.create({
   saveBtn: {
     backgroundColor: "rgba(255, 255, 255, 0.95)",
     borderRadius: 5,
+    borderColor: "white",
+    borderWidth: 1,
     width: "50%",
     justifyContent: "center",
     alignItems: "center",
-    color: "black",
     width: "50%",
   },
 });

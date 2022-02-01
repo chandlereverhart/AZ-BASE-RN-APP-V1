@@ -7,7 +7,6 @@ import { StyleSheet } from "react-native";
 import { Divider, Text, withTheme } from "react-native-paper";
 
 const LogBookDetails = (props) => {
-  const { colors } = props.theme;
   const jump = props.route?.params?.jump?.item ?? {};
 
   const navigation = useNavigation();
@@ -38,7 +37,6 @@ const LogBookDetails = (props) => {
       console.log(err.message);
     }
   };
-  //   console.log("JUMP", jump);
 
   return (
     <>
@@ -65,8 +63,8 @@ const LogBookDetails = (props) => {
           </View>
           <View style={styles.logoView}>
             <Image
-              style={{ width: 220, height: 60 }}
-              source={require("../../../../src/assets/camelback.png")}
+              style={{ width: 120, height: 150 }}
+              source={require("../../../../src/assets/AZBASE-LOGO.png")}
             />
           </View>
         </Card>
@@ -105,13 +103,22 @@ const styles = StyleSheet.create({
     paddingBottom: "10%",
     backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
+  card: {
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    paddingTop: "10%",
+    paddingBottom: "10%",
+    paddingHorizontal: "10%",
+  },
   dividerView: {
     width: 200,
   },
   logoView: {
-    marginTop: 100,
-    width: "100%",
-    opacity: 0.07,
+    marginTop: 50,
+    opacity: 0.2,
   },
   detailsView: {
     marginTop: 50,
@@ -153,14 +160,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 5,
     width: "50%",
-  },
-  card: {
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
-    paddingTop: "10%",
-    paddingBottom: "10%",
   },
 });
