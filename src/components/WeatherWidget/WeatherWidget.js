@@ -70,11 +70,11 @@ const Weather = ({
               style={{
                 transform: [{ rotateZ: `${direction + 180}deg` }],
                 position: "absolute",
-                left: "42%",
+                left: "36%",
               }}
               size={48}
               name="navigation"
-              color={"#fff"}
+              color={"rgba(255, 255, 255, 0.8)"}
             />
           </View>
         </View>
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   weatherCard: {
     flex: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.15)",
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   tempText: {
     fontSize: 48,
-    color: "#fff",
+    color: "rgba(255, 255, 255, 0.8)",
     textAlign: "center",
   },
   sunTimes: {

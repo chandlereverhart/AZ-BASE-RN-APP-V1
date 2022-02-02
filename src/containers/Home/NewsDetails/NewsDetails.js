@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Button } from "react-native";
+import { View, Button, Image } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
@@ -56,6 +56,12 @@ const NewsDetails = (props) => {
             <Text style={styles.otherText}>{news.date}</Text>
             <Text style={styles.otherText}>{news.description}</Text>
           </View>
+          <View style={styles.logoView}>
+            <Image
+              style={{ width: 120, height: 150 }}
+              source={require("../../../../src/assets/AZBASE-LOGO.png")}
+            />
+          </View>
         </Card>
         <View style={styles.buttonView}>
           <View style={styles.deleteButton}>
@@ -99,6 +105,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontWeight: "300",
   },
+  logoView: {
+    opacity: 0.1,
+    position: "absolute",
+    marginTop: 250,
+  },
+
   otherText: {
     fontSize: 18,
     marginVertical: 10,

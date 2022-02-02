@@ -149,7 +149,6 @@ function HomeStack({ props }) {
             headerTintColor: "rgba(255, 255, 255, 0.8)",
             headerTitle: () => <LogoTitle />,
             headerRight: () => <DrawerButton />,
-
             headerBackTitle: "Back",
             headerTruncatedBackTitle: null,
             headerStyle: {

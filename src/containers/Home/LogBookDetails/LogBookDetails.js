@@ -116,9 +116,11 @@ const styles = StyleSheet.create({
     width: 200,
   },
   logoView: {
-    marginTop: 50,
     opacity: 0.1,
+    position: "absolute",
+    marginTop: 250,
   },
+
   detailsView: {
     marginTop: 50,
     alignItems: "center",
