@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: "10%",
     paddingBottom: "10%",
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
   card: {
     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -118,7 +117,7 @@ const styles = StyleSheet.create({
   },
   logoView: {
     marginTop: 50,
-    opacity: 0.2,
+    opacity: 0.1,
   },
   detailsView: {
     marginTop: 50,
@@ -134,11 +133,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontWeight: "600",
     fontWeight: "300",
+    opacity: 0.8,
   },
   otherText: {
     fontSize: 18,
     marginVertical: 10,
     fontWeight: "200",
+    opacity: 0.8,
   },
   buttonView: {
     paddingVertical: 30,
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   editButton: {
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderColor: "black",
     borderWidth: 1,
     borderRadius: 5,
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     width: "50%",
   },
   deleteButton: {
-    borderColor: "rgba(255, 255, 255, 0.95)",
+    borderColor: "rgba(255, 255, 255, 0.8)",
     borderWidth: 1,
     borderRadius: 5,
     marginHorizontal: 5,

@@ -146,7 +146,7 @@ function HomeStack({ props }) {
           initialRouteName={initialRoute}
           screenOptions={() => ({
             headerTitleAlign: "center",
-            headerTintColor: "rgba(255, 255, 255, 0.95)",
+            headerTintColor: "rgba(255, 255, 255, 0.8)",
             headerTitle: () => <LogoTitle />,
             headerRight: () => <DrawerButton />,
 
@@ -228,7 +228,7 @@ function CustomDrawerContent(props) {
 function LogoTitle() {
   return (
     <Image
-      style={{ width: 135, height: 40, marginRight: 10 }}
+      style={{ width: 135, height: 40, marginRight: 10, opacity: 0.8 }}
       source={require("./src/assets/camelback-white.png")}
     />
   );

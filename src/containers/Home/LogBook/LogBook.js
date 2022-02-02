@@ -132,18 +132,8 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 16,
   },
-  totalView: {
-    alignItems: "center",
-  },
-  totalText: {
-    fontSize: 20,
-    marginVertical: 10,
-    fontWeight: "600",
-    fontWeight: "300",
-  },
   saveBtn: {
-    backgroundColor: "rgba(255, 255, 255, .95)",
-
+    backgroundColor: "rgba(255, 255, 255, .8)",
     borderRadius: 5,
     width: "50%",
     justifyContent: "center",
@@ -159,7 +149,6 @@ const styles = StyleSheet.create({
     minHeight: "100%",
     alignItems: "center",
     paddingBottom: 70,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
   card: {
     height: 40,
@@ -168,14 +157,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderRadius: 10,
-    borderColor: "#b0b0b0",
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
-
+    borderColor: "rgba(255, 255, 255, 0.15)",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderWidth: 1,
     marginBottom: 5,
   },
   cardText: {
     fontSize: 16,
-    opacity: 0.9,
+    color: "rgba(255, 255, 255, 0.8)",
   },
 });

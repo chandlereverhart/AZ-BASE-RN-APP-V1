@@ -43,7 +43,7 @@ const ExitDetails = (props) => {
   return (
     <>
       <View style={styles.pageContent}>
-        <Card style={styles.pageContent}>
+        <Card style={styles.card}>
           <View style={styles.detailsView}>
             <View style={styles.dividerView}>
               <Divider>
@@ -51,7 +51,7 @@ const ExitDetails = (props) => {
               </Divider>
             </View>
 
-            <Text style={styles.totalText}>"{exit.exitName}"</Text>
+            <Text style={styles.titleText}>"{exit.exitName}"</Text>
             <View style={styles.dividerView}>
               <Divider>
                 <Text>Divider</Text>
@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
     paddingTop: "10%",
     paddingBottom: "10%",
   },
@@ -100,37 +99,37 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  totalText: {
+  titleText: {
     fontSize: 20,
     marginVertical: 10,
     fontWeight: "600",
     fontWeight: "300",
+    opacity: 0.8,
   },
   otherText: {
     fontSize: 18,
     marginVertical: 10,
     fontWeight: "200",
+    opacity: 0.8,
   },
   buttonView: {
     paddingVertical: 30,
   },
   deleteButton: {
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 5,
     width: "50%",
     justifyContent: "center",
     alignItems: "center",
   },
   card: {
-    width: "90%",
-    height: 40,
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    flex: 1,
+    width: "100%",
+    height: "100%",
     alignItems: "center",
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderRadius: 10,
-    borderColor: "#b0b0b0",
-    borderWidth: 1,
-    marginBottom: 5,
+    paddingTop: "10%",
+    paddingBottom: "10%",
+    paddingHorizontal: "10%",
   },
 });

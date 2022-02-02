@@ -44,7 +44,7 @@ const Weather = ({
                 style={styles.sunIcon}
                 size={35}
                 name="weather-sunny"
-                color={"#fff"}
+                color={"rgba(255, 255, 255, 0.8)"}
               />
               <Text style={styles.sunText}>: {getTime(sunrise)} </Text>
             </View>
@@ -53,7 +53,7 @@ const Weather = ({
                 style={styles.sunIcon}
                 size={30}
                 name="weather-night"
-                color={"#fff"}
+                color={"rgba(255, 255, 255, 0.8)"}
               />
               <Text style={styles.sunText}>: {getTime(sunset - 43200)}</Text>
             </View>
@@ -165,9 +165,10 @@ const styles = StyleSheet.create({
   },
   weatherCard: {
     flex: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
     borderRadius: 12,
     borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.15)",
     paddingVertical: 30,
     paddingHorizontal: 30,
   },
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
   },
   sunText: {
     fontSize: 20,
-    color: "#fff",
+    color: "rgba(255, 255, 255, 0.8)",
     textAlign: "center",
   },
   bodyContainer: {
@@ -217,12 +218,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    color: "#fff",
+    color: "rgba(255, 255, 255, 0.8)",
     textAlign: "center",
   },
   subtitle: {
     fontSize: 24,
-    color: "#fff",
+    color: "rgba(255, 255, 255, 0.4)",
     textAlign: "center",
   },
   windIcon: {

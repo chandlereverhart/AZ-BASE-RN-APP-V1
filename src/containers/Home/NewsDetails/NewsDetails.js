@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: "10%",
     paddingBottom: "10%",
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
   dividerView: {
     width: 200,
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   deleteButton: {
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 5,
     width: "50%",
     justifyContent: "center",
@@ -125,6 +124,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: "10%",
     paddingBottom: "10%",
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
 });

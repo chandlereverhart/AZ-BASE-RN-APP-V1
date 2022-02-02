@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     fontWeight: "300",
   },
   saveBtn: {
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderWidth: 1,
     borderRadius: 5,
     width: "50%",
@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
     minHeight: "100%",
     alignItems: "center",
     paddingBottom: 70,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
   card: {
     height: 40,
@@ -171,13 +170,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderRadius: 10,
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: "rgba(255, 255, 255, 0.15)",
+
     borderWidth: 1,
     marginBottom: 5,
   },
   cardText: {
     fontSize: 16,
     opacity: 0.95,
-    color: "black",
+    color: "rgba(255, 255, 255, 0.8)",
   },
 });
