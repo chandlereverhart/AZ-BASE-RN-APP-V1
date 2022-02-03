@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Animated } from "react-native";
-import { useTheme, Card } from "react-native-paper";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { Card } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { API_KEY } from "../../utils/WeatherAPIKey";
 import * as Location from "expo-location";
 
 const Weather = ({
-  weather,
   sunrise,
   sunset,
   windSpeed,
@@ -14,39 +13,51 @@ const Weather = ({
   direction,
   temperature,
   hourly,
+  currentTime,
 }) => {
-  const theme = useTheme();
-
   function convertToF(celsius) {
     return (celsius * 9) / 5 + 32;
   }
-
+  // Time Handlers
   function getTime(timestamp) {
     var date = new Date(timestamp * 1000);
     var hours = date.getHours();
     var minutes = "0" + date.getMinutes();
-
     var formattedTime = hours + ":" + minutes.substr(-2);
     return formattedTime;
   }
+  function getHourlyTime(timestamp) {
+    var date = new Date(timestamp * 1000);
+    var getHours = date.getHours();
+    var hours = getHours > 12 ? getHours - 12 : getHours;
+    var formattedTime = `${hours}`;
+    return formattedTime;
+  }
+  function getAmPm(timestamp) {
+    var date = new Date(timestamp * 1000);
+    var getHours = date.getHours();
+    var formattedTime = `${getHours > 12 ? "pm" : "am"} `;
+    return formattedTime;
+  }
+
   const TABLE_HEAD = [
     {
-      label: "Now",
+      label: getHourlyTime(currentTime + 3600) + getAmPm(currentTime),
     },
     {
-      label: "1hr",
+      label: getHourlyTime(currentTime + 7200) + getAmPm(currentTime),
     },
     {
-      label: "2hr",
+      label: getHourlyTime(currentTime + 10800) + getAmPm(currentTime),
     },
     {
-      label: "3hr",
+      label: getHourlyTime(currentTime + 14400) + getAmPm(currentTime),
     },
     {
-      label: "4hr",
+      label: getHourlyTime(currentTime + 18000) + getAmPm(currentTime),
     },
     {
-      label: "5hr",
+      label: getHourlyTime(currentTime + 21600) + getAmPm(currentTime),
     },
   ];
 
@@ -78,22 +89,24 @@ const Weather = ({
               <Text style={styles.sunText}>: {getTime(sunset - 43200)}</Text>
             </View>
           </View>
+          <View style={styles.commentView}>
+            <Text style={styles.commentText}>It's Good.</Text>
+          </View>
         </View>
         <View style={styles.hourlyContainer}>
           <View style={styles.hourlyColumns}>
-            {hourly.map((item, index) => {
+            {hourly.map((item, index, key) => {
               return (
                 <>
                   <View style={styles.column}>
                     <Text style={styles.hourlyText}>
                       {TABLE_HEAD[index].label}
                     </Text>
-
                     <Text style={styles.hourlyText}>
-                      {hourly[index].wind_speed}
+                      {Math.round(item.wind_speed * 2.2)}
                     </Text>
                     <Text style={styles.hourlyText}>
-                      {hourly[index].wind_gust}
+                      {Math.round(item.wind_gust * 2.2)}
                     </Text>
                     <View>
                       <MaterialCommunityIcons
@@ -101,7 +114,7 @@ const Weather = ({
                         style={{
                           transform: [
                             {
-                              rotateZ: `${hourly[index].wind_deg + 180}deg`,
+                              rotateZ: `${item.wind_deg + 180}deg`,
                             },
                           ],
                           position: "absolute",
@@ -157,6 +170,7 @@ export default class WeatherWidget extends React.Component {
     lat: 33.44851,
     lng: -111.47684,
     hourly: [],
+    currentTime: null,
   };
 
   componentDidMount() {
@@ -183,7 +197,6 @@ export default class WeatherWidget extends React.Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        // console.log(json);
         this.setState({
           temperature: json.current.temp,
           sunrise: json.current.sunrise,
@@ -193,9 +206,9 @@ export default class WeatherWidget extends React.Component {
           windGusts: json.current.wind_gust,
           direction: json.current.wind_deg,
           hourly: json.hourly.slice(0, 5),
+          currentTime: json.current.dt,
           isLoading: false,
         });
-        console.log(json.hourly[0]);
       });
   }
 
@@ -215,6 +228,7 @@ export default class WeatherWidget extends React.Component {
             windGusts={this.state.windGusts}
             direction={this.state.direction}
             hourly={this.state.hourly}
+            currentTime={this.state.currentTime}
           />
         )}
       </View>
@@ -298,6 +312,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     paddingHorizontal: 25,
     marginBottom: 40,
+  },
+  commentText: {
+    marginTop: 10,
+    fontSize: 32,
+    color: "rgba(255, 255, 255, 0.8)",
+    textAlign: "center",
   },
   title: {
     fontSize: 32,
