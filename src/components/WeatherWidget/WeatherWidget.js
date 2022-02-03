@@ -28,8 +28,60 @@ const Weather = ({
     var formattedTime = hours + ":" + minutes.substr(-2);
     return formattedTime;
   }
+  const TABLE_HEAD = [
+    {
+      label: "Now",
+    },
+    {
+      label: "1hr",
+    },
+    {
+      label: "2hr",
+    },
+    {
+      label: "3hr",
+    },
+    {
+      label: "4hr",
+    },
+    {
+      label: "5hr",
+    },
+  ];
 
-  convertToF(30);
+  const hourly = [
+    {
+      wind_deg: 164,
+      wind_gust: 5,
+      wind_speed: 3,
+    },
+    {
+      wind_deg: 64,
+      wind_gust: 7,
+      wind_speed: 4,
+    },
+    {
+      wind_deg: 24,
+      wind_gust: 9,
+      wind_speed: 5,
+    },
+    {
+      wind_deg: 234,
+      wind_gust: 4,
+      wind_speed: 1,
+    },
+    {
+      wind_deg: 24,
+      wind_gust: 9,
+      wind_speed: 5,
+    },
+    {
+      wind_deg: 234,
+      wind_gust: 4,
+      wind_speed: 1,
+    },
+  ];
+
   return (
     <View style={styles.weatherContainer}>
       <Card style={styles.weatherCard}>
@@ -59,23 +111,55 @@ const Weather = ({
             </View>
           </View>
         </View>
-        <View style={styles.bodyContainer}>
-          <Text style={styles.title}>Wind {Math.round(windSpeed + 2)} mph</Text>
-          <Text style={styles.subtitle}>
-            Gusts {Math.round(windGusts + 3)} mph
-          </Text>
-          <View>
-            <MaterialCommunityIcons
-              style={styles.windIcon}
-              style={{
-                transform: [{ rotateZ: `${direction + 180}deg` }],
-                position: "absolute",
-                left: "36%",
-              }}
-              size={48}
-              name="navigation"
-              color={"rgba(255, 255, 255, 0.8)"}
-            />
+        <View style={styles.hourlyContainer}>
+          <View style={styles.hourlyColumns}>
+            {hourly.map((item, index) => {
+              return (
+                <>
+                  <View style={styles.column}>
+                    <Text style={styles.hourlyText}>
+                      {TABLE_HEAD[index].label}
+                    </Text>
+
+                    <Text style={styles.hourlyText}>{item.wind_speed}</Text>
+                    <Text style={styles.hourlyText}>{item.wind_gust}</Text>
+                    <View>
+                      <MaterialCommunityIcons
+                        style={styles.hourlyWindIcon}
+                        style={{
+                          transform: [{ rotateZ: `${item.wind_deg + 180}deg` }],
+                          position: "absolute",
+                        }}
+                        size={10}
+                        name="navigation"
+                        color={"rgba(255, 255, 255, 0.9)"}
+                      />
+                    </View>
+                  </View>
+                </>
+              );
+            })}
+          </View>
+          <View style={styles.bodyContainer}>
+            <Text style={styles.title}>
+              Wind {Math.round(windSpeed * 2.2)} mph
+            </Text>
+            <Text style={styles.subtitle}>
+              Gusts {Math.round(windGusts * 2.2)} mph
+            </Text>
+            <View>
+              <MaterialCommunityIcons
+                style={styles.windIcon}
+                style={{
+                  transform: [{ rotateZ: `${direction + 180}deg` }],
+                  position: "absolute",
+                  left: "36%",
+                }}
+                size={48}
+                name="navigation"
+                color={"rgba(255, 255, 255, 0.8)"}
+              />
+            </View>
           </View>
         </View>
       </Card>
@@ -118,19 +202,19 @@ export default class WeatherWidget extends React.Component {
 
   fetchWeather(lat = 25, lon = 25) {
     fetch(
-      `http://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.lng}&APPID=${API_KEY}&units=metric`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.lat}&lon=${this.state.lng}&exclude=minutely&appid=${API_KEY}&units=metric`
     )
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
         this.setState({
-          temperature: json.main.temp,
-          sunrise: json.sys.sunrise,
-          sunset: json.sys.sunset,
-          weatherCondition: json.weather[0].main,
-          windSpeed: json.wind.speed,
-          windGusts: json.wind.gust,
-          direction: json.wind.deg,
+          temperature: json.current.temp,
+          sunrise: json.current.sunrise,
+          sunset: json.current.sunset,
+          weatherCondition: json.current.weather[0].main,
+          windSpeed: json.current.wind_speed,
+          windGusts: json.current.wind_gust,
+          direction: json.current.wind_deg,
 
           isLoading: false,
         });
@@ -176,6 +260,31 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  hourlyContainer: {
+    flex: 1,
+    marginTop: 30,
+  },
+  hourlyCard: {
+    borderRadius: 12,
+    borderWidth: 1,
+    marginTop: 30,
+  },
+  hourlyColumns: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  column: {
+    flex: 1,
+    borderRightColor: "rgba(255, 255, 255, 0.8)",
+    borderRightWidth: 1,
+  },
+  hourlyText: {
+    color: "white",
+  },
+  hourlyWindIcon: {
+    display: "flex",
+    textAlign: "center",
   },
   tempText: {
     fontSize: 48,
@@ -226,6 +335,7 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, 0.4)",
     textAlign: "center",
   },
+
   windIcon: {
     display: "flex",
     textAlign: "center",
