@@ -13,6 +13,7 @@ const Weather = ({
   windGusts,
   direction,
   temperature,
+  hourly,
 }) => {
   const theme = useTheme();
 
@@ -46,39 +47,6 @@ const Weather = ({
     },
     {
       label: "5hr",
-    },
-  ];
-
-  const hourly = [
-    {
-      wind_deg: 164,
-      wind_gust: 5,
-      wind_speed: 3,
-    },
-    {
-      wind_deg: 64,
-      wind_gust: 7,
-      wind_speed: 4,
-    },
-    {
-      wind_deg: 24,
-      wind_gust: 9,
-      wind_speed: 5,
-    },
-    {
-      wind_deg: 234,
-      wind_gust: 4,
-      wind_speed: 1,
-    },
-    {
-      wind_deg: 24,
-      wind_gust: 9,
-      wind_speed: 5,
-    },
-    {
-      wind_deg: 234,
-      wind_gust: 4,
-      wind_speed: 1,
     },
   ];
 
@@ -121,16 +89,24 @@ const Weather = ({
                       {TABLE_HEAD[index].label}
                     </Text>
 
-                    <Text style={styles.hourlyText}>{item.wind_speed}</Text>
-                    <Text style={styles.hourlyText}>{item.wind_gust}</Text>
+                    <Text style={styles.hourlyText}>
+                      {hourly[index].wind_speed}
+                    </Text>
+                    <Text style={styles.hourlyText}>
+                      {hourly[index].wind_gust}
+                    </Text>
                     <View>
                       <MaterialCommunityIcons
                         style={styles.hourlyWindIcon}
                         style={{
-                          transform: [{ rotateZ: `${item.wind_deg + 180}deg` }],
+                          transform: [
+                            {
+                              rotateZ: `${hourly[index].wind_deg + 180}deg`,
+                            },
+                          ],
                           position: "absolute",
                         }}
-                        size={10}
+                        size={16}
                         name="navigation"
                         color={"rgba(255, 255, 255, 0.9)"}
                       />
@@ -180,6 +156,7 @@ export default class WeatherWidget extends React.Component {
     error: null,
     lat: 33.44851,
     lng: -111.47684,
+    hourly: [],
   };
 
   componentDidMount() {
@@ -206,7 +183,7 @@ export default class WeatherWidget extends React.Component {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
+        // console.log(json);
         this.setState({
           temperature: json.current.temp,
           sunrise: json.current.sunrise,
@@ -215,9 +192,10 @@ export default class WeatherWidget extends React.Component {
           windSpeed: json.current.wind_speed,
           windGusts: json.current.wind_gust,
           direction: json.current.wind_deg,
-
+          hourly: json.hourly.slice(0, 5),
           isLoading: false,
         });
+        console.log(json.hourly[0]);
       });
   }
 
@@ -236,6 +214,7 @@ export default class WeatherWidget extends React.Component {
             windSpeed={this.state.windSpeed}
             windGusts={this.state.windGusts}
             direction={this.state.direction}
+            hourly={this.state.hourly}
           />
         )}
       </View>
@@ -259,28 +238,23 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
   },
   hourlyContainer: {
     flex: 1,
-    marginTop: 30,
   },
-  hourlyCard: {
-    borderRadius: 12,
-    borderWidth: 1,
-    marginTop: 30,
-  },
+
   hourlyColumns: {
-    display: "flex",
     flexDirection: "row",
   },
   column: {
     flex: 1,
     borderRightColor: "rgba(255, 255, 255, 0.8)",
     borderRightWidth: 1,
+    marginLeft: 3,
   },
   hourlyText: {
     color: "white",
+    fontSize: 16,
   },
   hourlyWindIcon: {
     display: "flex",
