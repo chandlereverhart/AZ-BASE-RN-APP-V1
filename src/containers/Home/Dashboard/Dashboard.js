@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
-import { Card } from "react-native-paper";
 
 import WeatherWidget from "../../../components/WeatherWidget/WeatherWidget";
-
-// components
 
 const Dashboard = (props) => {
   const [loading, setLoading] = useState(true);

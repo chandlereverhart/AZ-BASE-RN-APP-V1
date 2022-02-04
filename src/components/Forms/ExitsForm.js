@@ -94,12 +94,16 @@ const ExitsForm = (props) => {
               placeholder="Description"
               style={styles.input}
             />
-            <Button
-              onPress={handleSubmit}
-              title="Submit"
-              color="white"
-              style={styles.saveBtn}
-            />
+            <View style={styles.buttonView}>
+              <View style={styles.saveBtn}>
+                <Button
+                  title="Submit"
+                  color="black"
+                  accessibilityLabel="Learn more about this purple button"
+                  onPress={handleSubmit}
+                />
+              </View>
+            </View>
           </View>
         )}
       </Formik>
@@ -119,13 +123,13 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "rgba(255, 255, 255, 0.2)",
     paddingHorizontal: 10,
-    paddingVertical: 10,
+    paddingVertical: 50,
   },
   input: {
     paddingHorizontal: 10,
     width: "100%",
     height: 40,
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
     borderRadius: 5,
     borderWidth: 1,
     borderColor: "lightgrey",
@@ -134,13 +138,15 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     paddingHorizontal: 30,
+    paddingVertical: 30,
+
+    alignItems: "center",
   },
   saveBtn: {
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 5,
     borderColor: "white",
     borderWidth: 1,
-    width: "50%",
     justifyContent: "center",
     alignItems: "center",
     width: "50%",

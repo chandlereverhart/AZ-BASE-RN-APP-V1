@@ -201,8 +201,7 @@ function CustomDrawerContent(props) {
           props.navigation.navigate("Home");
         }}
       />
-      <DrawerItem label="Notifications" onPress={() => {}} />
-      <DrawerItem label="Account" onPress={() => {}} />
+
       <DrawerItem
         label="Contact Us"
         onPress={() => {

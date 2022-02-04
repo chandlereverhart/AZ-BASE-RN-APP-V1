@@ -54,7 +54,6 @@ const News = (props) => {
     setLoading(false);
   }
   async function _getUsers() {
-    console.log(userId);
     setLoading(true);
     try {
       const snapShot = await db.collection("users").doc(userId).get();
@@ -65,14 +64,12 @@ const News = (props) => {
     }
     setLoading(false);
   }
-  console.log("USER", user);
 
   const openForm = () => {
     navigation.navigate("NewsForm");
   };
 
   const Item = ({ item, index }) => (
-    // console.log("NEWS", item),
     <Card
       style={styles.card}
       key={index}
@@ -103,7 +100,6 @@ const News = (props) => {
             keyExtractor={(item) => item.id}
             style={styles.flatList}
             contentContainerStyle={styles.flatlist}
-            // onEndReached={handleEndReached}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}

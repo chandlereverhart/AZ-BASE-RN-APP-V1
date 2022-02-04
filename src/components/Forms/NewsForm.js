@@ -74,11 +74,16 @@ const NewsForm = (props) => {
               placeholder="Description"
               style={styles.input}
             />
-            <Button
-              onPress={handleSubmit}
-              title="Submit"
-              style={styles.saveBtn}
-            />
+            <View style={styles.buttonView}>
+              <View style={styles.saveBtn}>
+                <Button
+                  title="Submit"
+                  color="black"
+                  accessibilityLabel="Learn more about this purple button"
+                  onPress={handleSubmit}
+                />
+              </View>
+            </View>
           </View>
         )}
       </Formik>
@@ -96,21 +101,34 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "100%",
     height: "100%",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    paddingHorizontal: 10,
+    paddingVertical: 50,
   },
   input: {
     paddingHorizontal: 10,
     width: "100%",
-    height: 30,
-    backgroundColor: "white",
+    height: 40,
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
     borderRadius: 5,
     borderWidth: 1,
     borderColor: "lightgrey",
     marginBottom: 10,
     marginTop: 10,
   },
+  buttonView: {
+    paddingHorizontal: 30,
+    paddingVertical: 30,
+
+    alignItems: "center",
+  },
   saveBtn: {
-    backgroundColor: "grey",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 5,
+    borderColor: "white",
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
     width: "50%",
   },
 });
