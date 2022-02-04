@@ -56,12 +56,10 @@ const Weather = ({
     {
       label: getHourlyTime(currentTime + 18000) + getAmPm(currentTime),
     },
-    {
-      label: getHourlyTime(currentTime + 21600) + getAmPm(currentTime),
-    },
   ];
 
-  const weatherComment = windGusts * 2.2 < 6 ? "It's Good." : "Ehhhhh...";
+  const weatherComment =
+    windGusts * 2.2 < 6 && windSpeed * 2.2 < 6 ? "It's Good." : "Ehhhhh...";
 
   const HourlyItem = (item) => {
     return (
@@ -95,6 +93,7 @@ const Weather = ({
       </>
     );
   };
+
   return (
     <View style={styles.weatherContainer}>
       <Card style={styles.weatherCard}>
@@ -127,6 +126,7 @@ const Weather = ({
             <Text style={styles.commentText}>{weatherComment}</Text>
           </View>
         </View>
+
         <View style={styles.hourlyContainer}>
           <View style={styles.hourlyColumns}>
             {hourly.map((item, index) => {
