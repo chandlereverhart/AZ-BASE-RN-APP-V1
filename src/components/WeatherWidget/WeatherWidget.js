@@ -61,6 +61,40 @@ const Weather = ({
     },
   ];
 
+  const weatherComment = windGusts * 2.2 < 6 ? "It's Good." : "Ehhhhh...";
+
+  const HourlyItem = (item) => {
+    return (
+      <>
+        <View style={styles.column}>
+          <Text style={styles.hourlyText}>{TABLE_HEAD[item.index].label}</Text>
+          <Text style={styles.hourlyText}>
+            {Math.round(item.item.wind_speed * 2.2)}
+          </Text>
+          <Text style={styles.hourlyText}>
+            {Math.round(item.item.wind_gust * 2.2)}
+          </Text>
+          <View>
+            <MaterialCommunityIcons
+              style={styles.hourlyWindIcon}
+              style={{
+                transform: [
+                  {
+                    rotateZ: `${item.item.wind_deg + 180}deg`,
+                  },
+                ],
+                position: "absolute",
+              }}
+              size={16}
+              name="navigation"
+              color={"rgba(255, 255, 255, 0.9)"}
+            />
+          </View>
+        </View>
+        <View style={styles.verticleLine}></View>
+      </>
+    );
+  };
   return (
     <View style={styles.weatherContainer}>
       <Card style={styles.weatherCard}>
@@ -90,43 +124,13 @@ const Weather = ({
             </View>
           </View>
           <View style={styles.commentView}>
-            <Text style={styles.commentText}>It's Good.</Text>
+            <Text style={styles.commentText}>{weatherComment}</Text>
           </View>
         </View>
         <View style={styles.hourlyContainer}>
           <View style={styles.hourlyColumns}>
-            {hourly.map((item, index, key) => {
-              return (
-                <>
-                  <View style={styles.column}>
-                    <Text style={styles.hourlyText}>
-                      {TABLE_HEAD[index].label}
-                    </Text>
-                    <Text style={styles.hourlyText}>
-                      {Math.round(item.wind_speed * 2.2)}
-                    </Text>
-                    <Text style={styles.hourlyText}>
-                      {Math.round(item.wind_gust * 2.2)}
-                    </Text>
-                    <View>
-                      <MaterialCommunityIcons
-                        style={styles.hourlyWindIcon}
-                        style={{
-                          transform: [
-                            {
-                              rotateZ: `${item.wind_deg + 180}deg`,
-                            },
-                          ],
-                          position: "absolute",
-                        }}
-                        size={16}
-                        name="navigation"
-                        color={"rgba(255, 255, 255, 0.9)"}
-                      />
-                    </View>
-                  </View>
-                </>
-              );
+            {hourly.map((item, index) => {
+              return <HourlyItem item={item} index={index} key={index} />;
             })}
           </View>
           <View style={styles.bodyContainer}>
@@ -262,9 +266,12 @@ const styles = StyleSheet.create({
   },
   column: {
     flex: 1,
-    borderRightColor: "rgba(255, 255, 255, 0.8)",
-    borderRightWidth: 1,
-    marginLeft: 3,
+  },
+  verticleLine: {
+    height: "130%",
+    width: 0.5,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    marginRight: 4,
   },
   hourlyText: {
     color: "white",
@@ -329,7 +336,6 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, 0.4)",
     textAlign: "center",
   },
-
   windIcon: {
     display: "flex",
     textAlign: "center",
