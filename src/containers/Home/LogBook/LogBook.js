@@ -13,6 +13,21 @@ import { Card } from "react-native-ui-lib";
 import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 import { fDate } from "../../../utils/DateFunctions";
+import { startLocationUpdatesAsync } from "expo-location";
+
+function applySortFilter(array, query) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+
+  if (query) {
+    return filter(
+      array,
+      (_notification) =>
+        _notification.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
+    );
+  }
+
+  return stabilizedThis.map((el) => el[0]);
+}
 
 const LogBook = (props) => {
   const [loading, setLoading] = useState(true);
@@ -56,7 +71,6 @@ const LogBook = (props) => {
   const openForm = () => {
     navigation.navigate("LogBookForm");
   };
-
   const Item = ({ item, index }) => (
     <Card
       style={styles.card}
@@ -80,7 +94,6 @@ const LogBook = (props) => {
     return <Item item={item} />;
   };
 
-  // console.log("LOGBOOK", logBook);
   return (
     <>
       <View style={styles.bottomHalf}>

@@ -18,7 +18,6 @@ const LoginScreen = (props) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user.uid);
         setUserId(user.uid);
         navigation.replace("MyTabs");
       }
