@@ -5,9 +5,11 @@ import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 import { StyleSheet } from "react-native";
 import { Divider, Text, withTheme } from "react-native-paper";
+import { fDate } from "../../../utils/DateFunctions";
 
 const LogBookDetails = (props) => {
   const jump = props.route?.params?.jump?.item ?? {};
+  const createdAt = jump?.createdAt ? fDate(jump.createdAt.seconds * 1000) : "";
 
   const navigation = useNavigation();
 
@@ -60,6 +62,7 @@ const LogBookDetails = (props) => {
             </View>
 
             <Text style={styles.otherText}>{jump.otherDetails}</Text>
+            <Text style={styles.otherText}>{createdAt}</Text>
           </View>
           <View style={styles.logoView}>
             <Image

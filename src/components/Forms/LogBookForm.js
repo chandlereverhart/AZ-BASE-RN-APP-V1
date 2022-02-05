@@ -68,6 +68,7 @@ const LogBookForm = (props) => {
           jumpNumber: jump?.jumpNumber?.toString() || "",
           exitName: jump?.exitName || "",
           otherDetails: jump?.otherDetails || "",
+          createdAt: jump?.createdAt || new Date(),
           id: jump?.id || "",
         }}
         onSubmit={(values) => handleSubmit(values)}
