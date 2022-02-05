@@ -12,6 +12,7 @@ import { Card } from "react-native-ui-lib";
 
 import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
+import { fDate } from "../../../utils/DateFunctions";
 
 const LogBook = (props) => {
   const [loading, setLoading] = useState(true);
@@ -57,7 +58,6 @@ const LogBook = (props) => {
   };
 
   const Item = ({ item, index }) => (
-    // console.log("ITEM", item),
     <Card
       style={styles.card}
       key={index}
@@ -68,7 +68,12 @@ const LogBook = (props) => {
         })
       }
     >
-      <Text style={styles.cardText}>Jump #{item.jumpNumber}</Text>
+      <View style={styles.cardTextView}>
+        <Text style={styles.cardText}>Jump #{item.jumpNumber}</Text>
+        <Text style={styles.dateText}>
+          {item?.createdAt ? fDate(item.createdAt.seconds * 1000) : ""}
+        </Text>
+      </View>
     </Card>
   );
   const renderItem = ({ item }) => {
@@ -153,7 +158,6 @@ const styles = StyleSheet.create({
   card: {
     height: 40,
     minWidth: "100%",
-    alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderRadius: 10,
@@ -162,8 +166,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 5,
   },
+  cardTextView: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+
   cardText: {
     fontSize: 16,
     color: "rgba(255, 255, 255, 0.8)",
+    marginHorizontal: 10,
+  },
+  dateText: {
+    fontSize: 16,
+    color: "rgba(255, 255, 255, 0.8)",
+    marginHorizontal: 10,
+    justifyContent: "flex-end",
   },
 });

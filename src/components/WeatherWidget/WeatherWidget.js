@@ -65,7 +65,7 @@ const Weather = ({
     return (
       <>
         <View style={styles.column}>
-          <Text style={styles.hourlyText}>{TABLE_HEAD[item.index].label}</Text>
+          <Text style={styles.pmText}>{TABLE_HEAD[item.index].label}</Text>
           <Text style={styles.hourlyText}>
             {Math.round(item.item.wind_speed * 2.2)}
           </Text>
@@ -82,6 +82,7 @@ const Weather = ({
                   },
                 ],
                 position: "absolute",
+                marginLeft: 10,
               }}
               size={16}
               name="navigation"
@@ -273,9 +274,14 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.7)",
     marginRight: 4,
   },
+  pmText: {
+    color: "white",
+    fontSize: 16,
+  },
   hourlyText: {
     color: "white",
     fontSize: 16,
+    marginLeft: "25%",
   },
   hourlyWindIcon: {
     display: "flex",

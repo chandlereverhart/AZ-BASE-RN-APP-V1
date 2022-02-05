@@ -3,7 +3,7 @@ import { format, getTime, formatDistanceToNow, fromUnixTime } from "date-fns";
 // ----------------------------------------------------------------------
 
 export function fDate(date, customFormat) {
-  const defaultFormat = "MMMM d, yyyy";
+  const defaultFormat = "MMM d, yyyy";
   return format(new Date(date), !customFormat ? defaultFormat : customFormat);
 }
 export function fDateComp(date, customFormat) {
