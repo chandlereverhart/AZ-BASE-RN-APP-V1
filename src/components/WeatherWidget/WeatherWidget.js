@@ -36,25 +36,25 @@ const Weather = ({
   function getAmPm(timestamp) {
     var date = new Date(timestamp * 1000);
     var getHours = date.getHours();
-    var formattedTime = `${getHours > 12 ? "pm" : "am"} `;
+    var formattedTime = `${getHours >= 12 ? "pm" : "am"} `;
     return formattedTime;
   }
 
   const TABLE_HEAD = [
     {
-      label: getHourlyTime(currentTime + 3600) + getAmPm(currentTime),
+      label: getHourlyTime(currentTime + 3600) + getAmPm(currentTime + 3600),
     },
     {
-      label: getHourlyTime(currentTime + 7200) + getAmPm(currentTime),
+      label: getHourlyTime(currentTime + 7200) + getAmPm(currentTime + 7200),
     },
     {
-      label: getHourlyTime(currentTime + 10800) + getAmPm(currentTime),
+      label: getHourlyTime(currentTime + 10800) + getAmPm(currentTime + 10800),
     },
     {
-      label: getHourlyTime(currentTime + 14400) + getAmPm(currentTime),
+      label: getHourlyTime(currentTime + 14400) + getAmPm(currentTime + 14400),
     },
     {
-      label: getHourlyTime(currentTime + 18000) + getAmPm(currentTime),
+      label: getHourlyTime(currentTime + 18000) + getAmPm(currentTime + 18000),
     },
   ];
 
@@ -62,6 +62,8 @@ const Weather = ({
     windGusts * 2.2 < 6 && windSpeed * 2.2 < 6 ? "It's Good." : "Ehhhhh...";
 
   const HourlyItem = (item) => {
+    console.log(item.index, item.length);
+
     return (
       <>
         <View style={styles.column}>
@@ -90,7 +92,7 @@ const Weather = ({
             />
           </View>
         </View>
-        <View style={styles.verticleLine}></View>
+        {item.index !== 4 && <View style={styles.verticleLine}></View>}
       </>
     );
   };
