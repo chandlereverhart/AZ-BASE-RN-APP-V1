@@ -62,8 +62,6 @@ const Weather = ({
     windGusts * 2.2 < 6 && windSpeed * 2.2 < 6 ? "It's Good." : "Ehhhhh...";
 
   const HourlyItem = (item) => {
-    console.log(item.index, item.length);
-
     return (
       <>
         <View style={styles.column}>
@@ -249,10 +247,9 @@ const styles = StyleSheet.create({
   },
   weatherCard: {
     flex: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.15)",
     paddingVertical: 30,
     paddingHorizontal: 30,
   },
