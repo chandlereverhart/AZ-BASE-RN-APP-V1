@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Button, Image } from "react-native";
 import { Card } from "react-native-ui-lib";
-import { auth, db } from "../../../../Firebase/firebase";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
 import { StyleSheet } from "react-native";
@@ -21,29 +20,6 @@ const LogBookDetails = (props) => {
     await dispatch(deleteLogBook(jump));
     navigation.goBack();
   };
-
-  // const _handleDelete = async () => {
-  //   try {
-  //     const user = auth.currentUser;
-  //     if (user) {
-  //       const jumpObj = db
-  //         .collection("users")
-  //         .doc(user.uid)
-  //         .collection("logBook")
-  //         .where("id", "==", jump.id);
-  //       jumpObj.get().then(function (querySnapshot) {
-  //         querySnapshot.forEach(function (doc) {
-  //           doc.ref.delete();
-  //         });
-  //       });
-
-  //       navigation.goBack();
-  //     }
-  //   } catch (err) {
-  //     alert(err.message);
-  //     console.log(err.message);
-  //   }
-  // };
 
   return (
     <>
