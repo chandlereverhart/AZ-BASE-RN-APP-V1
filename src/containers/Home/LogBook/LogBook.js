@@ -35,22 +35,14 @@ const LogBook = (props) => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   // const [logBook, setLogBook] = useState([]);
-  const isFocused = useIsFocused();
   const dispatch = useDispatch();
 
   const logBook = useSelector((state) => state.logBook.logBookItems);
-  // console.log(logBook);
+  console.log(logBook);
 
   useEffect(() => {
     dispatch(getLogBook());
   }, [dispatch]);
-  // useEffect(() => {
-  //   setLoading(true);
-  //   if (isFocused) {
-  //     _getLogBook();
-  //   }
-  //   setLoading(false);
-  // }, [isFocused]);
 
   async function handleListRefresh() {
     setRefreshing(true);
