@@ -29,7 +29,7 @@ const LogBookForm = (props) => {
 
   const handleSubmit = async (values) => {
     await dispatch(addLogBook(values));
-    navigation.goBack();
+    navigation.navigate("MyTabs");
   };
 
   return (

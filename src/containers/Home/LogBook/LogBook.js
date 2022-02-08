@@ -9,11 +9,8 @@ import {
   RefreshControl,
 } from "react-native";
 import { Card } from "react-native-ui-lib";
-
-import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation, useIsFocused } from "@react-navigation/core";
 import { fDate } from "../../../utils/DateFunctions";
-import { startLocationUpdatesAsync } from "expo-location";
 import { useSelector, useDispatch } from "../../../redux/store";
 import { getLogBook } from "../../../redux/slices/logBook";
 
@@ -34,19 +31,23 @@ function applySortFilter(array, query) {
 const LogBook = (props) => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  // const [logBook, setLogBook] = useState([]);
-  const dispatch = useDispatch();
-
   const logBook = useSelector((state) => state.logBook.logBookItems);
-  console.log(logBook);
+  const isFocused = useIsFocused();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getLogBook());
   }, [dispatch]);
 
-  async function handleListRefresh() {
+  useEffect(() => {
+    if (isFocused) {
+      dispatch(getLogBook());
+    }
+  }, [isFocused]);
+
+  function handleListRefresh() {
     setRefreshing(true);
-    await _getLogBook();
+    dispatch(getLogBook());
     setRefreshing(false);
   }
   async function _getLogBook() {

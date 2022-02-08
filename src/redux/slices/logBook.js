@@ -40,7 +40,6 @@ const slice = createSlice({
     // Add Logbook
     getLogbookAddSuccess(state, action) {
       state.isLoading = false;
-      state.logBookItems = state.logBookItems;
     },
 
     // // DELETE NOTIFICATION
@@ -129,17 +128,16 @@ export function addLogBook(values) {
           });
         });
       } else if (user) {
-        db
-          .collection("users")
+        db.collection("users")
           .doc(user.uid)
           .collection("logBook")
           .add({
             ...values,
             jumpNumber: Number(values.jumpNumber),
             id: uuid(),
-          }),
-          dispatch(slice.actions.getLogbookAddSuccess());
+          });
       }
+      dispatch(slice.actions.getLogbookAddSuccess());
     } catch (err) {
       alert(err.message);
       console.log(err.message);
