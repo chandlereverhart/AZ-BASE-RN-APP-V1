@@ -14,46 +14,20 @@ import { fDate } from "../../../utils/DateFunctions";
 import { useSelector, useDispatch } from "../../../redux/store";
 import { getLogBook } from "../../../redux/slices/logBook";
 
-function applySortFilter(array, query) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-
-  if (query) {
-    return filter(
-      array,
-      (_notification) =>
-        _notification.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
-    );
-  }
-
-  return stabilizedThis.map((el) => el[0]);
-}
-
 const LogBook = (props) => {
-  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const logBook = useSelector((state) => state.logBook.logBookItems);
-  const isFocused = useIsFocused();
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     dispatch(getLogBook());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (isFocused) {
-      dispatch(getLogBook());
-    }
-  }, [isFocused]);
-
   function handleListRefresh() {
     setRefreshing(true);
     dispatch(getLogBook());
     setRefreshing(false);
-  }
-  async function _getLogBook() {
-    setLoading(true);
-    await getLogBook();
-    setLoading(false);
   }
 
   const navigation = useNavigation();

@@ -109,38 +109,35 @@ export function getLogBook() {
 export function addLogBook(values) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
-    try {
-      const user = auth.currentUser;
-      const docId = values.id;
+    let jumpRef;
+    const user = auth.currentUser;
+    const docId = values.id;
+    if (values.id !== "") {
+      jumpRef = db
+        .collection("users")
+        .doc(user.uid)
+        .collection("logBook")
+        .doc(docId);
+    } else {
+      jumpRef = db
+        .collection("users")
+        .doc(user.uid)
+        .collection("logBook")
+        .doc();
+    }
 
-      if (values.id !== "") {
-        const jumpObj = db
-          .collection("users")
-          .doc(user.uid)
-          .collection("logBook")
-          .where("id", "==", docId);
-        jumpObj.get().then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            doc.ref.update({
-              ...values,
-              jumpNumber: Number(values.jumpNumber),
-            });
-          });
-        });
-      } else if (user) {
-        db.collection("users")
-          .doc(user.uid)
-          .collection("logBook")
-          .add({
-            ...values,
-            jumpNumber: Number(values.jumpNumber),
-            id: uuid(),
-          });
-      }
+    const firebaseObject = {
+      ...values,
+      id: jumpRef.id,
+      jumpNumber: Number(values.jumpNumber),
+    };
+    try {
+      await jumpRef.set(firebaseObject, { merge: true });
+
       dispatch(slice.actions.getLogbookAddSuccess());
-    } catch (err) {
-      alert(err.message);
-      console.log(err.message);
+    } catch (error) {
+      console.log(error);
+      dispatch(slice.actions.hasError(error));
     }
   };
 }

@@ -18,7 +18,7 @@ const LogBookDetails = (props) => {
 
   const _handleDelete = async () => {
     await dispatch(deleteLogBook(jump));
-    navigation.goBack();
+    navigation.navigate("MyTabs");
   };
 
   return (

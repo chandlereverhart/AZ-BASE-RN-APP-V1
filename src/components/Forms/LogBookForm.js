@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 
-import { addLogBook } from "../../redux/slices/logBook";
+import { addLogBook, getLogBook } from "../../redux/slices/logBook";
 
 const LogBookForm = (props) => {
   const jump = props.route?.params?.jump?.jump ?? {};
@@ -29,6 +29,7 @@ const LogBookForm = (props) => {
 
   const handleSubmit = async (values) => {
     await dispatch(addLogBook(values));
+    dispatch(getLogBook());
     navigation.navigate("MyTabs");
   };
 
