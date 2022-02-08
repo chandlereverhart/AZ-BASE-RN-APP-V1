@@ -11,9 +11,11 @@ import {
 import { Card } from "react-native-ui-lib";
 
 import { auth, db } from "../../../../Firebase/firebase";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, useIsFocused } from "@react-navigation/core";
 import { fDate } from "../../../utils/DateFunctions";
 import { startLocationUpdatesAsync } from "expo-location";
+import { useSelector, useDispatch } from "../../../redux/store";
+import { getLogBook } from "../../../redux/slices/logBook";
 
 function applySortFilter(array, query) {
   const stabilizedThis = array.map((el, index) => [el, index]);
@@ -32,37 +34,32 @@ function applySortFilter(array, query) {
 const LogBook = (props) => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [logBook, setLogBook] = useState([]);
+  // const [logBook, setLogBook] = useState([]);
+  const isFocused = useIsFocused();
+  const dispatch = useDispatch();
+
+  const logBook = useSelector((state) => state.logBook.logBookItems);
+  // console.log(logBook);
 
   useEffect(() => {
-    setLoading(true);
-    _getLogBook();
-    setLoading(false);
-  }, []);
+    dispatch(getLogBook());
+  }, [dispatch]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   if (isFocused) {
+  //     _getLogBook();
+  //   }
+  //   setLoading(false);
+  // }, [isFocused]);
 
   async function handleListRefresh() {
     setRefreshing(true);
     await _getLogBook();
     setRefreshing(false);
   }
-
   async function _getLogBook() {
     setLoading(true);
-    try {
-      const user = auth.currentUser;
-      if (user) {
-        const snapshot = await db
-          .collection("users")
-          .doc(user.uid)
-          .collection("logBook")
-          .orderBy("jumpNumber", "desc")
-          .get();
-        const response = snapshot.docs.map((doc) => doc.data());
-        setLogBook(response);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    await getLogBook();
     setLoading(false);
   }
 

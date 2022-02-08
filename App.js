@@ -8,6 +8,12 @@ import {
 import { APP_CONFIGURATION } from "./src/variables";
 
 import { StyleSheet, Image, Linking } from "react-native";
+// redux
+import { Provider as ReduxProvider } from "react-redux";
+import { PersistGate } from "redux-persist/lib/integration/react";
+
+import { store, persistor } from "./src/redux/store";
+
 //containers
 import LoginScreen from "./src/Auth/LoginScreen";
 import Dashboard from "./src/containers/Home/Dashboard/Dashboard";
@@ -140,43 +146,47 @@ function HomeStack({ props }) {
     [toggleTheme, isThemeDark]
   );
   return (
-    <PreferencesContext.Provider value={preferences}>
-      <PaperProvider theme={CombinedDarkTheme}>
-        <Stack.Navigator
-          initialRouteName={initialRoute}
-          screenOptions={() => ({
-            headerTitleAlign: "center",
-            headerTintColor: "rgba(255, 255, 255, 0.8)",
-            headerTitle: () => <LogoTitle />,
-            headerRight: () => <DrawerButton />,
-            headerBackTitle: "Back",
-            headerTruncatedBackTitle: null,
-            headerStyle: {
-              height: 70,
-            },
-          })}
-        >
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
+    <ReduxProvider store={store}>
+      <PersistGate persistor={persistor}>
+        <PreferencesContext.Provider value={preferences}>
+          <PaperProvider theme={CombinedDarkTheme}>
+            <Stack.Navigator
+              initialRouteName={initialRoute}
+              screenOptions={() => ({
+                headerTitleAlign: "center",
+                headerTintColor: "rgba(255, 255, 255, 0.8)",
+                headerTitle: () => <LogoTitle />,
+                headerRight: () => <DrawerButton />,
+                headerBackTitle: "Back",
+                headerTruncatedBackTitle: null,
+                headerStyle: {
+                  height: 70,
+                },
+              })}
+            >
+              <Stack.Screen
+                name="Login"
+                component={LoginScreen}
+                options={{
+                  headerShown: false,
+                }}
+              />
 
-          <Stack.Screen name="MyTabs" component={MyTabs} />
-          <Stack.Screen name="Exits" component={Exits} />
-          <Stack.Screen name="ExitsForm" component={ExitsForm} />
-          <Stack.Screen name="ExitDetails" component={ExitDetails} />
-          <Stack.Screen name="LogBook" component={LogBook} />
-          <Stack.Screen name="LogBookForm" component={LogBookForm} />
-          <Stack.Screen name="LogBookDetails" component={LogBookDetails} />
-          <Stack.Screen name="News" component={News} />
-          <Stack.Screen name="NewsForm" component={NewsForm} />
-          <Stack.Screen name="NewsDetails" component={NewsDetails} />
-        </Stack.Navigator>
-      </PaperProvider>
-    </PreferencesContext.Provider>
+              <Stack.Screen name="MyTabs" component={MyTabs} />
+              <Stack.Screen name="Exits" component={Exits} />
+              <Stack.Screen name="ExitsForm" component={ExitsForm} />
+              <Stack.Screen name="ExitDetails" component={ExitDetails} />
+              <Stack.Screen name="LogBook" component={LogBook} />
+              <Stack.Screen name="LogBookForm" component={LogBookForm} />
+              <Stack.Screen name="LogBookDetails" component={LogBookDetails} />
+              <Stack.Screen name="News" component={News} />
+              <Stack.Screen name="NewsForm" component={NewsForm} />
+              <Stack.Screen name="NewsDetails" component={NewsDetails} />
+            </Stack.Navigator>
+          </PaperProvider>
+        </PreferencesContext.Provider>
+      </PersistGate>
+    </ReduxProvider>
   );
 }
 const Drawer = createDrawerNavigator();

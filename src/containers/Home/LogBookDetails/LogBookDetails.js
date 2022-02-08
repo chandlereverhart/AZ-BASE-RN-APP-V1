@@ -2,43 +2,48 @@ import React from "react";
 import { View, Button, Image } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { auth, db } from "../../../../Firebase/firebase";
+import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
 import { StyleSheet } from "react-native";
 import { Divider, Text, withTheme } from "react-native-paper";
 import { fDate } from "../../../utils/DateFunctions";
+//redux
+
+import { deleteLogBook } from "../../../redux/slices/logBook";
 
 const LogBookDetails = (props) => {
   const jump = props.route?.params?.jump?.item ?? {};
   const createdAt = jump?.createdAt ? fDate(jump.createdAt.seconds * 1000) : "";
-
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const handleDelete = () => {
-    _handleDelete();
-  };
-
   const _handleDelete = async () => {
-    try {
-      const user = auth.currentUser;
-      if (user) {
-        const jumpObj = db
-          .collection("users")
-          .doc(user.uid)
-          .collection("logBook")
-          .where("id", "==", jump.id);
-        jumpObj.get().then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            doc.ref.delete();
-          });
-        });
-
-        navigation.goBack();
-      }
-    } catch (err) {
-      alert(err.message);
-      console.log(err.message);
-    }
+    await dispatch(deleteLogBook(jump));
+    navigation.goBack();
   };
+
+  // const _handleDelete = async () => {
+  //   try {
+  //     const user = auth.currentUser;
+  //     if (user) {
+  //       const jumpObj = db
+  //         .collection("users")
+  //         .doc(user.uid)
+  //         .collection("logBook")
+  //         .where("id", "==", jump.id);
+  //       jumpObj.get().then(function (querySnapshot) {
+  //         querySnapshot.forEach(function (doc) {
+  //           doc.ref.delete();
+  //         });
+  //       });
+
+  //       navigation.goBack();
+  //     }
+  //   } catch (err) {
+  //     alert(err.message);
+  //     console.log(err.message);
+  //   }
+  // };
 
   return (
     <>
@@ -73,7 +78,7 @@ const LogBookDetails = (props) => {
         </Card>
         <View style={styles.buttonView}>
           <View style={styles.deleteButton}>
-            <Button title="Delete Jump" color="white" onPress={handleDelete} />
+            <Button title="Delete Jump" color="white" onPress={_handleDelete} />
           </View>
           <View style={styles.editButton}>
             <Button

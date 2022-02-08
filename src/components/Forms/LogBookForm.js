@@ -1,6 +1,5 @@
 import React from "react";
 import "react-native-get-random-values";
-import { v4 as uuid } from "uuid";
 
 import {
   View,
@@ -13,10 +12,14 @@ import {
 import { auth, db } from "../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
+import { useDispatch } from "react-redux";
+
+import { addLogBook } from "../../redux/slices/logBook";
 
 const LogBookForm = (props) => {
   const jump = props.route?.params?.jump?.jump ?? {};
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleSignOut = () => {
     auth.signOut().then(() => {
@@ -25,40 +28,8 @@ const LogBookForm = (props) => {
   };
 
   const handleSubmit = async (values) => {
-    try {
-      const user = auth.currentUser;
-      const docId = values.id;
-      if (values.id !== "") {
-        const jumpObj = db
-          .collection("users")
-          .doc(user.uid)
-          .collection("logBook")
-          .where("id", "==", docId);
-        jumpObj.get().then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            doc.ref.update({
-              ...values,
-              jumpNumber: Number(values.jumpNumber),
-            });
-          });
-        }),
-          navigation.navigate("LogBook");
-      } else if (user) {
-        db
-          .collection("users")
-          .doc(user.uid)
-          .collection("logBook")
-          .add({
-            ...values,
-            jumpNumber: Number(values.jumpNumber),
-            id: uuid(),
-          }),
-          navigation.navigate("LogBook");
-      }
-    } catch (err) {
-      alert(err.message);
-      console.log(err.message);
-    }
+    await dispatch(addLogBook(values));
+    navigation.goBack();
   };
 
   return (
