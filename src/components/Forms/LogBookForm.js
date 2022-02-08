@@ -53,6 +53,7 @@ const LogBookForm = (props) => {
               onBlur={handleBlur("jumpNumber")}
               value={values.jumpNumber}
               type="number"
+              placeholderTextColor="rgba(255, 255, 255, 0.3)"
               placeholder="Jump #"
               style={styles.input}
             />
@@ -61,6 +62,7 @@ const LogBookForm = (props) => {
               onChangeText={handleChange("exitName")}
               onBlur={handleBlur("exitName")}
               value={values.exitName}
+              placeholderTextColor="rgba(255, 255, 255, 0.3)"
               placeholder="Exit Name"
               style={styles.input}
             />
@@ -68,6 +70,7 @@ const LogBookForm = (props) => {
               onChangeText={handleChange("otherDetails")}
               onBlur={handleBlur("otherDetails")}
               value={values.otherDetails}
+              placeholderTextColor="rgba(255, 255, 255, 0.3)"
               placeholder="Other Details..."
               style={styles.input}
             />
@@ -98,7 +101,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "100%",
     height: "100%",
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
     paddingHorizontal: 10,
     paddingVertical: 50,
   },
@@ -106,10 +108,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: "100%",
     height: 40,
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    color: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    borderColor: "rgba(255, 255, 255, 0.2)",
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: "lightgrey",
     marginBottom: 10,
     marginTop: 10,
   },

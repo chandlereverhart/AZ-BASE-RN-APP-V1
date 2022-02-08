@@ -63,6 +63,7 @@ const ExitsForm = (props) => {
               onChangeText={handleChange("exitName")}
               onBlur={handleBlur("exitName")}
               value={values.exitName}
+              placeholderTextColor="rgba(255, 255, 255, 0.3)"
               placeholder="Exit Name"
               style={styles.input}
             />
@@ -70,6 +71,7 @@ const ExitsForm = (props) => {
               onChangeText={handleChange("impactHeight")}
               onBlur={handleBlur("impactHeight")}
               value={values.impactHeight}
+              placeholderTextColor="rgba(255, 255, 255, 0.3)"
               placeholder="Height to Impact"
               style={styles.input}
             />
@@ -77,6 +79,7 @@ const ExitsForm = (props) => {
               onChangeText={handleChange("overallHeight")}
               onBlur={handleBlur("overallHeight")}
               value={values.overallHeight}
+              placeholderTextColor="rgba(255, 255, 255, 0.3)"
               placeholder="Overall Height"
               style={styles.input}
             />
@@ -84,6 +87,7 @@ const ExitsForm = (props) => {
               onChangeText={handleChange("coordinates")}
               onBlur={handleBlur("coordinates")}
               value={values.coordinates}
+              placeholderTextColor="rgba(255, 255, 255, 0.3)"
               placeholder="Location"
               style={styles.input}
             />
@@ -91,6 +95,7 @@ const ExitsForm = (props) => {
               onChangeText={handleChange("description")}
               onBlur={handleBlur("description")}
               value={values.description}
+              placeholderTextColor="rgba(255, 255, 255, 0.3)"
               placeholder="Description"
               style={styles.input}
             />
@@ -121,7 +126,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "100%",
     height: "100%",
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
     paddingHorizontal: 10,
     paddingVertical: 50,
   },
@@ -129,10 +133,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: "100%",
     height: 40,
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    color: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: "lightgrey",
+    borderColor: "rgba(255, 255, 255, 0.2)",
     marginBottom: 10,
     marginTop: 10,
   },
