@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuid } from "uuid";
 
 // Firebase
 import { auth, db } from "../../../Firebase/firebase";

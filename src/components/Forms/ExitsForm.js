@@ -2,26 +2,13 @@ import React from "react";
 import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
 
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, TextInput, Button, StyleSheet } from "react-native";
 import { auth, db } from "../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 
 const ExitsForm = (props) => {
   const navigation = useNavigation();
-
-  const handleSignOut = () => {
-    auth.signOut().then(() => {
-      navigation.replace("Login");
-    });
-  };
 
   const handleSubmit = async (values) => {
     try {
@@ -112,9 +99,6 @@ const ExitsForm = (props) => {
           </View>
         )}
       </Formik>
-      <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-        <Text style={styles.buttonText}>Sign Out</Text>
-      </TouchableOpacity>
     </>
   );
 };

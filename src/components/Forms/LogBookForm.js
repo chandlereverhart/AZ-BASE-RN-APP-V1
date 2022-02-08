@@ -1,31 +1,15 @@
 import React from "react";
 import "react-native-get-random-values";
-
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
-import { auth, db } from "../../../Firebase/firebase";
+import { View, TextInput, Button, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
-
 import { addLogBook, getLogBook } from "../../redux/slices/logBook";
 
 const LogBookForm = (props) => {
   const jump = props.route?.params?.jump?.jump ?? {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  const handleSignOut = () => {
-    auth.signOut().then(() => {
-      navigation.replace("Login");
-    });
-  };
 
   const handleSubmit = async (values) => {
     await dispatch(addLogBook(values));
@@ -87,9 +71,6 @@ const LogBookForm = (props) => {
           </View>
         )}
       </Formik>
-      <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-        <Text style={styles.buttonText}>Sign Out</Text>
-      </TouchableOpacity>
     </>
   );
 };
