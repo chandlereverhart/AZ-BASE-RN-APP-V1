@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Button, Image } from "react-native";
+import { View, Button, Image, TouchableOpacity, Linking } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
@@ -9,6 +9,7 @@ import { fDate } from "../../../utils/DateFunctions";
 //redux
 
 import { deleteLogBook } from "../../../redux/slices/logBook";
+import { Link } from "@react-navigation/native";
 
 const LogBookDetails = (props) => {
   const jump = props.route?.params?.jump?.item ?? {};
@@ -45,24 +46,34 @@ const LogBookDetails = (props) => {
             <Text style={styles.otherText}>{jump.otherDetails}</Text>
             <Text style={styles.otherText}>{createdAt}</Text>
           </View>
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Image
-              source={{ uri: jump.photoUrl }}
-              style={{ width: 200, height: 200 }}
-            />
-          </View>
-          <View style={styles.logoView}>
-            <Image
-              style={{ width: 120, height: 150 }}
-              source={require("../../../../src/assets/AZBASE-LOGO.png")}
-            />
-          </View>
+
+          {jump.photoUrl ? (
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(jump.photoUrl);
+              }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  // alignItems: "center",
+                  // justifyContent: "center",
+                }}
+              >
+                <Image
+                  source={{ uri: jump.photoUrl }}
+                  style={{ width: 100, height: 100, borderRadius: 12 }}
+                />
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <View style={styles.logoView}>
+              <Image
+                style={{ width: 120, height: 150 }}
+                source={require("../../../../src/assets/AZBASE-LOGO.png")}
+              />
+            </View>
+          )}
         </Card>
         <View style={styles.buttonView}>
           <View style={styles.deleteButton}>

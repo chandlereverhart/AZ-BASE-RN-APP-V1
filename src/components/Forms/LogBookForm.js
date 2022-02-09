@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { addLogBook, getLogBook } from "../../redux/slices/logBook";
 
 import * as ImagePicker from "expo-image-picker";
+import { values } from "lodash-es";
 
 const LogBookForm = (props) => {
   const jump = props.route?.params?.jump?.jump ?? {};
@@ -97,8 +98,8 @@ const LogBookForm = (props) => {
               />
               <TouchableOpacity onPress={pickImage}></TouchableOpacity>
               <Image
-                source={{ uri: image }}
-                style={{ width: 200, height: 200 }}
+                source={{ uri: image || values?.photoUrl }}
+                style={{ width: 100, height: 100, borderRadius: 12 }}
               />
             </View>
             <View style={styles.buttonView}>

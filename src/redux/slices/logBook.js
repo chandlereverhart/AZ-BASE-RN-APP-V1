@@ -136,11 +136,10 @@ export function addLogBook(values) {
     };
     try {
       // If File Begin Upload
-      if (values.photoUrl !== "") {
+      if (values.photoUrl !== null) {
         const file = values.photoUrl;
         const response = await fetch(file.uri);
         const blob = await response.blob();
-        // console.log("BLOB=>", blob);
         const extension = file.type.split("/")[1];
         const storageRef = storage.ref(
           `users/${user.uid}/photo_${user.uid}.${extension}`
