@@ -54,11 +54,15 @@ const LogBookDetails = (props) => {
         </Card>
         <View style={styles.buttonView}>
           <View style={styles.deleteButton}>
-            <Button title="Delete Jump" color="white" onPress={_handleDelete} />
+            <Button
+              title="Delete Jump"
+              color="rgba(255, 255, 255, 0.8)"
+              onPress={_handleDelete}
+            />
           </View>
           <View style={styles.editButton}>
             <Button
-              title="Edit "
+              title="Edit"
               color="black"
               onPress={() =>
                 props.navigation.navigate("LogBookForm", {

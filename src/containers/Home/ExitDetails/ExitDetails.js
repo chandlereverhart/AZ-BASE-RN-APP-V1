@@ -53,9 +53,20 @@ const ExitDetails = (props) => {
           <View style={styles.deleteButton}>
             <Button
               title="Delete Exit"
-              color="black"
+              color="rgba(255, 255, 255, 0.8)"
               accessibilityLabel="Learn more about this purple button"
               onPress={handleDelete}
+            />
+          </View>
+          <View style={styles.editButton}>
+            <Button
+              title="Edit "
+              color="black"
+              onPress={() =>
+                props.navigation.navigate("ExitsForm", {
+                  exit: { exit },
+                })
+              }
             />
           </View>
         </View>
@@ -76,6 +87,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: "10%",
     paddingBottom: "10%",
+  },
+  card: {
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    paddingTop: "10%",
+    paddingBottom: "10%",
+    paddingHorizontal: "10%",
   },
   dividerView: {
     width: 200,
@@ -105,22 +126,23 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     paddingVertical: 30,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  editButton: {
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginHorizontal: 5,
+    width: "50%",
   },
   deleteButton: {
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    borderColor: "rgba(255, 255, 255, 0.8)",
+    borderWidth: 1,
     borderRadius: 5,
+    marginHorizontal: 5,
     width: "50%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  card: {
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
-    paddingTop: "10%",
-    paddingBottom: "10%",
-    paddingHorizontal: "10%",
   },
 });

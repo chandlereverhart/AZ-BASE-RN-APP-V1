@@ -9,6 +9,8 @@ import { Formik } from "formik";
 import { addExit, getExits } from "../../redux/slices/exits";
 
 const ExitsForm = (props) => {
+  const exit = props.route?.params?.exit?.exit ?? {};
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -23,12 +25,12 @@ const ExitsForm = (props) => {
     <>
       <Formik
         initialValues={{
-          exitName: "",
-          impactHeight: "",
-          overallHeight: "",
-          coordinates: "",
-          description: "",
-          id: "",
+          exitName: exit?.exitName || "",
+          impactHeight: exit?.impactHeight || "",
+          overallHeight: exit?.overallHeight || "",
+          coordinates: exit?.coordinates || "",
+          description: exit?.description || "",
+          id: exit?.id || "",
         }}
         onSubmit={(values) => handleSubmit(values)}
       >
