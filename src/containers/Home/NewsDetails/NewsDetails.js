@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Button, Image } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { auth, db } from "../../../../Firebase/firebase";
@@ -7,14 +7,26 @@ import { StyleSheet } from "react-native";
 import { Divider, Text, withTheme } from "react-native-paper";
 
 const NewsDetails = (props) => {
-  const { colors } = props.theme;
   const news = props.route?.params?.news?.item ?? {};
-
   const navigation = useNavigation();
+  const [userId, setUserId] = useState(auth.currentUser.uid);
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    _getUsers();
+  }, []);
 
   const handleDelete = () => {
     handleDeletenews();
   };
+  async function _getUsers() {
+    try {
+      const snapShot = await db.collection("users").doc(userId).get();
+      const response = snapShot.data();
+      setUser(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleDeletenews = async () => {
     try {
@@ -34,7 +46,6 @@ const NewsDetails = (props) => {
       console.log(err.message);
     }
   };
-  //   console.log("news", news);
 
   return (
     <>
@@ -63,16 +74,18 @@ const NewsDetails = (props) => {
             />
           </View>
         </Card>
-        <View style={styles.buttonView}>
-          <View style={styles.deleteButton}>
-            <Button
-              title="Delete news"
-              color="black"
-              accessibilityLabel="Learn more about this purple button"
-              onPress={handleDelete}
-            />
+        {user?.roles?.superAdmin && (
+          <View style={styles.buttonView}>
+            <View style={styles.deleteButton}>
+              <Button
+                title="Delete news"
+                color="black"
+                accessibilityLabel="Learn more about this purple button"
+                onPress={handleDelete}
+              />
+            </View>
           </View>
-        </View>
+        )}
       </View>
     </>
   );
