@@ -1,44 +1,24 @@
 import React from "react";
 import { View, Button, Image } from "react-native";
 import { Card } from "react-native-ui-lib";
+import { useDispatch } from "react-redux";
+
 import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 import { StyleSheet } from "react-native";
 import { Divider, Text, withTheme } from "react-native-paper";
+import { deleteExit } from "../../../redux/slices/exits";
 
 const ExitDetails = (props) => {
-  const { colors } = props.theme;
   const exit = props.route?.params?.exit?.item ?? {};
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  const handleDelete = () => {
-    handleDeleteExit();
+  const handleDelete = async () => {
+    await dispatch(deleteExit(exit));
+    navigation.navigate("MyTabs");
   };
-
-  const handleDeleteExit = async () => {
-    try {
-      const user = auth.currentUser;
-      if (user) {
-        const exitObj = db
-          .collection("users")
-          .doc(user.uid)
-          .collection("exits")
-          .where("id", "==", exit.id);
-        exitObj.get().then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            doc.ref.delete();
-          });
-        });
-
-        navigation.goBack();
-      }
-    } catch (err) {
-      alert(err.message);
-      console.log(err.message);
-    }
-  };
-  //   console.log("exit", exit);
 
   return (
     <>

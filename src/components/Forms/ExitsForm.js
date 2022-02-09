@@ -1,34 +1,22 @@
 import React from "react";
 import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
-
+import { useDispatch } from "react-redux";
 import { View, TextInput, Button, StyleSheet } from "react-native";
 import { auth, db } from "../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
+import { addExit, getExits } from "../../redux/slices/exits";
 
 const ExitsForm = (props) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (values) => {
-    try {
-      const user = auth.currentUser;
-      console.log(user);
-      if (user) {
-        db
-          .collection("users")
-          .doc(user.uid)
-          .collection("exits")
-          .add({
-            ...values,
-            id: uuid(),
-          }),
-          navigation.navigate("Exits");
-      }
-    } catch (err) {
-      alert(err.message);
-      console.log(err.message);
-    }
+    await dispatch(addExit(values));
+    dispatch(getExits());
+
+    navigation.navigate("MyTabs");
   };
 
   return (
