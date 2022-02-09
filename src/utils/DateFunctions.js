@@ -14,6 +14,9 @@ export function fDateComp(date, customFormat) {
 export function fDateTime(date) {
   return format(new Date(date), "dd MMM yyyy HH:mm");
 }
+export function fTimeShort(date) {
+  return format(new Date(date), "h a");
+}
 
 export function fTimestamp(date) {
   return getTime(new Date(date));

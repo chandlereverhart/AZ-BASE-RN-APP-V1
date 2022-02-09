@@ -29,13 +29,20 @@ const Weather = ({
   function getHourlyTime(timestamp) {
     var date = new Date(timestamp * 1000);
     var getHours = date.getHours();
-    var hours = getHours > 12 ? getHours - 12 : getHours;
+
+    var hours = getHours >= 12 ? getHours - 12 : getHours;
+    if (hours === 0) {
+      hours = 12;
+    }
     var formattedTime = `${hours}`;
     return formattedTime;
   }
   function getAmPm(timestamp) {
     var date = new Date(timestamp * 1000);
     var getHours = date.getHours();
+    if (getHours === 0) {
+      getHours = 12;
+    }
     var formattedTime = `${getHours >= 12 ? "pm" : "am"} `;
     return formattedTime;
   }
