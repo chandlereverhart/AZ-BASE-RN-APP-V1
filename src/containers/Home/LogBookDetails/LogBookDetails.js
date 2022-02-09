@@ -45,6 +45,18 @@ const LogBookDetails = (props) => {
             <Text style={styles.otherText}>{jump.otherDetails}</Text>
             <Text style={styles.otherText}>{createdAt}</Text>
           </View>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Image
+              source={{ uri: jump.photoUrl }}
+              style={{ width: 200, height: 200 }}
+            />
+          </View>
           <View style={styles.logoView}>
             <Image
               style={{ width: 120, height: 150 }}

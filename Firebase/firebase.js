@@ -19,5 +19,7 @@ if (!firebase.apps.length) {
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
+const UPLOAD_STATE_CHANGED = firebase.storage.TaskEvent.STATE_CHANGED;
 
-export { auth, db };
+export { auth, db, storage, UPLOAD_STATE_CHANGED };

@@ -1,18 +1,44 @@
-import React from "react";
-import "react-native-get-random-values";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { addLogBook, getLogBook } from "../../redux/slices/logBook";
 
+import * as ImagePicker from "expo-image-picker";
+
 const LogBookForm = (props) => {
   const jump = props.route?.params?.jump?.jump ?? {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    // console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      setFile(result);
+    }
+  };
 
   const handleSubmit = async (values) => {
-    await dispatch(addLogBook(values));
+    await dispatch(addLogBook({ ...values, photoUrl: file }));
     dispatch(getLogBook());
     navigation.navigate("MyTabs");
   };
@@ -26,6 +52,7 @@ const LogBookForm = (props) => {
           otherDetails: jump?.otherDetails || "",
           createdAt: jump?.createdAt || new Date(),
           id: jump?.id || "",
+          photoUrl: jump?.photoUrl || file,
         }}
         onSubmit={(values) => handleSubmit(values)}
       >
@@ -41,7 +68,6 @@ const LogBookForm = (props) => {
               placeholder="Jump #"
               style={styles.input}
             />
-
             <TextInput
               onChangeText={handleChange("exitName")}
               onBlur={handleBlur("exitName")}
@@ -58,6 +84,23 @@ const LogBookForm = (props) => {
               placeholder="Other Details..."
               style={styles.input}
             />
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                title="Pick an image from camera roll"
+                onPress={pickImage}
+              />
+              <TouchableOpacity onPress={pickImage}></TouchableOpacity>
+              <Image
+                source={{ uri: image }}
+                style={{ width: 200, height: 200 }}
+              />
+            </View>
             <View style={styles.buttonView}>
               <View style={styles.saveBtn}>
                 <Button

@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 // Firebase
-import { auth, db } from "../../../Firebase/firebase";
+import {
+  auth,
+  db,
+  storage,
+  UPLOAD_STATE_CHANGED,
+} from "../../../Firebase/firebase";
 
 const initialState = {
   isLoading: false,
@@ -104,8 +109,8 @@ export function getLogBook() {
 }
 
 // ----------------------------------------------------------------------
-
 export function addLogBook(values) {
+  console.log("VALUES ==>", values);
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     let jumpRef;
@@ -131,8 +136,31 @@ export function addLogBook(values) {
       jumpNumber: Number(values.jumpNumber),
     };
     try {
-      await jumpRef.set(firebaseObject, { merge: true });
-
+      // If File Begin Upload
+      if (values.photoUrl !== "") {
+        console.log("FIRED", values.photoUrl);
+        const file = values.photoUrl;
+        console.log("FILE=>", file);
+        const response = await fetch(file.uri);
+        const blob = await response.blob();
+        // console.log("BLOB=>", blob);
+        const extension = file.type.split("/")[1];
+        const storageRef = storage.ref(
+          `users/${user.uid}/photo_${user.uid}.${extension}`
+        );
+        const task = storageRef.put(blob);
+        task.on(UPLOAD_STATE_CHANGED, () => {
+          task
+            .then(() => storageRef.getDownloadURL())
+            .then(async (downloadURL) => {
+              firebaseObject.photoUrl = downloadURL;
+              await jumpRef.set(firebaseObject, { merge: true });
+            });
+        });
+      } else {
+        firebaseObject.photoUrl = values.photoUrl;
+        await jumpRef.set(firebaseObject, { merge: true });
+      }
       dispatch(slice.actions.getLogbookAddSuccess());
     } catch (error) {
       console.log(error);
@@ -140,3 +168,38 @@ export function addLogBook(values) {
     }
   };
 }
+// export function addLogBook(values) {
+//   return async (dispatch) => {
+//     dispatch(slice.actions.startLoading());
+//     let jumpRef;
+//     const user = auth.currentUser;
+//     const docId = values.id;
+//     if (values.id !== "") {
+//       jumpRef = db
+//         .collection("users")
+//         .doc(user.uid)
+//         .collection("logBook")
+//         .doc(docId);
+//     } else {
+//       jumpRef = db
+//         .collection("users")
+//         .doc(user.uid)
+//         .collection("logBook")
+//         .doc();
+//     }
+
+//     const firebaseObject = {
+//       ...values,
+//       id: jumpRef.id,
+//       jumpNumber: Number(values.jumpNumber),
+//     };
+//     try {
+//       await jumpRef.set(firebaseObject, { merge: true });
+
+//       dispatch(slice.actions.getLogbookAddSuccess());
+//     } catch (error) {
+//       console.log(error);
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
