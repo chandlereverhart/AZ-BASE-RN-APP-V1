@@ -9,52 +9,49 @@ import {
 } from "react-native";
 import { StyleSheet } from "react-native";
 import { Card } from "react-native-ui-lib";
-import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
+import { useSelector, useDispatch } from "../../../redux/store";
+
+import { getExits } from "../../../redux/slices/exits";
 
 const Exits = (props) => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [exits, setExits] = useState([]);
-
-  const handleSignOut = () => {
-    auth.signOut().then(() => {
-      navigation.navigate("Login");
-    });
-  };
+  const exits = useSelector((state) => state.exits.exitsItems);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLoading(true);
-    _getExits();
+    dispatch(getExits());
     setLoading(false);
   }, []);
 
   async function handleListRefresh() {
     setRefreshing(true);
-    await _getExits();
+    await dispatch(getExits());
     setRefreshing(false);
   }
 
-  async function _getExits() {
-    setLoading(true);
-    try {
-      const user = auth.currentUser;
-      if (user) {
-        const snapshot = await db
-          .collection("users")
-          .doc(user.uid)
-          .collection("exits")
-          .orderBy("exitName", "asc")
-          .get();
-        const response = snapshot.docs.map((doc) => doc.data());
-        setExits(response);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  }
+  // async function _getExits() {
+  //   setLoading(true);
+  //   try {
+  //     const user = auth.currentUser;
+  //     if (user) {
+  //       const snapshot = await db
+  //         .collection("users")
+  //         .doc(user.uid)
+  //         .collection("exits")
+  //         .orderBy("exitName", "asc")
+  //         .get();
+  //       const response = snapshot.docs.map((doc) => doc.data());
+  //       setExits(response);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   setLoading(false);
+  // }
 
   const openForm = () => {
     navigation.navigate("ExitsForm");

@@ -4,6 +4,7 @@ import storage from "@react-native-async-storage/async-storage";
 // slices
 
 import logBookReducer from "./slices/logBook";
+import exitsReducer from "./slices/exits";
 
 // ----------------------------------------------------------------------
 
@@ -16,6 +17,7 @@ const rootPersistConfig = {
 
 const rootReducer = combineReducers({
   logBook: logBookReducer,
+  exits: exitsReducer,
 });
 
 export { rootPersistConfig, rootReducer };
