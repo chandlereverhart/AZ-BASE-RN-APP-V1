@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Button, Image } from "react-native";
+import { View, Button, Image, TouchableOpacity } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Linking } from "react-native";
 import { Divider, Text, withTheme } from "react-native-paper";
 import { deleteExit } from "../../../redux/slices/exits";
 
@@ -16,6 +16,14 @@ const ExitDetails = (props) => {
     await dispatch(deleteExit(exit));
     navigation.navigate("MyTabs");
   };
+
+  const scheme = Platform.select({ ios: "maps:0,0?q=", android: "geo:0,0?q=" });
+  const latLng = `${exit.coordinates}`;
+  const label = "Custom Label";
+  const url = Platform.select({
+    ios: `${scheme}${label}@${latLng}`,
+    android: `${scheme}${latLng}(${label})`,
+  });
 
   return (
     <>
@@ -35,9 +43,11 @@ const ExitDetails = (props) => {
             </View>
             <Text style={styles.otherText}>{exit.impactHeight} to impact</Text>
             <Text style={styles.otherText}>{exit.overallHeight} overall</Text>
-            <Text style={styles.otherText}>{exit.coordinates}</Text>
-            <Text style={styles.otherText}>{exit.description}</Text>
+            <TouchableOpacity onPress={() => Linking.openURL(url)}>
+              <Text style={styles.otherText}>{exit.coordinates}</Text>
+            </TouchableOpacity>
           </View>
+          <Text style={styles.otherText}>{exit.description}</Text>
           <View style={styles.logoView}>
             <Image
               style={{ width: 120, height: 150 }}

@@ -9,7 +9,7 @@ import {
   RefreshControl,
 } from "react-native";
 import { Card } from "react-native-ui-lib";
-import { useNavigation, useIsFocused } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/core";
 import { fDate } from "../../../utils/DateFunctions";
 import { useSelector, useDispatch } from "../../../redux/store";
 import { getLogBook } from "../../../redux/slices/logBook";
@@ -19,7 +19,6 @@ const LogBook = (props) => {
   const [refreshing, setRefreshing] = useState(false);
   const logBook = useSelector((state) => state.logBook.logBookItems);
   const dispatch = useDispatch();
-  const isFocused = useIsFocused();
 
   useEffect(() => {
     dispatch(getLogBook());
@@ -72,7 +71,6 @@ const LogBook = (props) => {
               keyExtractor={(item) => item.id}
               style={styles.flatList}
               contentContainerStyle={styles.flatlist}
-              // onEndReached={handleEndReached}
               refreshControl={
                 <RefreshControl
                   refreshing={refreshing}

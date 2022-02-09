@@ -1,7 +1,13 @@
 import React from "react";
 import "react-native-get-random-values";
 import { useDispatch } from "react-redux";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  SafeAreaView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 import { addExit, getExits } from "../../redux/slices/exits";
@@ -32,56 +38,58 @@ const ExitsForm = (props) => {
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View style={styles.logView}>
-            <TextInput
-              onChangeText={handleChange("exitName")}
-              onBlur={handleBlur("exitName")}
-              value={values.exitName}
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              placeholder="Exit Name"
-              style={styles.input}
-            />
-            <TextInput
-              onChangeText={handleChange("impactHeight")}
-              onBlur={handleBlur("impactHeight")}
-              value={values.impactHeight}
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              placeholder="Height to Impact"
-              style={styles.input}
-            />
-            <TextInput
-              onChangeText={handleChange("overallHeight")}
-              onBlur={handleBlur("overallHeight")}
-              value={values.overallHeight}
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              placeholder="Overall Height"
-              style={styles.input}
-            />
-            <TextInput
-              onChangeText={handleChange("coordinates")}
-              onBlur={handleBlur("coordinates")}
-              value={values.coordinates}
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              placeholder="Location"
-              style={styles.input}
-            />
-            <TextInput
-              onChangeText={handleChange("description")}
-              onBlur={handleBlur("description")}
-              value={values.description}
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              placeholder="Description"
-              style={styles.input}
-            />
-            <View style={styles.buttonView}>
-              <View style={styles.saveBtn}>
-                <Button
-                  title="Submit"
-                  color="black"
-                  accessibilityLabel="Learn more about this purple button"
-                  onPress={handleSubmit}
-                />
+            <SafeAreaView style={styles.container}>
+              <TextInput
+                onChangeText={handleChange("exitName")}
+                onBlur={handleBlur("exitName")}
+                value={values.exitName}
+                placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                placeholder="Exit Name"
+                style={styles.input}
+              />
+              <TextInput
+                onChangeText={handleChange("impactHeight")}
+                onBlur={handleBlur("impactHeight")}
+                value={values.impactHeight}
+                placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                placeholder="Height to Impact"
+                style={styles.input}
+              />
+              <TextInput
+                onChangeText={handleChange("overallHeight")}
+                onBlur={handleBlur("overallHeight")}
+                value={values.overallHeight}
+                placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                placeholder="Overall Height"
+                style={styles.input}
+              />
+              <TextInput
+                onChangeText={handleChange("coordinates")}
+                onBlur={handleBlur("coordinates")}
+                value={values.coordinates}
+                placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                placeholder="Location"
+                style={styles.input}
+              />
+              <TextInput
+                onChangeText={handleChange("description")}
+                onBlur={handleBlur("description")}
+                value={values.description}
+                placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                placeholder="Description"
+                style={styles.input}
+              />
+              <View style={styles.buttonView}>
+                <View style={styles.saveBtn}>
+                  <Button
+                    title="Submit"
+                    color="black"
+                    accessibilityLabel="Learn more about this purple button"
+                    onPress={handleSubmit}
+                  />
+                </View>
               </View>
-            </View>
+            </SafeAreaView>
           </View>
         )}
       </Formik>
@@ -98,6 +106,11 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingHorizontal: 10,
     paddingVertical: 50,
+  },
+  container: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
   },
   input: {
     paddingHorizontal: 10,
