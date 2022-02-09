@@ -16,15 +16,12 @@ import { getExits } from "../../../redux/slices/exits";
 
 const Exits = (props) => {
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const exits = useSelector((state) => state.exits.exitsItems);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setLoading(true);
     dispatch(getExits());
-    setLoading(false);
   }, []);
 
   async function handleListRefresh() {
@@ -33,32 +30,11 @@ const Exits = (props) => {
     setRefreshing(false);
   }
 
-  // async function _getExits() {
-  //   setLoading(true);
-  //   try {
-  //     const user = auth.currentUser;
-  //     if (user) {
-  //       const snapshot = await db
-  //         .collection("users")
-  //         .doc(user.uid)
-  //         .collection("exits")
-  //         .orderBy("exitName", "asc")
-  //         .get();
-  //       const response = snapshot.docs.map((doc) => doc.data());
-  //       setExits(response);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   setLoading(false);
-  // }
-
   const openForm = () => {
     navigation.navigate("ExitsForm");
   };
 
   const Item = ({ item, index }) => (
-    // console.log("ITEM", item),
     <Card
       style={styles.card}
       key={index}
@@ -86,7 +62,6 @@ const Exits = (props) => {
             keyExtractor={(item) => item.id}
             style={styles.flatList}
             contentContainerStyle={styles.flatlist}
-            // onEndReached={handleEndReached}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}

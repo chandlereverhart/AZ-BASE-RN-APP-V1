@@ -1,23 +1,19 @@
 import React from "react";
 import "react-native-get-random-values";
-import { v4 as uuid } from "uuid";
 import { useDispatch } from "react-redux";
 import { View, TextInput, Button, StyleSheet } from "react-native";
-import { auth, db } from "../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 import { addExit, getExits } from "../../redux/slices/exits";
 
 const ExitsForm = (props) => {
   const exit = props.route?.params?.exit?.exit ?? {};
-
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const handleSubmit = async (values) => {
     await dispatch(addExit(values));
     dispatch(getExits());
-
     navigation.navigate("MyTabs");
   };
 

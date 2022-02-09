@@ -2,8 +2,6 @@ import React from "react";
 import { View, Button, Image } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { useDispatch } from "react-redux";
-
-import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
 import { StyleSheet } from "react-native";
 import { Divider, Text, withTheme } from "react-native-paper";
@@ -11,7 +9,6 @@ import { deleteExit } from "../../../redux/slices/exits";
 
 const ExitDetails = (props) => {
   const exit = props.route?.params?.exit?.item ?? {};
-
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -30,7 +27,6 @@ const ExitDetails = (props) => {
                 <Text>Divider</Text>
               </Divider>
             </View>
-
             <Text style={styles.titleText}>"{exit.exitName}"</Text>
             <View style={styles.dividerView}>
               <Divider>
