@@ -110,7 +110,6 @@ export function getLogBook() {
 
 // ----------------------------------------------------------------------
 export function addLogBook(values) {
-  console.log("VALUES ==>", values);
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     let jumpRef;
@@ -138,9 +137,7 @@ export function addLogBook(values) {
     try {
       // If File Begin Upload
       if (values.photoUrl !== "") {
-        console.log("FIRED", values.photoUrl);
         const file = values.photoUrl;
-        console.log("FILE=>", file);
         const response = await fetch(file.uri);
         const blob = await response.blob();
         // console.log("BLOB=>", blob);
@@ -168,38 +165,3 @@ export function addLogBook(values) {
     }
   };
 }
-// export function addLogBook(values) {
-//   return async (dispatch) => {
-//     dispatch(slice.actions.startLoading());
-//     let jumpRef;
-//     const user = auth.currentUser;
-//     const docId = values.id;
-//     if (values.id !== "") {
-//       jumpRef = db
-//         .collection("users")
-//         .doc(user.uid)
-//         .collection("logBook")
-//         .doc(docId);
-//     } else {
-//       jumpRef = db
-//         .collection("users")
-//         .doc(user.uid)
-//         .collection("logBook")
-//         .doc();
-//     }
-
-//     const firebaseObject = {
-//       ...values,
-//       id: jumpRef.id,
-//       jumpNumber: Number(values.jumpNumber),
-//     };
-//     try {
-//       await jumpRef.set(firebaseObject, { merge: true });
-
-//       dispatch(slice.actions.getLogbookAddSuccess());
-//     } catch (error) {
-//       console.log(error);
-//       dispatch(slice.actions.hasError(error));
-//     }
-//   };
-// }
