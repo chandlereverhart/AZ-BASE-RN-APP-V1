@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/core";
 import { useSelector, useDispatch } from "../../../redux/store";
 
 import { getExits } from "../../../redux/slices/exits";
+import EmptyList from "../../../components/EmptyList/EmptyList";
 
 const Exits = (props) => {
   const navigation = useNavigation();
@@ -56,19 +57,23 @@ const Exits = (props) => {
     <>
       <View style={styles.bottomHalf}>
         <SafeAreaView style={styles.container}>
-          <FlatList
-            data={exits}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            style={styles.flatList}
-            contentContainerStyle={styles.flatlist}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={handleListRefresh}
-              />
-            }
-          />
+          {exits.length === 0 ? (
+            <EmptyList label={"exits"} />
+          ) : (
+            <FlatList
+              data={exits}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+              style={styles.flatList}
+              contentContainerStyle={styles.flatlist}
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={handleListRefresh}
+                />
+              }
+            />
+          )}
         </SafeAreaView>
 
         <View style={styles.buttons}>

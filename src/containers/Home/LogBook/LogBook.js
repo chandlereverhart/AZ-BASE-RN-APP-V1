@@ -13,6 +13,7 @@ import { useNavigation, useIsFocused } from "@react-navigation/core";
 import { fDate } from "../../../utils/DateFunctions";
 import { useSelector, useDispatch } from "../../../redux/store";
 import { getLogBook } from "../../../redux/slices/logBook";
+import EmptyList from "../../../components/EmptyList/EmptyList";
 
 const LogBook = (props) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -62,20 +63,24 @@ const LogBook = (props) => {
     <>
       <View style={styles.bottomHalf}>
         <SafeAreaView style={styles.container}>
-          <FlatList
-            data={logBook}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            style={styles.flatList}
-            contentContainerStyle={styles.flatlist}
-            // onEndReached={handleEndReached}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={handleListRefresh}
-              />
-            }
-          />
+          {logBook.length === 0 ? (
+            <EmptyList label={"jumps"} />
+          ) : (
+            <FlatList
+              data={logBook}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+              style={styles.flatList}
+              contentContainerStyle={styles.flatlist}
+              // onEndReached={handleEndReached}
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={handleListRefresh}
+                />
+              }
+            />
+          )}
         </SafeAreaView>
 
         <View style={styles.buttons}>
