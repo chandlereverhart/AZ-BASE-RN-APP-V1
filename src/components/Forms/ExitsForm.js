@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   StyleSheet,
+  Image,
   ScrollView,
   TouchableOpacity,
   Linking,
@@ -16,15 +17,36 @@ import { addExit, getExits } from "../../redux/slices/exits";
 //icons
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Location from "expo-location";
+import * as ImagePicker from "expo-image-picker";
 
 const ExitsForm = (props) => {
   const exit = props.route?.params?.exit?.exit ?? {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [position, setPosition] = useState("");
+  const [image, setImage] = useState(exit.photoUrl || null);
+  const [file, setFile] = useState(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      setFile(result);
+    }
+  };
+  const removeImage = async () => {
+    setImage(null);
+    setFile(null);
+  };
 
   const handleSubmit = async (values) => {
-    await dispatch(addExit(values));
+    await dispatch(addExit({ ...values, photoUrl: file ? file : "" }));
     dispatch(getExits());
     navigation.navigate("MyTabs");
   };
@@ -96,14 +118,6 @@ const ExitsForm = (props) => {
                 style={styles.input}
               />
               <TextInput
-                onChangeText={handleChange("coordinates")}
-                onBlur={handleBlur("coordinates")}
-                value={values.coordinates}
-                placeholderTextColor="rgba(255, 255, 255, 0.3)"
-                placeholder="Coordinates (lat,lng)"
-                style={styles.input}
-              />
-              <TextInput
                 onChangeText={handleChange("description")}
                 onBlur={handleBlur("description")}
                 value={values.description}
@@ -111,7 +125,15 @@ const ExitsForm = (props) => {
                 placeholder="Description"
                 style={styles.input}
               />
-              <View style={styles.addPhotoView}>
+              <TextInput
+                onChangeText={handleChange("coordinates")}
+                onBlur={handleBlur("coordinates")}
+                value={values.coordinates}
+                placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                placeholder="Coordinates (lat,lng)"
+                style={styles.input}
+              />
+              <View style={styles.addCoordsView}>
                 <TouchableOpacity onPress={() => Linking.openURL(url)}>
                   <MaterialCommunityIcons
                     color="rgba(255, 255, 255, 0.8)"
@@ -120,6 +142,42 @@ const ExitsForm = (props) => {
                   />
                 </TouchableOpacity>
               </View>
+              {!image ? (
+                <View style={styles.addPhotoView}>
+                  <TouchableOpacity onPress={pickImage}>
+                    <MaterialCommunityIcons
+                      color="rgba(255, 255, 255, 0.8)"
+                      name="image-plus"
+                      size={40}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View
+                  style={{
+                    alignItems: "center",
+                  }}
+                >
+                  <View>
+                    <View>
+                      <Image
+                        source={{ uri: image }}
+                        style={{ width: 100, height: 100, borderRadius: 12 }}
+                      />
+                    </View>
+                    <View style={styles.removeImageIcon}>
+                      <TouchableOpacity onPress={removeImage}>
+                        <MaterialCommunityIcons
+                          color="black"
+                          name="close"
+                          size={30}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              )}
+
               <View style={styles.buttonView}>
                 <View style={styles.saveBtn}>
                   <Button
@@ -137,6 +195,7 @@ const ExitsForm = (props) => {
     </>
   );
 };
+
 export default ExitsForm;
 
 const styles = StyleSheet.create({
@@ -168,8 +227,10 @@ const styles = StyleSheet.create({
   buttonView: {
     paddingHorizontal: 30,
     paddingVertical: 30,
-
     alignItems: "center",
+  },
+  addCoordsView: {
+    alignSelf: "center",
   },
   saveBtn: {
     backgroundColor: "rgba(255, 255, 255, 0.8)",

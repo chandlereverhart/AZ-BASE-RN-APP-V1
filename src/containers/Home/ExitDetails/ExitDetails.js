@@ -54,6 +54,20 @@ const ExitDetails = (props) => {
               source={require("../../../../src/assets/AZBASE-LOGO.png")}
             />
           </View>
+          {exit.photoUrl !== "" && (
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(exit.photoUrl);
+                }}
+              >
+                <Image
+                  source={{ uri: exit.photoUrl }}
+                  style={{ width: 100, height: 100, borderRadius: 12 }}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
         </Card>
         <View style={styles.buttonView}>
           <View style={styles.deleteButton}>

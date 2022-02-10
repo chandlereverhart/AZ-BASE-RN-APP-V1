@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { v4 as uuid } from "uuid";
 
 // Firebase
-import { auth, db } from "../../../Firebase/firebase";
+import {
+  auth,
+  db,
+  storage,
+  UPLOAD_STATE_CHANGED,
+} from "../../../Firebase/firebase";
 
 const initialState = {
   isLoading: false,
@@ -105,6 +111,38 @@ export function getExits() {
 
 // ----------------------------------------------------------------------
 
+// export function addExit(values) {
+//   return async (dispatch) => {
+//     dispatch(slice.actions.startLoading());
+//     let exitRef;
+//     const user = auth.currentUser;
+//     const docId = values.id;
+//     if (values.id !== "") {
+//       exitRef = db
+//         .collection("users")
+//         .doc(user.uid)
+//         .collection("exits")
+//         .doc(docId);
+//     } else {
+//       exitRef = db.collection("users").doc(user.uid).collection("exits").doc();
+//     }
+
+//     const firebaseObject = {
+//       ...values,
+//       id: exitRef.id,
+//     };
+//     try {
+//       await exitRef.set(firebaseObject, { merge: true });
+
+//       dispatch(slice.actions.getExitAddSuccess());
+//     } catch (error) {
+//       console.log(error);
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
+
+// ----------------------------------------------------------------------
 export function addExit(values) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
@@ -126,8 +164,27 @@ export function addExit(values) {
       id: exitRef.id,
     };
     try {
-      await exitRef.set(firebaseObject, { merge: true });
+      // If File Begin Upload
 
+      if (values.photoUrl.uri !== undefined) {
+        const file = values.photoUrl.uri;
+        const response = await fetch(file);
+        const blob = await response.blob();
+        const extension = uuid();
+        const storageRef = storage.ref(`users/${user.uid}/photo_${extension}`);
+        const task = storageRef.put(blob);
+        task.on(UPLOAD_STATE_CHANGED, () => {
+          task
+            .then(() => storageRef.getDownloadURL())
+            .then(async (downloadURL) => {
+              firebaseObject.photoUrl = downloadURL;
+              await exitRef.set(firebaseObject, { merge: true });
+            });
+        });
+      } else {
+        firebaseObject.photoUrl = values.photoUrl;
+        await exitRef.set(firebaseObject, { merge: true });
+      }
       dispatch(slice.actions.getExitAddSuccess());
     } catch (error) {
       console.log(error);
