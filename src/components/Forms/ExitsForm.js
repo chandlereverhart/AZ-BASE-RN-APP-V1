@@ -1,21 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "react-native-get-random-values";
 import { useDispatch } from "react-redux";
-import { View, TextInput, Button, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 import { addExit, getExits } from "../../redux/slices/exits";
+//icons
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import * as Location from "expo-location";
 
 const ExitsForm = (props) => {
   const exit = props.route?.params?.exit?.exit ?? {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [position, setPosition] = useState("");
 
   const handleSubmit = async (values) => {
     await dispatch(addExit(values));
     dispatch(getExits());
     navigation.navigate("MyTabs");
   };
+
+  useEffect(() => {
+    getMapUrl();
+  }, []);
+
+  const getMapUrl = () => {
+    Location.installWebGeolocationPolyfill();
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position),
+        setPosition({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+    });
+  };
+
+  const scheme = Platform.select({ ios: "maps:0,0?q=", android: "geo:0,0?q=" });
+  const latLng = `${position.lat}, ${position.lng}`;
+  const label = "Custom Label";
+  const url = Platform.select({
+    ios: `https://www.google.com/maps/search/?api=1&center=${latLng}`,
+    android: `${scheme}${latLng}(${label})`,
+  });
 
   return (
     <>
@@ -76,6 +111,15 @@ const ExitsForm = (props) => {
                 placeholder="Description"
                 style={styles.input}
               />
+              <View style={styles.addPhotoView}>
+                <TouchableOpacity onPress={() => Linking.openURL(url)}>
+                  <MaterialCommunityIcons
+                    color="rgba(255, 255, 255, 0.8)"
+                    name="map-marker-multiple"
+                    size={40}
+                  />
+                </TouchableOpacity>
+              </View>
               <View style={styles.buttonView}>
                 <View style={styles.saveBtn}>
                   <Button

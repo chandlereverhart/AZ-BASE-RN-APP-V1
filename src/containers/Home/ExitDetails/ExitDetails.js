@@ -21,7 +21,7 @@ const ExitDetails = (props) => {
   const latLng = `${exit.coordinates}`;
   const label = "Custom Label";
   const url = Platform.select({
-    ios: `${scheme}${label}@${latLng}`,
+    ios: `https://www.google.com/maps/search/?api=1&query=${latLng}`,
     android: `${scheme}${latLng}(${label})`,
   });
 
