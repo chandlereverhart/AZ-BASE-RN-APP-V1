@@ -41,19 +41,20 @@ const ExitDetails = (props) => {
                 <Text>Divider</Text>
               </Divider>
             </View>
-            <Text style={styles.otherText}>{exit.impactHeight} to impact</Text>
-            <Text style={styles.otherText}>{exit.overallHeight} overall</Text>
+            {exit.impactHeight !== "" && (
+              <Text style={styles.otherText}>
+                {exit.impactHeight} to impact
+              </Text>
+            )}
+            {exit.overallHeight !== "" && (
+              <Text style={styles.otherText}>{exit.overallHeight} overall</Text>
+            )}
             <TouchableOpacity onPress={() => Linking.openURL(url)}>
               <Text style={styles.otherText}>{exit.coordinates}</Text>
             </TouchableOpacity>
           </View>
           <Text style={styles.otherText}>{exit.description}</Text>
-          <View style={styles.logoView}>
-            <Image
-              style={{ width: 120, height: 150 }}
-              source={require("../../../../src/assets/AZBASE-LOGO.png")}
-            />
-          </View>
+
           {exit.photoUrl !== "" && (
             <View>
               <TouchableOpacity
@@ -66,6 +67,14 @@ const ExitDetails = (props) => {
                   style={{ width: 100, height: 100, borderRadius: 12 }}
                 />
               </TouchableOpacity>
+            </View>
+          )}
+          {!exit.photoUrl && (
+            <View style={styles.logoView}>
+              <Image
+                style={{ width: 120, height: 150 }}
+                source={require("../../../../src/assets/AZBASE-LOGO.png")}
+              />
             </View>
           )}
         </Card>

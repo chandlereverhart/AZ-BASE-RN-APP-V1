@@ -125,22 +125,24 @@ const ExitsForm = (props) => {
                 placeholder="Description"
                 style={styles.input}
               />
-              <TextInput
-                onChangeText={handleChange("coordinates")}
-                onBlur={handleBlur("coordinates")}
-                value={values.coordinates}
-                placeholderTextColor="rgba(255, 255, 255, 0.3)"
-                placeholder="Coordinates (lat,lng)"
-                style={styles.input}
-              />
-              <View style={styles.addCoordsView}>
-                <TouchableOpacity onPress={() => Linking.openURL(url)}>
-                  <MaterialCommunityIcons
-                    color="rgba(255, 255, 255, 0.8)"
-                    name="map-marker-multiple"
-                    size={40}
-                  />
-                </TouchableOpacity>
+              <View style={styles.coordsView}>
+                <TextInput
+                  onChangeText={handleChange("coordinates")}
+                  onBlur={handleBlur("coordinates")}
+                  value={values.coordinates}
+                  placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                  placeholder="Coordinates (lat,lng)"
+                  style={styles.input}
+                />
+                <View style={styles.getCoordsIcon}>
+                  <TouchableOpacity onPress={() => Linking.openURL(url)}>
+                    <MaterialCommunityIcons
+                      color="rgba(255, 255, 255, .95)"
+                      name="map-marker-multiple"
+                      size={35}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
               {!image ? (
                 <View style={styles.addPhotoView}>
@@ -229,8 +231,27 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
     alignItems: "center",
   },
-  addCoordsView: {
+  getCoordsIcon: {
     alignSelf: "center",
+    position: "absolute",
+    top: 0,
+    right: 0,
+    borderRadius: 20,
+    marginTop: 13,
+    marginRight: 10,
+  },
+  addPhotoView: {
+    alignSelf: "center",
+  },
+  addPhotoText: {
+    color: "rgba(255, 255, 255, 0.95)",
+  },
+  removeImageIcon: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    borderRadius: 20,
   },
   saveBtn: {
     backgroundColor: "rgba(255, 255, 255, 0.8)",
