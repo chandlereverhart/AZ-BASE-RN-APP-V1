@@ -1,13 +1,7 @@
 import React from "react";
 import "react-native-get-random-values";
 import { useDispatch } from "react-redux";
-import {
-  View,
-  TextInput,
-  Button,
-  StyleSheet,
-  SafeAreaView,
-} from "react-native";
+import { View, TextInput, Button, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 import { addExit, getExits } from "../../redux/slices/exits";
@@ -38,7 +32,10 @@ const ExitsForm = (props) => {
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View style={styles.logView}>
-            <SafeAreaView style={styles.container}>
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1 }}
+              keyboardShouldPersistTaps="handled"
+            >
               <TextInput
                 onChangeText={handleChange("exitName")}
                 onBlur={handleBlur("exitName")}
@@ -68,7 +65,7 @@ const ExitsForm = (props) => {
                 onBlur={handleBlur("coordinates")}
                 value={values.coordinates}
                 placeholderTextColor="rgba(255, 255, 255, 0.3)"
-                placeholder="Location"
+                placeholder="Coordinates (lat,lng)"
                 style={styles.input}
               />
               <TextInput
@@ -89,7 +86,7 @@ const ExitsForm = (props) => {
                   />
                 </View>
               </View>
-            </SafeAreaView>
+            </ScrollView>
           </View>
         )}
       </Formik>
