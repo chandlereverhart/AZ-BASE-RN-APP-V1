@@ -106,40 +106,40 @@ const LogBookForm = (props) => {
               ) : (
                 <View
                   style={{
-                    flex: 1,
                     alignItems: "center",
-                    justifyContent: "center",
                   }}
                 >
                   <View>
-                    <Image
-                      source={{ uri: image }}
-                      style={{ width: 150, height: 150, borderRadius: 12 }}
-                    />
-                  </View>
-                  <View style={styles.removeImageIcon}>
-                    <TouchableOpacity onPress={removeImage}>
-                      <MaterialCommunityIcons
-                        color="black"
-                        name="close"
-                        size={30}
+                    <View>
+                      <Image
+                        source={{ uri: image }}
+                        style={{ width: 100, height: 100, borderRadius: 12 }}
                       />
-                    </TouchableOpacity>
+                    </View>
+                    <View style={styles.removeImageIcon}>
+                      <TouchableOpacity onPress={removeImage}>
+                        <MaterialCommunityIcons
+                          color="black"
+                          name="close"
+                          size={30}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
               )}
-            </ScrollView>
 
-            <View style={styles.buttonView}>
-              <View style={styles.saveBtn}>
-                <Button
-                  title="Submit"
-                  color="black"
-                  accessibilityLabel="Learn more about this purple button"
-                  onPress={handleSubmit}
-                />
+              <View style={styles.buttonView}>
+                <View style={styles.saveBtn}>
+                  <Button
+                    title="Submit"
+                    color="black"
+                    accessibilityLabel="Learn more about this purple button"
+                    onPress={handleSubmit}
+                  />
+                </View>
               </View>
-            </View>
+            </ScrollView>
           </View>
         )}
       </Formik>
@@ -177,8 +177,8 @@ const styles = StyleSheet.create({
   },
   removeImageIcon: {
     position: "absolute",
-    top: 30,
-    right: 100,
+    top: 0,
+    right: 0,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 20,
   },
@@ -192,7 +192,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: "white",
     borderWidth: 1,
-    justifyContent: "center",
     alignItems: "center",
     width: "50%",
   },
