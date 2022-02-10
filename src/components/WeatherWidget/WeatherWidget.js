@@ -253,7 +253,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   weatherCard: {
-    flex: 1,
     backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderRadius: 12,
     borderWidth: 1,
@@ -327,9 +326,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   bodyContainer: {
-    flex: 2,
+    flex: 1,
     justifyContent: "flex-end",
     paddingHorizontal: 25,
+    paddingVertical: 25,
+
     marginBottom: 40,
   },
   commentText: {

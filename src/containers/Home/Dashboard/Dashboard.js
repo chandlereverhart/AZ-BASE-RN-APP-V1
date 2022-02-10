@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
-
+import { View, StyleSheet, ScrollView } from "react-native";
 import WeatherWidget from "../../../components/WeatherWidget/WeatherWidget";
+import UsersCard from "../../../components/UsersCard/UsersCard";
 
 const Dashboard = (props) => {
   const [loading, setLoading] = useState(true);
@@ -14,9 +14,12 @@ const Dashboard = (props) => {
   return (
     <>
       <View style={styles.bottomHalf}>
-        <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.container}>
           <WeatherWidget />
-        </SafeAreaView>
+          <View style={styles.divider} />
+          <UsersCard />
+          <View style={styles.marginBottom} />
+        </ScrollView>
       </View>
     </>
   );
@@ -27,13 +30,21 @@ const styles = StyleSheet.create({
   root: {},
   container: {
     flex: 1,
-    paddingVertical: 10,
+    marginVertical: 10,
+    marginBottom: 10,
   },
 
   bottomHalf: {
     width: "100%",
     minHeight: "100%",
     alignItems: "center",
-    paddingBottom: 70,
+  },
+  divider: {
+    borderTopColor: "rgba(255, 255, 255, 0.3)",
+    borderTopWidth: 1,
+    marginVertical: 20,
+  },
+  marginBottom: {
+    marginBottom: 100,
   },
 });
