@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Button, Image, TouchableOpacity, Linking } from "react-native";
+import {
+  View,
+  Button,
+  Image,
+  TouchableOpacity,
+  Linking,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
 import { Card } from "react-native-ui-lib";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
@@ -9,7 +17,6 @@ import { fDate } from "../../../utils/DateFunctions";
 //redux
 
 import { deleteLogBook } from "../../../redux/slices/logBook";
-import { Link } from "@react-navigation/native";
 
 const LogBookDetails = (props) => {
   const jump = props.route?.params?.jump?.item ?? {};
@@ -26,54 +33,49 @@ const LogBookDetails = (props) => {
     <>
       <View style={styles.pageContent}>
         <Card style={styles.card}>
-          <View style={styles.jumpView}>
-            <Text style={styles.jumpText}>#{jump.jumpNumber}</Text>
-          </View>
-          <View style={styles.detailsView}>
-            <View style={styles.dividerView}>
-              <Divider>
-                <Text>Divider</Text>
-              </Divider>
-            </View>
-
-            <Text style={styles.totalText}>"{jump.exitName}"</Text>
-            <View style={styles.dividerView}>
-              <Divider>
-                <Text>Divider</Text>
-              </Divider>
-            </View>
-
-            <Text style={styles.otherText}>{jump.otherDetails}</Text>
-            <Text style={styles.otherText}>{createdAt}</Text>
-          </View>
-
-          {jump.photoUrl ? (
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL(jump.photoUrl);
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  // alignItems: "center",
-                  // justifyContent: "center",
-                }}
-              >
-                <Image
-                  source={{ uri: jump.photoUrl }}
-                  style={{ width: 100, height: 100, borderRadius: 12 }}
-                />
+          <View style={styles.headerView}>
+            {jump.photoUrl !== "" && (
+              <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    Linking.openURL(jump.photoUrl);
+                  }}
+                >
+                  <Image
+                    source={{ uri: jump.photoUrl }}
+                    style={{ width: 100, height: 100, borderRadius: 12 }}
+                  />
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
-          ) : (
+            )}
+            <View>
+              <Text style={styles.jumpText}>#{jump.jumpNumber}</Text>
+              <Text style={styles.otherText}>{createdAt}</Text>
+            </View>
+          </View>
+          <ScrollView>
+            <View style={styles.detailsView}>
+              <View style={styles.dividerView}>
+                <Divider>
+                  <Text>Divider</Text>
+                </Divider>
+              </View>
+
+              <Text style={styles.totalText}>"{jump.exitName}"</Text>
+              <View style={styles.dividerView}>
+                <Divider>
+                  <Text>Divider</Text>
+                </Divider>
+              </View>
+            </View>
+            <Text style={styles.otherText}>{jump.otherDetails}</Text>
             <View style={styles.logoView}>
               <Image
                 style={{ width: 120, height: 150 }}
                 source={require("../../../../src/assets/AZBASE-LOGO.png")}
               />
             </View>
-          )}
+          </ScrollView>
         </Card>
         <View style={styles.buttonView}>
           <View style={styles.deleteButton}>
@@ -113,6 +115,7 @@ const styles = StyleSheet.create({
     paddingTop: "10%",
     paddingBottom: "10%",
   },
+
   card: {
     backgroundColor: "rgba(255, 255, 255, 0.2)",
     flex: 1,
@@ -123,15 +126,24 @@ const styles = StyleSheet.create({
     paddingBottom: "10%",
     paddingHorizontal: "10%",
   },
+  headerView: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  jumpView: {
+    flexDirection: "column",
+    alignSelf: "flex-end",
+  },
   dividerView: {
     width: 200,
   },
   logoView: {
     opacity: 0.1,
     position: "absolute",
-    marginTop: 250,
+    marginTop: 100,
+    marginLeft: 35,
   },
-
   detailsView: {
     marginTop: 50,
     alignItems: "center",

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { v4 as uuid } from "uuid";
 
 // Firebase
 import {
@@ -136,14 +137,13 @@ export function addLogBook(values) {
     };
     try {
       // If File Begin Upload
-      if (values.photoUrl !== null) {
-        const file = values.photoUrl;
-        const response = await fetch(file.uri);
+
+      if (values.photoUrl.uri !== undefined) {
+        const file = values.photoUrl.uri;
+        const response = await fetch(file);
         const blob = await response.blob();
-        const extension = file.type.split("/")[1];
-        const storageRef = storage.ref(
-          `users/${user.uid}/photo_${user.uid}.${extension}`
-        );
+        const extension = uuid();
+        const storageRef = storage.ref(`users/${user.uid}/photo_${extension}`);
         const task = storageRef.put(blob);
         task.on(UPLOAD_STATE_CHANGED, () => {
           task

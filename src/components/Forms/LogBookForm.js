@@ -1,45 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   TextInput,
   Button,
   StyleSheet,
   Image,
+  Text,
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { addLogBook, getLogBook } from "../../redux/slices/logBook";
+// icons
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import * as ImagePicker from "expo-image-picker";
-import { values } from "lodash-es";
 
 const LogBookForm = (props) => {
   const jump = props.route?.params?.jump?.jump ?? {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(jump.photoUrl || null);
   const [file, setFile] = useState(null);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-
-    // console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri);
       setFile(result);
     }
   };
+  const removeImage = async () => {
+    setImage(null);
+    setFile(null);
+  };
 
   const handleSubmit = async (values) => {
-    await dispatch(addLogBook({ ...values, photoUrl: file }));
+    await dispatch(addLogBook({ ...values, photoUrl: file ? file : "" }));
     dispatch(getLogBook());
     navigation.navigate("MyTabs");
   };
@@ -53,7 +57,7 @@ const LogBookForm = (props) => {
           otherDetails: jump?.otherDetails || "",
           createdAt: jump?.createdAt || new Date(),
           id: jump?.id || "",
-          photoUrl: jump?.photoUrl || file,
+          photoUrl: jump?.photoUrl || "",
         }}
         onSubmit={(values) => handleSubmit(values)}
       >
@@ -85,23 +89,43 @@ const LogBookForm = (props) => {
               placeholder="Other Details..."
               style={styles.input}
             />
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Button
-                title="Pick an image from camera roll"
-                onPress={pickImage}
-              />
-              <TouchableOpacity onPress={pickImage}></TouchableOpacity>
-              <Image
-                source={{ uri: image || values?.photoUrl }}
-                style={{ width: 100, height: 100, borderRadius: 12 }}
-              />
-            </View>
+
+            {!image ? (
+              <View style={styles.addPhotoView}>
+                <TouchableOpacity onPress={pickImage}>
+                  <MaterialCommunityIcons
+                    color="rgba(255, 255, 255, 0.8)"
+                    name="image-plus"
+                    size={40}
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <View>
+                  <Image
+                    source={{ uri: image }}
+                    style={{ width: 150, height: 150, borderRadius: 12 }}
+                  />
+                </View>
+                <View style={styles.removeImageIcon}>
+                  <TouchableOpacity onPress={removeImage}>
+                    <MaterialCommunityIcons
+                      color="black"
+                      name="close"
+                      size={30}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+
             <View style={styles.buttonView}>
               <View style={styles.saveBtn}>
                 <Button
@@ -141,10 +165,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
+  addPhotoView: {
+    alignSelf: "center",
+  },
+  addPhotoText: {
+    color: "rgba(255, 255, 255, 0.95)",
+  },
+  removeImageIcon: {
+    position: "absolute",
+    top: 30,
+    right: 100,
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    borderRadius: 20,
+  },
   buttonView: {
     paddingHorizontal: 30,
     paddingVertical: 30,
-
     alignItems: "center",
   },
   saveBtn: {
