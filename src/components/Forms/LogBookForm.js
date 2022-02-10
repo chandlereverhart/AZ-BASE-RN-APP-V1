@@ -5,7 +5,7 @@ import {
   Button,
   StyleSheet,
   Image,
-  Text,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
@@ -63,68 +63,72 @@ const LogBookForm = (props) => {
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View style={styles.logView}>
-            <TextInput
-              type="number"
-              onChangeText={handleChange("jumpNumber")}
-              onBlur={handleBlur("jumpNumber")}
-              value={values.jumpNumber}
-              type="number"
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              placeholder="Jump #"
-              style={styles.input}
-            />
-            <TextInput
-              onChangeText={handleChange("exitName")}
-              onBlur={handleBlur("exitName")}
-              value={values.exitName}
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              placeholder="Exit Name"
-              style={styles.input}
-            />
-            <TextInput
-              onChangeText={handleChange("otherDetails")}
-              onBlur={handleBlur("otherDetails")}
-              value={values.otherDetails}
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              placeholder="Other Details..."
-              style={styles.input}
-            />
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1 }}
+              keyboardShouldPersistTaps="handled"
+            >
+              <TextInput
+                type="number"
+                onChangeText={handleChange("jumpNumber")}
+                onBlur={handleBlur("jumpNumber")}
+                value={values.jumpNumber}
+                placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                placeholder="Jump #"
+                style={styles.input}
+              />
+              <TextInput
+                onChangeText={handleChange("exitName")}
+                onBlur={handleBlur("exitName")}
+                value={values.exitName}
+                placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                placeholder="Exit Name"
+                style={styles.input}
+              />
+              <TextInput
+                onChangeText={handleChange("otherDetails")}
+                onBlur={handleBlur("otherDetails")}
+                value={values.otherDetails}
+                placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                placeholder="Other Details..."
+                style={styles.input}
+              />
 
-            {!image ? (
-              <View style={styles.addPhotoView}>
-                <TouchableOpacity onPress={pickImage}>
-                  <MaterialCommunityIcons
-                    color="rgba(255, 255, 255, 0.8)"
-                    name="image-plus"
-                    size={40}
-                  />
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <View>
-                  <Image
-                    source={{ uri: image }}
-                    style={{ width: 150, height: 150, borderRadius: 12 }}
-                  />
-                </View>
-                <View style={styles.removeImageIcon}>
-                  <TouchableOpacity onPress={removeImage}>
+              {!image ? (
+                <View style={styles.addPhotoView}>
+                  <TouchableOpacity onPress={pickImage}>
                     <MaterialCommunityIcons
-                      color="black"
-                      name="close"
-                      size={30}
+                      color="rgba(255, 255, 255, 0.8)"
+                      name="image-plus"
+                      size={40}
                     />
                   </TouchableOpacity>
                 </View>
-              </View>
-            )}
+              ) : (
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <View>
+                    <Image
+                      source={{ uri: image }}
+                      style={{ width: 150, height: 150, borderRadius: 12 }}
+                    />
+                  </View>
+                  <View style={styles.removeImageIcon}>
+                    <TouchableOpacity onPress={removeImage}>
+                      <MaterialCommunityIcons
+                        color="black"
+                        name="close"
+                        size={30}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+            </ScrollView>
 
             <View style={styles.buttonView}>
               <View style={styles.saveBtn}>

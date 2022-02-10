@@ -146,7 +146,6 @@ function HomeStack() {
                 headerShown: false,
               }}
             />
-
             <Stack.Screen name="MyTabs" component={MyTabs} />
             <Stack.Screen name="Exits" component={Exits} />
             <Stack.Screen name="ExitsForm" component={ExitsForm} />
@@ -225,6 +224,7 @@ function MyDrawer() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name="Home" component={HomeStack} />
+      <Drawer.Screen name="Dashboard" component={Dashboard} />
     </Drawer.Navigator>
   );
 }
