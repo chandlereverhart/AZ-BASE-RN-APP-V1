@@ -2,15 +2,9 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import WeatherWidget from "../../../components/WeatherWidget/WeatherWidget";
 import UsersCard from "../../../components/UsersCard/UsersCard";
+import LastJumpCard from "../../../components/LastJumpCard/LastJumpCard";
 
 const Dashboard = (props) => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    setLoading(false);
-  }, []);
-
   return (
     <>
       <View style={styles.bottomHalf}>
@@ -18,6 +12,8 @@ const Dashboard = (props) => {
           <WeatherWidget />
           <View style={styles.divider} />
           <UsersCard />
+          <View style={styles.divider} />
+          <LastJumpCard />
           <View style={styles.marginBottom} />
         </ScrollView>
       </View>
