@@ -47,10 +47,15 @@ const LogBook = (props) => {
       }
     >
       <View style={styles.cardTextView}>
-        <Text style={styles.cardText}>Jump #{item.jumpNumber}</Text>
-        <Text style={styles.dateText}>
-          {item?.createdAt ? fDate(item.createdAt.seconds * 1000) : ""}
-        </Text>
+        <View style={styles.numberView}>
+          <Text style={styles.numberText}>#{item.jumpNumber}</Text>
+        </View>
+        <View style={styles.column}>
+          <Text style={styles.nameText}>"{item.exitName}"</Text>
+          <Text style={styles.dateText}>
+            {item?.createdAt ? fDate(item.createdAt.seconds * 1000) : ""}
+          </Text>
+        </View>
       </View>
     </Card>
   );
@@ -136,7 +141,8 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
   },
   card: {
-    height: 40,
+    flex: 1,
+    justifyContent: "space-between",
     minWidth: "100%",
     paddingHorizontal: 10,
     paddingVertical: 8,
@@ -144,23 +150,37 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255, 255, 255, 0.15)",
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderWidth: 1,
-    marginBottom: 5,
+    marginBottom: 3,
+  },
+  numberView: {
+    width: "25%",
+    alignSelf: "center",
+  },
+  column: {
+    flexDirection: "column",
   },
   cardTextView: {
-    display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
-  },
-
-  cardText: {
-    fontSize: 16,
-    color: "rgba(255, 255, 255, 0.8)",
-    marginHorizontal: 10,
+    marginLeft: 10,
   },
   dateText: {
     fontSize: 16,
+    fontWeight: "500",
     color: "rgba(255, 255, 255, 0.8)",
-    marginHorizontal: 10,
-    justifyContent: "flex-end",
+  },
+  nameText: {
+    fontSize: 24,
+    color: "rgba(255, 255, 255, 0.8)",
+  },
+  numberText: {
+    fontSize: 24,
+    color: "rgba(255, 255, 255, 0.8)",
+    marginRight: 20,
+    alignSelf: "center",
+  },
+
+  icon: {
+    fontSize: 24,
+    color: "rgba(255, 255, 255, 0.8)",
   },
 });

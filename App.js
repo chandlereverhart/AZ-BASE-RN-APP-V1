@@ -102,7 +102,7 @@ function MyTabs({ props }) {
         }}
       />
       <Tab.Screen
-        name="Log Book"
+        name="LogBook"
         component={LogBook}
         options={{
           tabBarLabel: "Log Book",

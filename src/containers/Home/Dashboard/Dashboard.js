@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Text } from "react-native";
 import WeatherWidget from "../../../components/WeatherWidget/WeatherWidget";
 import UsersCard from "../../../components/UsersCard/UsersCard";
 import LastJumpCard from "../../../components/LastJumpCard/LastJumpCard";
+import LastExitCard from "../../../components/LastExitCard/LastExitCard";
 
 const Dashboard = (props) => {
   return (
@@ -14,7 +15,9 @@ const Dashboard = (props) => {
           <UsersCard />
           <View style={styles.divider} />
           <LastJumpCard />
-          <View style={styles.marginBottom} />
+          <View style={styles.divider} />
+          {/* <LastExitCard /> */}
+          {/* <View style={styles.marginBottom} /> */}
         </ScrollView>
       </View>
     </>
@@ -39,6 +42,11 @@ const styles = StyleSheet.create({
     borderTopColor: "rgba(255, 255, 255, 0.3)",
     borderTopWidth: 1,
     marginVertical: 20,
+  },
+  textView: {
+    position: "relative",
+    left: 40,
+    bottom: 38,
   },
   marginBottom: {
     marginBottom: 100,

@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
   },
   card: {
-    height: 40,
+    flex: 1,
     minWidth: "100%",
     alignItems: "center",
     paddingHorizontal: 10,
@@ -149,12 +149,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderColor: "rgba(255, 255, 255, 0.15)",
-
     borderWidth: 1,
     marginBottom: 5,
   },
   cardText: {
-    fontSize: 16,
+    fontSize: 24,
     opacity: 0.95,
     color: "rgba(255, 255, 255, 0.8)",
   },

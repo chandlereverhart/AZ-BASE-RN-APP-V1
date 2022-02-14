@@ -193,13 +193,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cardText: {
-    fontSize: 16,
+    fontSize: 24,
     marginHorizontal: 8,
     color: "rgba(255, 255, 255, 0.8)",
   },
   cardTextGrey: {
-    fontSize: 14,
+    fontSize: 16,
     marginHorizontal: 8,
     color: "rgba(255, 255, 255, 0.8)",
+    fontWeight: "500",
   },
 });
