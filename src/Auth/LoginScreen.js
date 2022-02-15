@@ -14,6 +14,8 @@ const LoginScreen = (props) => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const [userId, setUserId] = useState();
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -46,19 +48,37 @@ const LoginScreen = (props) => {
           }),
       ]);
     } catch (err) {
-      alert(err.message);
-      console.log(err.message);
+      setError(true);
+      setErrorMessage(err.message);
+
+      // alert(err.message);
+      // console.log(err.message);
     }
   };
-  const handleLogin = () => {
-    auth.signInWithEmailAndPassword(email, password).then((userCredentials) => {
-      const user = userCredentials.user;
-      console.log("Logged in with:", user.email);
-    });
+  const handleLogin = async () => {
+    try {
+      await auth
+        .signInWithEmailAndPassword(email, password)
+        .then((userCredentials) => {
+          const user = userCredentials.user;
+          console.log("Logged in with:", user.email);
+        });
+    } catch (err) {
+      setError(true);
+      setErrorMessage(err.message);
+
+      // alert(err.message);
+      // console.log(err.message);
+    }
   };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      {error && (
+        <View>
+          <Text style={styles.error}>{errorMessage}</Text>
+        </View>
+      )}
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -99,6 +119,10 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: "80%",
+  },
+  error: {
+    fontSize: 24,
+    color: "white",
   },
   input: {
     backgroundColor: "white",
