@@ -58,11 +58,10 @@ const ExitsForm = (props) => {
   const getMapUrl = () => {
     Location.installWebGeolocationPolyfill();
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position),
-        setPosition({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
+      setPosition({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
     });
   };
 

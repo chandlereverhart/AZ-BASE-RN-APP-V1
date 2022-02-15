@@ -13,11 +13,11 @@ const Dashboard = (props) => {
           <WeatherWidget />
           <View style={styles.divider} />
           <UsersCard />
+          {/* <View style={styles.divider} />
+          <LastJumpCard />
           <View style={styles.divider} />
-          {/* <LastJumpCard />
-          <View style={styles.divider} /> */}
-          {/* <LastExitCard /> */}
-          {/* <View style={styles.marginBottom} /> */}
+          <LastExitCard /> */}
+          <View style={styles.marginBottom} />
         </ScrollView>
       </View>
     </>
