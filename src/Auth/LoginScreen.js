@@ -50,9 +50,6 @@ const LoginScreen = (props) => {
     } catch (err) {
       setError(true);
       setErrorMessage(err.message);
-
-      // alert(err.message);
-      // console.log(err.message);
     }
   };
   const handleLogin = async () => {
@@ -66,9 +63,6 @@ const LoginScreen = (props) => {
     } catch (err) {
       setError(true);
       setErrorMessage(err.message);
-
-      // alert(err.message);
-      // console.log(err.message);
     }
   };
 
