@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Formik } from "formik";
 import {
   View,
   TextInput,
@@ -9,26 +10,24 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import { Formik } from "formik";
+// redux
 import { useDispatch } from "react-redux";
 import { addLogBook, getLogBook } from "../../redux/slices/logBook";
 // icons
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
+// utils
 import * as ImagePicker from "expo-image-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { fDate } from "../../utils/DateFunctions";
 
 const LogBookForm = (props) => {
   const jump = props.route?.params?.jump?.jump ?? {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [date, setDate] = useState(
-    jump?.createdAt.seconds * 1000 || new Date()
+    jump?.createdAt?.seconds * 1000 || new Date()
   );
   const [image, setImage] = useState(jump.photoUrl || null);
   const [file, setFile] = useState(null);
-  console.log(jump?.createdAt);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -53,7 +52,6 @@ const LogBookForm = (props) => {
   };
 
   const handleSubmit = async (values) => {
-    console.log("VALUES", values);
     await dispatch(
       addLogBook({
         ...values,
