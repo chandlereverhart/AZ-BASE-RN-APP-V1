@@ -17,16 +17,18 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import * as ImagePicker from "expo-image-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { fDate } from "../../utils/DateFunctions";
 
 const LogBookForm = (props) => {
   const jump = props.route?.params?.jump?.jump ?? {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [date, setDate] = useState(
-    jump.createdAt?.seconds * 1000 || new Date()
+    jump?.createdAt.seconds * 1000 || new Date()
   );
   const [image, setImage] = useState(jump.photoUrl || null);
   const [file, setFile] = useState(null);
+  console.log(jump?.createdAt);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -70,7 +72,7 @@ const LogBookForm = (props) => {
           jumpNumber: jump?.jumpNumber?.toString() || "",
           exitName: jump?.exitName || "",
           otherDetails: jump?.otherDetails || "",
-          createdAt: jump?.createdAt || date,
+          createdAt: jump?.createdAt?.seconds || date,
           id: jump?.id || "",
           photoUrl: jump?.photoUrl || "",
         }}
