@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Card } from "react-native-paper";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "../../redux/store";
 import { getLogBook } from "../../redux/slices/logBook";
 import { getExits } from "../../redux/slices/exits";
@@ -10,10 +8,10 @@ import { useNavigation } from "@react-navigation/core";
 
 const UsersCard = ({}) => {
   const logBook = useSelector((state) => state.logBook.logBookItems);
-  //   console.log("USERS CARD", logBook);
   const exits = useSelector((state) => state.exits.exitsItems);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const jump = logBook[0];
 
   useEffect(() => {
     dispatch(getExits());
@@ -21,31 +19,35 @@ const UsersCard = ({}) => {
   }, []);
 
   return (
-    <View style={styles.weatherContainer}>
-      <Card style={styles.usersCard}>
-        <Text style={styles.text}>You've Logged</Text>
-        <View style={styles.body}>
-          <TouchableOpacity
-            style={styles.column}
-            onPress={() => {
-              navigation.navigate("LogBook");
-            }}
-          >
-            <Text style={styles.numberText}>{logBook.length}</Text>
-            <Text style={styles.subtitle}>Jumps</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.column}
-            onPress={() => {
-              navigation.navigate("Exits");
-            }}
-          >
-            <Text style={styles.numberText}>{exits.length}</Text>
-            <Text style={styles.subtitle}>Exits</Text>
-          </TouchableOpacity>
+    <>
+      {jump && (
+        <View style={styles.weatherContainer}>
+          <Card style={styles.usersCard}>
+            <Text style={styles.text}>You've Logged</Text>
+            <View style={styles.body}>
+              <TouchableOpacity
+                style={styles.column}
+                onPress={() => {
+                  navigation.navigate("LogBook");
+                }}
+              >
+                <Text style={styles.numberText}>{jump.jumpNumber}</Text>
+                <Text style={styles.subtitle}>Jumps</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.column}
+                onPress={() => {
+                  navigation.navigate("Exits");
+                }}
+              >
+                <Text style={styles.numberText}>{exits.length}</Text>
+                <Text style={styles.subtitle}>Exits</Text>
+              </TouchableOpacity>
+            </View>
+          </Card>
         </View>
-      </Card>
-    </View>
+      )}
+    </>
   );
 };
 
