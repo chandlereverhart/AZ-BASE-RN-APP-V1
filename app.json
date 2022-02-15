@@ -23,7 +23,7 @@
     ],
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.chandlereverhart.azbase"
     },
     "android": {
