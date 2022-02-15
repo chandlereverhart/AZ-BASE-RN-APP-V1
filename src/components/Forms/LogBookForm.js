@@ -23,9 +23,7 @@ const LogBookForm = (props) => {
   const jump = props.route?.params?.jump?.jump ?? {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [date, setDate] = useState(
-    jump?.createdAt?.seconds * 1000 || new Date()
-  );
+  const [date, setDate] = useState(jump?.createdAt || new Date());
   const [image, setImage] = useState(jump.photoUrl || null);
   const [file, setFile] = useState(null);
 
