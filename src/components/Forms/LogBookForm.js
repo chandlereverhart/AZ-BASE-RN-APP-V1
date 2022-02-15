@@ -86,6 +86,21 @@ const LogBookForm = (props) => {
               contentContainerStyle={{ flexGrow: 1 }}
               keyboardShouldPersistTaps="handled"
             >
+              <View>
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode="date"
+                  display="default"
+                  themeVariant="dark"
+                  onChange={onChange}
+                  style={{
+                    height: 40,
+                    marginBottom: 10,
+                    marginTop: 10,
+                  }}
+                />
+              </View>
               <TextInput
                 type="number"
                 onChangeText={handleChange("jumpNumber")}
@@ -95,6 +110,7 @@ const LogBookForm = (props) => {
                 placeholder="Jump #"
                 style={styles.input}
               />
+
               <TextInput
                 onChangeText={handleChange("exitName")}
                 onBlur={handleBlur("exitName")}
@@ -102,19 +118,6 @@ const LogBookForm = (props) => {
                 placeholderTextColor="rgba(255, 255, 255, 0.3)"
                 placeholder="Exit Name"
                 style={styles.input}
-              />
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode="date"
-                display="default"
-                onChange={onChange}
-                textColor="red"
-                neutralButtonLabel="clear"
-                style={{
-                  backgroundColor: "rgba(255, 255, 255, 0.3)",
-                  width: "100%",
-                }}
               />
 
               <TextInput
@@ -190,7 +193,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 50,
   },
-
+  numberInput: {
+    paddingHorizontal: 10,
+    width: "66%",
+    height: 40,
+    color: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    borderColor: "rgba(255, 255, 255, 0.2)",
+    borderRadius: 5,
+    borderWidth: 1,
+    marginBottom: 10,
+    marginTop: 10,
+  },
   input: {
     paddingHorizontal: 10,
     width: "100%",
@@ -202,6 +216,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     marginTop: 10,
+  },
+  row: {
+    flexDirection: "row",
   },
   addPhotoView: {
     alignSelf: "center",
