@@ -16,14 +16,21 @@ import { addLogBook, getLogBook } from "../../redux/slices/logBook";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import * as ImagePicker from "expo-image-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const LogBookForm = (props) => {
   const jump = props.route?.params?.jump?.jump ?? {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [date, setDate] = useState(jump.createdAt.seconds * 1000 || new Date());
   const [image, setImage] = useState(jump.photoUrl || null);
   const [file, setFile] = useState(null);
 
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    console.log("SELECTED DATE", currentDate);
+    setDate(currentDate);
+  };
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -43,7 +50,14 @@ const LogBookForm = (props) => {
   };
 
   const handleSubmit = async (values) => {
-    await dispatch(addLogBook({ ...values, photoUrl: file ? file : "" }));
+    console.log("VALUES", values);
+    await dispatch(
+      addLogBook({
+        ...values,
+        photoUrl: file ? file : "",
+        createdAt: date,
+      })
+    );
     dispatch(getLogBook());
     navigation.navigate("MyTabs");
   };
@@ -55,13 +69,19 @@ const LogBookForm = (props) => {
           jumpNumber: jump?.jumpNumber?.toString() || "",
           exitName: jump?.exitName || "",
           otherDetails: jump?.otherDetails || "",
-          createdAt: jump?.createdAt || new Date(),
+          createdAt: jump?.createdAt || date,
           id: jump?.id || "",
           photoUrl: jump?.photoUrl || "",
         }}
         onSubmit={(values) => handleSubmit(values)}
       >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          setFieldValue,
+          values,
+        }) => (
           <View style={styles.logView}>
             <ScrollView
               contentContainerStyle={{ flexGrow: 1 }}
@@ -84,6 +104,20 @@ const LogBookForm = (props) => {
                 placeholder="Exit Name"
                 style={styles.input}
               />
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode="date"
+                display="default"
+                onChange={onChange}
+                textColor="red"
+                neutralButtonLabel="clear"
+                style={{
+                  backgroundColor: "rgba(255, 255, 255, 0.3)",
+                  width: "100%",
+                }}
+              />
+
               <TextInput
                 onChangeText={handleChange("otherDetails")}
                 onBlur={handleBlur("otherDetails")}
@@ -157,6 +191,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 50,
   },
+
   input: {
     paddingHorizontal: 10,
     width: "100%",

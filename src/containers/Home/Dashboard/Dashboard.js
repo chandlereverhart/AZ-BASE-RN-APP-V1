@@ -14,8 +14,8 @@ const Dashboard = (props) => {
           <View style={styles.divider} />
           <UsersCard />
           <View style={styles.divider} />
-          <LastJumpCard />
-          <View style={styles.divider} />
+          {/* <LastJumpCard />
+          <View style={styles.divider} /> */}
           {/* <LastExitCard /> */}
           {/* <View style={styles.marginBottom} /> */}
         </ScrollView>

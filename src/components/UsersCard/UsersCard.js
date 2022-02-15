@@ -20,33 +20,32 @@ const UsersCard = ({}) => {
 
   return (
     <>
-      {jump && (
-        <View style={styles.weatherContainer}>
-          <Card style={styles.usersCard}>
-            <Text style={styles.text}>You've Logged</Text>
-            <View style={styles.body}>
-              <TouchableOpacity
-                style={styles.column}
-                onPress={() => {
-                  navigation.navigate("LogBook");
-                }}
-              >
-                <Text style={styles.numberText}>{jump.jumpNumber}</Text>
-                <Text style={styles.subtitle}>Jumps</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.column}
-                onPress={() => {
-                  navigation.navigate("Exits");
-                }}
-              >
-                <Text style={styles.numberText}>{exits.length}</Text>
-                <Text style={styles.subtitle}>Exits</Text>
-              </TouchableOpacity>
-            </View>
-          </Card>
-        </View>
-      )}
+      <View style={styles.weatherContainer}>
+        <Card style={styles.usersCard}>
+          <Text style={styles.text}>You've Logged</Text>
+          <View style={styles.body}>
+            <TouchableOpacity
+              style={styles.column}
+              onPress={() => {
+                navigation.navigate("LogBook");
+              }}
+            >
+              {jump && <Text style={styles.numberText}>{jump.jumpNumber}</Text>}
+              {!jump && <Text style={styles.numberText}>{logBook.length}</Text>}
+              <Text style={styles.subtitle}>Jumps</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.column}
+              onPress={() => {
+                navigation.navigate("Exits");
+              }}
+            >
+              <Text style={styles.numberText}>{exits.length}</Text>
+              <Text style={styles.subtitle}>Exits</Text>
+            </TouchableOpacity>
+          </View>
+        </Card>
+      </View>
     </>
   );
 };
