@@ -90,9 +90,14 @@ const LoginScreen = (props) => {
       </View>
 
       <View style={styles.buttonContainer}>
+        <Text style={styles.helperText}>Have an account?</Text>
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
+        <Text style={styles.helperText}>Or</Text>
+
+        <Text style={styles.helperText}>Create an account</Text>
+
         <TouchableOpacity
           onPress={handleSignup}
           style={[styles.button, styles.buttonOutline]}
@@ -124,6 +129,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
+  },
+  helperText: {
+    fontSize: 16,
+    color: "white",
   },
   buttonContainer: {
     width: "60%",
