@@ -2,7 +2,7 @@
   "expo": {
     "name": "AZ-BASE-App",
     "slug": "AZ-BASE-App",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "src/assets/AppIcons/appstore.png",
     "splash": {
@@ -24,8 +24,12 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.chandlereverhart.azbase"
+      "bundleIdentifier": "com.chandlereverhart.azbase",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Allow this app to use your location."
+      }
     },
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "src/assets/AppIcons/playstore.png",
