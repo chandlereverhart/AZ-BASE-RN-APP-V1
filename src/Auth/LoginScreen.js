@@ -6,6 +6,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   TextInput,
+  Input,
   TouchableOpacity,
 } from "react-native";
 import { auth, db } from "../../Firebase/firebase";

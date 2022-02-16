@@ -24,10 +24,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.chandlereverhart.azbase",
-      "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Allow this app to use your location."
-      }
+      "bundleIdentifier": "com.chandlereverhart.azbase"
     },
 
     "android": {

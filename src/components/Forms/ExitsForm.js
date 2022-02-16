@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "react-native-get-random-values";
 import { useDispatch } from "react-redux";
 import {
@@ -16,7 +16,6 @@ import { Formik } from "formik";
 import { addExit, getExits } from "../../redux/slices/exits";
 //icons
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import * as Location from "expo-location";
 import * as ImagePicker from "expo-image-picker";
 
 const ExitsForm = (props) => {
@@ -51,25 +50,10 @@ const ExitsForm = (props) => {
     navigation.navigate("MyTabs");
   };
 
-  useEffect(() => {
-    getMapUrl();
-  }, []);
-
-  const getMapUrl = () => {
-    Location.installWebGeolocationPolyfill();
-    navigator.geolocation.getCurrentPosition((position) => {
-      setPosition({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      });
-    });
-  };
-
   const scheme = Platform.select({ ios: "maps:0,0?q=", android: "geo:0,0?q=" });
-  const latLng = `${position.lat}, ${position.lng}`;
   const label = "Custom Label";
   const url = Platform.select({
-    ios: `https://www.google.com/maps/search/?api=1&center=${latLng}`,
+    ios: `https://www.google.com/maps/search/?api=1&center=`,
     android: `${scheme}${latLng}(${label})`,
   });
 
