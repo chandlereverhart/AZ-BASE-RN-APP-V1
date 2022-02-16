@@ -51,7 +51,9 @@ const LogBook = (props) => {
           <Text style={styles.numberText}>#{item.jumpNumber}</Text>
         </View>
         <View style={styles.column}>
-          <Text style={styles.nameText}>"{item.exitName}"</Text>
+          <Text numberOfLines={1} style={styles.nameText}>
+            "{item.exitName}"
+          </Text>
           <Text style={styles.dateText}>
             {item?.createdAt ? fDate(item.createdAt.seconds * 1000) : ""}
           </Text>
@@ -150,14 +152,15 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255, 255, 255, 0.15)",
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderWidth: 1,
-    marginBottom: 3,
+    marginBottom: 5,
   },
   numberView: {
-    width: "25%",
+    width: "35%",
     alignSelf: "center",
   },
   column: {
     flexDirection: "column",
+    width: "70%",
   },
   cardTextView: {
     flexDirection: "row",
@@ -165,7 +168,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: "400",
     color: "rgba(255, 255, 255, 0.8)",
   },
   nameText: {
