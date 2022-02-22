@@ -132,9 +132,10 @@ export function addExit(values) {
     };
     try {
       // If File Begin Upload
+      // console.log("VALUES==>", values);
 
-      if (values.photoUrl) {
-        const file = values.photoUrl;
+      if (values.file !== null) {
+        const file = values.file.uri;
         const response = await fetch(file);
         const blob = await response.blob();
         const extension = uuid();

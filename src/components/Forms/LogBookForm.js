@@ -27,7 +27,8 @@ const LogBookForm = (props) => {
     jump?.createdAt?.seconds * 1000 || new Date()
   );
   const [image, setImage] = useState(jump?.photoUrl || null);
-  const [file, setFile] = useState(jump?.photoUrl || null);
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -52,17 +53,19 @@ const LogBookForm = (props) => {
   };
 
   const handleSubmit = async (values) => {
+    setLoading(true);
     await dispatch(
       addLogBook({
         ...values,
-        photoUrl: file,
+        file: file,
+        photoUrl: jump?.photoUrl || null,
         createdAt: new Date(date),
       })
     );
     dispatch(getLogBook());
+    setLoading(false);
     navigation.navigate("MyTabs");
   };
-  console.log("DATE===>", date);
 
   return (
     <>
