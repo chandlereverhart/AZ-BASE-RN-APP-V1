@@ -34,7 +34,7 @@ const LogBookDetails = (props) => {
       <View style={styles.pageContent}>
         <Card style={styles.card}>
           <View style={styles.headerView}>
-            {jump.photoUrl !== "" && (
+            {jump.photoUrl !== null && (
               <View>
                 <TouchableOpacity
                   onPress={() => {
