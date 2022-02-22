@@ -140,8 +140,8 @@ export function addLogBook(values) {
     try {
       // If File Begin Upload
 
-      if (values.photoUrl !== null) {
-        const file = values.photoUrl.uri;
+      if (values.photoUrl) {
+        const file = values.photoUrl;
         const response = await fetch(file);
         const blob = await response.blob();
         const extension = uuid();
