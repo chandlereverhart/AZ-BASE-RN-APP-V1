@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Button, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Button,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { Card } from "react-native-ui-lib";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
@@ -29,31 +35,35 @@ const ExitDetails = (props) => {
     <>
       <View style={styles.pageContent}>
         <Card style={styles.card}>
-          <View style={styles.detailsView}>
-            <View style={styles.dividerView}>
-              <Divider>
-                <Text>Divider</Text>
-              </Divider>
+          <ScrollView>
+            <View style={styles.detailsView}>
+              <View style={styles.dividerView}>
+                <Divider>
+                  <Text>Divider</Text>
+                </Divider>
+              </View>
+              <Text style={styles.titleText}>"{exit.exitName}"</Text>
+              <View style={styles.dividerView}>
+                <Divider>
+                  <Text>Divider</Text>
+                </Divider>
+              </View>
+              {exit.impactHeight !== "" && (
+                <Text style={styles.otherText}>
+                  {exit.impactHeight} to impact
+                </Text>
+              )}
+              {exit.overallHeight !== "" && (
+                <Text style={styles.otherText}>
+                  {exit.overallHeight} overall
+                </Text>
+              )}
+              <TouchableOpacity onPress={() => Linking.openURL(url)}>
+                <Text style={styles.otherText}>{exit.coordinates}</Text>
+              </TouchableOpacity>
+              <Text style={styles.otherText}>{exit.description}</Text>
             </View>
-            <Text style={styles.titleText}>"{exit.exitName}"</Text>
-            <View style={styles.dividerView}>
-              <Divider>
-                <Text>Divider</Text>
-              </Divider>
-            </View>
-            {exit.impactHeight !== "" && (
-              <Text style={styles.otherText}>
-                {exit.impactHeight} to impact
-              </Text>
-            )}
-            {exit.overallHeight !== "" && (
-              <Text style={styles.otherText}>{exit.overallHeight} overall</Text>
-            )}
-            <TouchableOpacity onPress={() => Linking.openURL(url)}>
-              <Text style={styles.otherText}>{exit.coordinates}</Text>
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.otherText}>{exit.description}</Text>
+          </ScrollView>
 
           {exit.photoUrl !== "" && (
             <View>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Button, Image } from "react-native";
+import { View, Button, Image, ScrollView } from "react-native";
 import { Card } from "react-native-ui-lib";
 import { auth, db } from "../../../../Firebase/firebase";
 import { useNavigation } from "@react-navigation/core";
@@ -51,22 +51,24 @@ const NewsDetails = (props) => {
     <>
       <View style={styles.pageContent}>
         <Card style={styles.card}>
-          <View style={styles.detailsView}>
-            <View style={styles.dividerView}>
-              <Divider>
-                <Text>Divider</Text>
-              </Divider>
-            </View>
+          <ScrollView>
+            <View style={styles.detailsView}>
+              <View style={styles.dividerView}>
+                <Divider>
+                  <Text>Divider</Text>
+                </Divider>
+              </View>
 
-            <Text style={styles.totalText}>{news.title}</Text>
-            <View style={styles.dividerView}>
-              <Divider>
-                <Text>Divider</Text>
-              </Divider>
+              <Text style={styles.totalText}>{news.title}</Text>
+              <View style={styles.dividerView}>
+                <Divider>
+                  <Text>Divider</Text>
+                </Divider>
+              </View>
+              <Text style={styles.otherText}>{news.date}</Text>
+              <Text style={styles.otherText}>{news.description}</Text>
             </View>
-            <Text style={styles.otherText}>{news.date}</Text>
-            <Text style={styles.otherText}>{news.description}</Text>
-          </View>
+          </ScrollView>
           <View style={styles.logoView}>
             <Image
               style={{ width: 120, height: 150 }}
@@ -104,6 +106,16 @@ const styles = StyleSheet.create({
     paddingTop: "10%",
     paddingBottom: "10%",
   },
+  card: {
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    paddingTop: "10%",
+    paddingBottom: "10%",
+    paddingHorizontal: "10%",
+  },
   dividerView: {
     width: 200,
   },
@@ -139,16 +151,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     color: "black",
-  },
-  card: {
-    display: "flex",
-    flex: 1,
-    paddingHorizontal: "10%",
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
-    paddingTop: "10%",
-    paddingBottom: "10%",
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
 });
