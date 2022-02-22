@@ -46,7 +46,7 @@ const ExitsForm = (props) => {
   };
 
   const handleSubmit = async (values) => {
-    await dispatch(addExit({ ...values, photoUrl: file ? file : "" }));
+    await dispatch(addExit({ ...values, photoUrl: image }));
     dispatch(getExits());
     navigation.navigate("MyTabs");
   };
