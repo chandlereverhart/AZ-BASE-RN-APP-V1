@@ -23,8 +23,10 @@ const LogBookForm = (props) => {
   const jump = props.route?.params?.jump?.jump ?? {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [date, setDate] = useState(jump?.createdAt || new Date());
-  const [image, setImage] = useState(jump.photoUrl || null);
+  const [date, setDate] = useState(
+    jump?.createdAt?.seconds * 1000 || new Date()
+  );
+  const [image, setImage] = useState(jump?.photoUrl || null);
   const [file, setFile] = useState(null);
 
   const onChange = (event, selectedDate) => {
@@ -53,13 +55,14 @@ const LogBookForm = (props) => {
     await dispatch(
       addLogBook({
         ...values,
-        photoUrl: file ? file : "",
-        createdAt: date,
+        photoUrl: image,
+        createdAt: new Date(date),
       })
     );
     dispatch(getLogBook());
     navigation.navigate("MyTabs");
   };
+  console.log("DATE===>", date);
 
   return (
     <>
@@ -89,7 +92,7 @@ const LogBookForm = (props) => {
               <View>
                 <DateTimePicker
                   testID="dateTimePicker"
-                  value={date}
+                  value={new Date(date)}
                   mode="date"
                   display="default"
                   themeVariant="dark"
