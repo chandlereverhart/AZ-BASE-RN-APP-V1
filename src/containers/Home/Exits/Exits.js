@@ -46,7 +46,9 @@ const Exits = (props) => {
         })
       }
     >
-      <Text style={styles.cardText}>"{item.exitName}"</Text>
+      <Text numberOfLines={1} style={styles.cardText}>
+        "{item.exitName}"
+      </Text>
     </Card>
   );
   const renderItem = ({ item }) => {

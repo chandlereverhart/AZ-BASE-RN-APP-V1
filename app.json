@@ -2,7 +2,7 @@
   "expo": {
     "name": "AZ-BASE-App",
     "slug": "AZ-BASE-App",
-    "version": "1.0.3",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "src/assets/AppIcons/appstore.png",
     "splash": {
@@ -26,6 +26,7 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.chandlereverhart.azbase"
     },
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "src/assets/AppIcons/playstore.png",

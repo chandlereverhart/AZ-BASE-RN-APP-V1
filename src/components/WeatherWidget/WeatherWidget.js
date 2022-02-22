@@ -3,7 +3,6 @@ import { View, Text, StyleSheet } from "react-native";
 import { Card } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { API_KEY } from "../../utils/WeatherAPIKey";
-import * as Location from "expo-location";
 
 const Weather = ({
   sunrise,
@@ -186,26 +185,12 @@ export default class WeatherWidget extends React.Component {
   };
 
   componentDidMount() {
-    Location.installWebGeolocationPolyfill();
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.fetchWeather(position.coords.latitude, position.coords.longitude);
-        this.setState({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      },
-      (error) => {
-        this.setState({
-          error: "Error Gettig Weather Condtions",
-        });
-      }
-    );
+    this.fetchWeather();
   }
 
-  fetchWeather(lat = 25, lon = 25) {
+  fetchWeather(lat = 33.44851, lon = -111.47684) {
     fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.lat}&lon=${this.state.lng}&exclude=minutely&appid=${API_KEY}&units=metric`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=${API_KEY}&units=metric`
     )
       .then((res) => res.json())
       .then((json) => {
