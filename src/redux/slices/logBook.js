@@ -112,7 +112,6 @@ export function getLogBook() {
 
 // ----------------------------------------------------------------------
 export function addLogBook(values) {
-  console.log("VALUES", values);
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     let jumpRef;

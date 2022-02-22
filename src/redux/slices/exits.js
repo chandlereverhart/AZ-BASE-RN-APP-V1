@@ -110,39 +110,6 @@ export function getExits() {
 }
 
 // ----------------------------------------------------------------------
-
-// export function addExit(values) {
-//   return async (dispatch) => {
-//     dispatch(slice.actions.startLoading());
-//     let exitRef;
-//     const user = auth.currentUser;
-//     const docId = values.id;
-//     if (values.id !== "") {
-//       exitRef = db
-//         .collection("users")
-//         .doc(user.uid)
-//         .collection("exits")
-//         .doc(docId);
-//     } else {
-//       exitRef = db.collection("users").doc(user.uid).collection("exits").doc();
-//     }
-
-//     const firebaseObject = {
-//       ...values,
-//       id: exitRef.id,
-//     };
-//     try {
-//       await exitRef.set(firebaseObject, { merge: true });
-
-//       dispatch(slice.actions.getExitAddSuccess());
-//     } catch (error) {
-//       console.log(error);
-//       dispatch(slice.actions.hasError(error));
-//     }
-//   };
-// }
-
-// ----------------------------------------------------------------------
 export function addExit(values) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
