@@ -166,7 +166,7 @@ export function addExit(values) {
     try {
       // If File Begin Upload
 
-      if (values.photoUrl.uri !== undefined) {
+      if (values.photoUrl !== null) {
         const file = values.photoUrl.uri;
         const response = await fetch(file);
         const blob = await response.blob();

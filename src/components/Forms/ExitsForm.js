@@ -24,8 +24,8 @@ const ExitsForm = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [position, setPosition] = useState("");
-  const [image, setImage] = useState(exit.photoUrl || null);
-  const [file, setFile] = useState(null);
+  const [image, setImage] = useState(exit?.photoUrl || null);
+  const [file, setFile] = useState(exit?.photoUrl || null);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -46,7 +46,7 @@ const ExitsForm = (props) => {
   };
 
   const handleSubmit = async (values) => {
-    await dispatch(addExit({ ...values, photoUrl: image }));
+    await dispatch(addExit({ ...values, photoUrl: file }));
     dispatch(getExits());
     navigation.navigate("MyTabs");
   };
@@ -72,6 +72,7 @@ const ExitsForm = (props) => {
     ios: `https://www.google.com/maps/search/?api=1&center=${latLng}`,
     android: `${scheme}${latLng}(${label})`,
   });
+  console.log("FILE==>", file);
 
   return (
     <>

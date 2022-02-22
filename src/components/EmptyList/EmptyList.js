@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+} from "react-native";
 
 //styles
 const EmptyList = ({ label }) => {
@@ -31,6 +38,11 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     alignItems: "center",
+  },
+  container: {
+    flex: 1,
+    marginVertical: 10,
+    marginBottom: 10,
   },
   text: {
     color: "rgba(255, 255, 255, 0.9)",

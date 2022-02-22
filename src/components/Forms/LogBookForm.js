@@ -27,7 +27,7 @@ const LogBookForm = (props) => {
     jump?.createdAt?.seconds * 1000 || new Date()
   );
   const [image, setImage] = useState(jump?.photoUrl || null);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(jump?.photoUrl || null);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -55,7 +55,7 @@ const LogBookForm = (props) => {
     await dispatch(
       addLogBook({
         ...values,
-        photoUrl: image,
+        photoUrl: file,
         createdAt: new Date(date),
       })
     );
