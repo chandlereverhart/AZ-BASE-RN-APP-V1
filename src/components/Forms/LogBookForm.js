@@ -8,10 +8,11 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Text,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 // redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addLogBook, getLogBook } from "../../redux/slices/logBook";
 // icons
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -29,6 +30,9 @@ const LogBookForm = (props) => {
   const [image, setImage] = useState(jump?.photoUrl || null);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const uploading = useSelector((state) => state.logBook.isLoading);
+  const progress = useSelector((state) => state.logBook.progress);
+  console.log(progress);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -39,7 +43,7 @@ const LogBookForm = (props) => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 0.1,
+      quality: 0.5,
     });
 
     if (!result.cancelled) {
@@ -52,145 +56,184 @@ const LogBookForm = (props) => {
     setFile(null);
   };
 
+  // const handleSubmit = async (values) => {
+  //   setLoading(true);
+  //   await dispatch(
+  //     addLogBook({
+  //       ...values,
+  //       file: file,
+  //       photoUrl: jump?.photoUrl || null,
+  //       createdAt: new Date(date),
+  //     })
+  //   );
+  //   setLoading(uploading ? true : false);
+  //   dispatch(getLogBook());
+  //   navigation.navigate("MyTabs");
+  // };
   const handleSubmit = async (values) => {
     setLoading(true);
-    await dispatch(
-      addLogBook({
-        ...values,
-        file: file,
-        photoUrl: jump?.photoUrl || null,
-        createdAt: new Date(date),
-      })
-    );
-    dispatch(getLogBook());
-    setLoading(false);
-    navigation.navigate("MyTabs");
+    try {
+      await dispatch(
+        addLogBook({
+          ...values,
+          file: file,
+          photoUrl: jump?.photoUrl || null,
+          createdAt: new Date(date),
+        })
+      );
+      while (progress < 100) {
+        setLoading(true);
+      }
+      await dispatch(getLogBook());
+      setLoading(false);
+      navigation.navigate("MyTabs");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
 
   return (
     <>
-      <Formik
-        initialValues={{
-          jumpNumber: jump?.jumpNumber?.toString() || "",
-          exitName: jump?.exitName || "",
-          otherDetails: jump?.otherDetails || "",
-          createdAt: jump?.createdAt?.seconds || date,
-          id: jump?.id || "",
-          photoUrl: jump?.photoUrl || "",
-        }}
-        onSubmit={(values) => handleSubmit(values)}
-      >
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          setFieldValue,
-          values,
-        }) => (
-          <View style={styles.logView}>
-            <ScrollView
-              contentContainerStyle={{ flexGrow: 1 }}
-              keyboardShouldPersistTaps="handled"
-            >
-              <View>
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={new Date(date)}
-                  mode="date"
-                  display="default"
-                  themeVariant="dark"
-                  onChange={onChange}
-                  style={{
-                    height: 40,
-                    marginBottom: 10,
-                    marginTop: 10,
-                  }}
-                />
-              </View>
-              <TextInput
-                type="number"
-                onChangeText={handleChange("jumpNumber")}
-                onBlur={handleBlur("jumpNumber")}
-                value={values.jumpNumber}
-                placeholderTextColor="rgba(255, 255, 255, 0.3)"
-                placeholder="Jump #"
-                style={styles.input}
-              />
-
-              <TextInput
-                onChangeText={handleChange("exitName")}
-                onBlur={handleBlur("exitName")}
-                value={values.exitName}
-                placeholderTextColor="rgba(255, 255, 255, 0.3)"
-                placeholder="Exit Name"
-                style={styles.input}
-              />
-
-              <TextInput
-                onChangeText={handleChange("otherDetails")}
-                onBlur={handleBlur("otherDetails")}
-                value={values.otherDetails}
-                placeholderTextColor="rgba(255, 255, 255, 0.3)"
-                placeholder="Other Details..."
-                style={styles.input}
-              />
-
-              {!image ? (
-                <View style={styles.addPhotoView}>
-                  <TouchableOpacity onPress={pickImage}>
-                    <MaterialCommunityIcons
-                      color="rgba(255, 255, 255, 0.8)"
-                      name="image-plus"
-                      size={40}
-                    />
-                  </TouchableOpacity>
-                </View>
-              ) : (
-                <View
-                  style={{
-                    alignItems: "center",
-                  }}
-                >
-                  <View>
-                    <View>
-                      <Image
-                        source={{ uri: image }}
-                        style={{ width: 100, height: 100, borderRadius: 12 }}
-                      />
-                    </View>
-                    <View style={styles.removeImageIcon}>
-                      <TouchableOpacity onPress={removeImage}>
-                        <MaterialCommunityIcons
-                          color="black"
-                          name="close"
-                          size={30}
-                        />
-                      </TouchableOpacity>
-                    </View>
+      <View style={uploading ? styles.overlay : styles.overlayNone}>
+        <Formik
+          initialValues={{
+            jumpNumber: jump?.jumpNumber?.toString() || "",
+            exitName: jump?.exitName || "",
+            otherDetails: jump?.otherDetails || "",
+            createdAt: jump?.createdAt?.seconds || date,
+            id: jump?.id || "",
+            photoUrl: jump?.photoUrl || "",
+          }}
+          onSubmit={(values) => handleSubmit(values)}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <View style={styles.logView}>
+              <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                keyboardShouldPersistTaps="handled"
+              >
+                {uploading && (
+                  <View style={styles.loadingView}>
+                    <Text style={styles.loadingText}>Submitting...</Text>
                   </View>
-                </View>
-              )}
+                )}
 
-              <View style={styles.buttonView}>
-                <View style={styles.saveBtn}>
-                  <Button
-                    title="Submit"
-                    color="black"
-                    accessibilityLabel="Learn more about this purple button"
-                    onPress={handleSubmit}
+                <View>
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={new Date(date)}
+                    mode="date"
+                    display="default"
+                    themeVariant="dark"
+                    onChange={onChange}
+                    style={{
+                      height: 40,
+                      marginBottom: 10,
+                      marginTop: 10,
+                    }}
                   />
                 </View>
-              </View>
-            </ScrollView>
-          </View>
-        )}
-      </Formik>
+                <TextInput
+                  type="number"
+                  onChangeText={handleChange("jumpNumber")}
+                  onBlur={handleBlur("jumpNumber")}
+                  value={values.jumpNumber}
+                  placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                  placeholder="Jump #"
+                  style={styles.input}
+                />
+
+                <TextInput
+                  onChangeText={handleChange("exitName")}
+                  onBlur={handleBlur("exitName")}
+                  value={values.exitName}
+                  placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                  placeholder="Exit Name"
+                  style={styles.input}
+                />
+
+                <TextInput
+                  onChangeText={handleChange("otherDetails")}
+                  onBlur={handleBlur("otherDetails")}
+                  value={values.otherDetails}
+                  placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                  placeholder="Other Details..."
+                  style={styles.input}
+                />
+
+                {!image ? (
+                  <View style={styles.addPhotoView}>
+                    <TouchableOpacity onPress={pickImage}>
+                      <MaterialCommunityIcons
+                        color="rgba(255, 255, 255, 0.8)"
+                        name="image-plus"
+                        size={40}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      alignItems: "center",
+                    }}
+                  >
+                    <View>
+                      <View>
+                        <Image
+                          source={{ uri: image }}
+                          style={{ width: 100, height: 100, borderRadius: 12 }}
+                        />
+                      </View>
+                      <View style={styles.removeImageIcon}>
+                        <TouchableOpacity onPress={removeImage}>
+                          <MaterialCommunityIcons
+                            color="black"
+                            name="close"
+                            size={30}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                )}
+
+                <View style={styles.buttonView}>
+                  <View style={styles.saveBtn}>
+                    <Button
+                      title="Submit"
+                      color="black"
+                      accessibilityLabel="Learn more about this purple button"
+                      onPress={handleSubmit}
+                    />
+                  </View>
+                </View>
+              </ScrollView>
+            </View>
+          )}
+        </Formik>
+      </View>
     </>
   );
 };
 export default LogBookForm;
 
 const styles = StyleSheet.create({
+  overlayNone: {},
+  overlay: {
+    opacity: 0.4,
+  },
+  loadingView: {
+    position: "absolute",
+    left: "27%",
+    top: "33%",
+  },
+  loadingText: {
+    fontSize: 30,
+    textAlign: "center",
+    color: "rgba(255, 255, 255, 0.95)",
+  },
+
   logView: {
     display: "flex",
     flexDirection: "column",

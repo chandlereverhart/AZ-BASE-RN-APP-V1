@@ -22,7 +22,6 @@ const ExitsForm = (props) => {
   const exit = props.route?.params?.exit?.exit ?? {};
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [position, setPosition] = useState("");
   const [image, setImage] = useState(exit?.photoUrl || null);
   const [file, setFile] = useState(null);
 
@@ -31,7 +30,7 @@ const ExitsForm = (props) => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 0.1,
+      quality: 0.5,
     });
 
     if (!result.cancelled) {

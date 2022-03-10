@@ -47,6 +47,10 @@ const slice = createSlice({
     getLogbookAddSuccess(state, action) {
       state.isLoading = false;
     },
+    // SET SELECTED FILES
+    // onSetSelectedMediaItemsSuccess(state, action) {
+    //   state.selectedMediaItems = action.payload;
+    // },
 
     // // DELETE NOTIFICATION
     deleteLogbookSuccess(state, action) {
@@ -138,8 +142,6 @@ export function addLogBook(values) {
     };
     try {
       // If File Begin Upload
-      // console.log("VALUES==>", values);
-
       if (values.file !== null) {
         const file = values.file.uri;
         const response = await fetch(file);
@@ -147,7 +149,13 @@ export function addLogBook(values) {
         const extension = uuid();
         const storageRef = storage.ref(`users/${user.uid}/photo_${extension}`);
         const task = storageRef.put(blob);
-        task.on(UPLOAD_STATE_CHANGED, () => {
+        task.on(UPLOAD_STATE_CHANGED, (snapshot) => {
+          const { bytesTransferred, totalBytes } = snapshot;
+          const percentComplete = Math.round(
+            100 * (bytesTransferred / totalBytes)
+          );
+          dispatch(slice.actions.startUploading(percentComplete));
+
           task
             .then(() => storageRef.getDownloadURL())
             .then(async (downloadURL) => {
