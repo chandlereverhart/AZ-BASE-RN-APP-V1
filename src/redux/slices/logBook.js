@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useState } from "react";
+
 import { v4 as uuid } from "uuid";
 import { fTimestamp } from "../../utils/DateFunctions";
+import { cloneDeep } from "lodash";
 
 // Firebase
 import {
@@ -30,6 +33,10 @@ const slice = createSlice({
     startUploading(state, action) {
       state.progress = action.payload;
     },
+    // END UPLOADING
+    endUploading(state, action) {
+      state.progress = 0;
+    },
 
     // HAS ERROR
     hasError(state, action) {
@@ -47,10 +54,6 @@ const slice = createSlice({
     getLogbookAddSuccess(state, action) {
       state.isLoading = false;
     },
-    // SET SELECTED FILES
-    // onSetSelectedMediaItemsSuccess(state, action) {
-    //   state.selectedMediaItems = action.payload;
-    // },
 
     // // DELETE NOTIFICATION
     deleteLogbookSuccess(state, action) {
@@ -149,20 +152,20 @@ export function addLogBook(values) {
         const extension = uuid();
         const storageRef = storage.ref(`users/${user.uid}/photo_${extension}`);
         const task = storageRef.put(blob);
-        task.on(UPLOAD_STATE_CHANGED, (snapshot) => {
-          const { bytesTransferred, totalBytes } = snapshot;
-          const percentComplete = Math.round(
-            100 * (bytesTransferred / totalBytes)
+        task.on(UPLOAD_STATE_CHANGED, async (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          dispatch(slice.actions.startUploading(percentComplete));
-
-          task
-            .then(() => storageRef.getDownloadURL())
-            .then(async (downloadURL) => {
-              firebaseObject.photoUrl = downloadURL;
-              await jumpRef.set(firebaseObject, { merge: true });
-            });
+          console.log("Progress is " + progress + "% done");
+          dispatch(slice.actions.startUploading(progress));
         });
+
+        task
+          .then(() => storageRef.getDownloadURL())
+          .then(async (downloadURL) => {
+            firebaseObject.photoUrl = downloadURL;
+            await jumpRef.set(firebaseObject, { merge: true });
+          });
       } else {
         firebaseObject.photoUrl = values.photoUrl;
         await jumpRef.set(firebaseObject, { merge: true });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import {
   View,
@@ -30,9 +30,17 @@ const LogBookForm = (props) => {
   const [image, setImage] = useState(jump?.photoUrl || null);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const uploading = useSelector((state) => state.logBook.isLoading);
-  const progress = useSelector((state) => state.logBook.progress);
-  console.log(progress);
+  // const progress = useSelector((state) => state.logBook.progress);
+  const state = useSelector((state) => state.logBook.progress);
+  const [progress, setProgress] = useState(0);
+
+  const isLoading = useSelector((state) => state.logBook.isLoading);
+
+  useEffect(() => {
+    setProgress(state);
+  });
+
+  console.log("PROGRESS", progress);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -56,20 +64,6 @@ const LogBookForm = (props) => {
     setFile(null);
   };
 
-  // const handleSubmit = async (values) => {
-  //   setLoading(true);
-  //   await dispatch(
-  //     addLogBook({
-  //       ...values,
-  //       file: file,
-  //       photoUrl: jump?.photoUrl || null,
-  //       createdAt: new Date(date),
-  //     })
-  //   );
-  //   setLoading(uploading ? true : false);
-  //   dispatch(getLogBook());
-  //   navigation.navigate("MyTabs");
-  // };
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
@@ -81,11 +75,8 @@ const LogBookForm = (props) => {
           createdAt: new Date(date),
         })
       );
-      while (progress < 100) {
-        setLoading(true);
-      }
-      await dispatch(getLogBook());
       setLoading(false);
+      await dispatch(getLogBook());
       navigation.navigate("MyTabs");
     } catch (error) {
       console.log(error);
@@ -95,7 +86,7 @@ const LogBookForm = (props) => {
 
   return (
     <>
-      <View style={uploading ? styles.overlay : styles.overlayNone}>
+      <View style={loading ? styles.overlay : styles.overlayNone}>
         <Formik
           initialValues={{
             jumpNumber: jump?.jumpNumber?.toString() || "",
@@ -113,7 +104,7 @@ const LogBookForm = (props) => {
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
               >
-                {uploading && (
+                {loading && (
                   <View style={styles.loadingView}>
                     <Text style={styles.loadingText}>Submitting...</Text>
                   </View>
